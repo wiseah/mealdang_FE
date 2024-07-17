@@ -81,13 +81,13 @@ const Login = () => {
   }
 
   const navigateToTest = () => {
-    navigate('./test');
+    navigate('/test');
   }
 
   return (
     <Container className='LoginContainer'>
       <div className='LogoContainer'>
-        <LogoContainer src='./images/mealdangLogo.png' alt="mealdang" />
+        <LogoContainer src='/images/mealdangLogo.png' alt="mealdang" />
       </div>
       <form onSubmit={handleLogin}>
         <div>
