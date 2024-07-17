@@ -44,7 +44,7 @@ const SubmitButton = styled.button`
   text-align: center;
 `
 
-const JoinLink = styled.span`
+const Join = styled.span`
   font-size: 20px;
   font-weight: 400;
   color: #737373;
@@ -80,14 +80,14 @@ const Login = () => {
     setPassword(e.target.value);
   }
 
-  const navigateToJoin = () => {
-    navigate('./join');
+  const navigateToTest = () => {
+    navigate('./test');
   }
 
   return (
     <Container className='LoginContainer'>
       <div className='LogoContainer'>
-        <LogoContainer src={process.env.PUBLIC_URL + '/images/mealdangLogo.png'} alt="mealdang" className="Logo" />
+        <LogoContainer src='./images/mealdangLogo.png' alt="mealdang" />
       </div>
       <form onSubmit={handleLogin}>
         <div>
@@ -110,9 +110,9 @@ const Login = () => {
             placeholder='비밀번호'
             required />
         </div>
-        <SubmitButton type='submit'>로그인하기</SubmitButton>
+        <SubmitButton type='submit' onClick={navigateToTest}>로그인하기</SubmitButton>
       </form>
-      <JoinLink onClick={navigateToJoin} className='GoToJoin'>회원가입</JoinLink>
+      <Join onClick={() => navigate('/join')}>회원가입</Join>
     </Container >
   )
 }
