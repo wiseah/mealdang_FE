@@ -25,6 +25,7 @@ const InputField = styled.input`
   margin-bottom: 12px;
   font-size: 30px;
   font-weight: 400;
+  font-family: 'WavvePADO-Regular';
   text-align: center;
 `
 
@@ -38,6 +39,7 @@ const SubmitButton = styled.button`
   margin: 26.5px 35px 18px 35px;
   font-size: 30px;
   font-weight: 400;
+  font-family: 'WavvePADO-Regular';
   color: #ffffff;
   text-align: center;
 `
@@ -45,6 +47,7 @@ const SubmitButton = styled.button`
 const JoinLink = styled.span`
   font-size: 20px;
   font-weight: 400;
+  color: #737373;
 `
 
 const Login = () => {
