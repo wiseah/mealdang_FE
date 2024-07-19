@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+## 개발 환경 세팅
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- Node.js 18+를 설치합니다.
+- 터미널을 열고 `npm install`을 입력하여 패키지를 모두 설치합니다.
+- `npm run start` 명령어로 개발 서버를 실행합니다.
 
-## Available Scripts
+## 작업 방식
 
-In the project directory, you can run:
+#### 0. merge한 사람이 merge 했다고 하면 master에서 pull 받아서 최신화 하기
 
-### `npm start`
+#### 1. 작업할 기능에 대해 이슈 생성
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+#### 2. master브랜치에서 feat/이슈번호 브랜치 생성 (git switch master -> git switch -c feat/이슈번호)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+#### 3. 기능 개발 완료 후 `[#이슈번호] 커밋 메시지 내용` 형식으로 commit 및 push (git commit -m "[#이슈번호] 커밋 내용" -> git push origin feat/이슈번호)
 
-### `npm test`
+#### 4. github 사이트 와서 pull & request 생성하기 (master <- feat/이슈번호)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### 5. 팀장 코드 피드백 완료 후 본인이 merge 하기
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## PR Convention
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+PR 제목은 커밋 요약과 동일하게 "(type): (content)" 형식으로 작성하며, 내용은 다음을 포함하여 작성합니다.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Changes 📝
 
-### `npm run eject`
+이 PR에서 작업한 사항을 적어주세요.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Issues 🚩
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+이 PR과 연관된 Issue를 작성해주세요. 해당 PR이 Issue를 해결한다면 Issue도 꼭 닫아주세요!
+**"close #이슈번호" 를 써주면 PR을 닫을때 Isuue도 함께 닫힙니다!**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Screenshot 📷 (선택)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+작업한 사항을 스크린샷으로 찍을 수 있다면 (예: 신규 페이지 구현, 새로운 컴포넌트 구현) 스크린샷을 찍어서 올려주세요.
