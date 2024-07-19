@@ -1,6 +1,7 @@
 import Main from "./pages/Main";
 import Login from "./pages/Login";
 import Sitemap from "./pages/Sitemap";
+import Test from "./pages/Test";
 
 
 const routes = [
