@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import SubmitButton from "../components/SubmitButton";
 
 const Container = styled.div`
   display: flex;
@@ -29,21 +30,6 @@ const InputField = styled.input`
   text-align: center;
 `
 
-const SubmitButton = styled.button`
-  width: 280px;
-  height: 56px;
-  border: none;
-  border-radius: 10px;
-  box-sizing: border-box;
-  background-color: #6A0DAD;
-  margin: 26.5px 35px 18px 35px;
-  font-size: 30px;
-  font-weight: 400;
-  font-family: 'WavvePADO-Regular';
-  color: #ffffff;
-  text-align: center;
-`
-
 const Join = styled.span`
   font-size: 20px;
   font-weight: 400;
@@ -68,7 +54,7 @@ const Login = () => {
     } else if (password !== 'password') {
       alert('비밀번호가 틀렸습니다.');
     } else {
-      navigate('/main');
+      navigate('/test');
     }
   };
 
@@ -80,16 +66,13 @@ const Login = () => {
     setPassword(e.target.value);
   }
 
-  const navigateToTest = () => {
-    navigate('/test');
-  }
 
   return (
     <Container className='LoginContainer'>
       <div className='LogoContainer'>
         <LogoContainer src='/images/mealdangLogo.png' alt="mealdang" />
       </div>
-      <form onSubmit={handleLogin}>
+      <form>
         <div>
           <label htmlFor='member_id' />
           <InputField
@@ -110,7 +93,8 @@ const Login = () => {
             placeholder='비밀번호'
             required />
         </div>
-        <SubmitButton type='submit' onClick={navigateToTest}>로그인하기</SubmitButton>
+        <SubmitButton type='submit' onClick={handleLogin}>로그인하기</SubmitButton>
+
       </form>
       <Join onClick={() => navigate('/join')}>회원가입</Join>
     </Container >
