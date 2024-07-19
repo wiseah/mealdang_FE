@@ -8,6 +8,7 @@ import Join from "./pages/Join";
 import JoinSuccess from "./pages/JoinSuccess";
 
 
+
 const routes = [
     {
         path: '/',
