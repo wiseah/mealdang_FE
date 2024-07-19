@@ -12,7 +12,9 @@
 3. 기능 개발 완료 후 `[#이슈번호] 커밋 메시지 내용` 형식으로 commit 및 push (git commit -m "[#이슈번호] 커밋 내용" -> git push origin feat/이슈번호)
 4. github 사이트 와서 pull & request 생성하기 (dev <- feat/이슈번호)
 5. 팀장 코드 피드백 완료 후 본인이 merge 하기
-
+6. "feat/이슈번호" 브랜치 -> dev 브랜치로 이동 (git switch dev) 
+7. dev브랜치에서 master로 푸쉬 (git add . 후에 git push origin dev)
+8. master<-dev로 PR 작성
 
 ## PR Convention
 
