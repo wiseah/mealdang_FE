@@ -3,7 +3,7 @@ import React from 'react'
 function Main() {
   return (
     <div>
-      메인페이지 입니다.
+      메인페이지 입니다. 1
     </div>
   )
 }
