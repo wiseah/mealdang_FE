@@ -6,9 +6,10 @@ const ModalContainer = styled.div`
   top: 0;
   display: flex;
   width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
+  max-width:390px;
+  min-height:100vh;
+  background-color: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
   justify-content: center;
   align-items: center;
 `;
@@ -36,6 +37,7 @@ const Title = styled.h2`
 `
 
 const Explanation = styled.div`
+  font-family: 'NotoSansKR-Regular';
   font-size: 16px;
   line-height: 1.5;
   margin-top: 30px;
@@ -72,7 +74,7 @@ const FoodExchangeListModal = ({ isOpen, onClose }) => {
           </Paragraph>
           <Paragraph>
             더 많은 정보를 알고 싶다면? <br />
-            <ExternalLink href="https://www.diabetes.or.kr/general/dietary/dietary_03.php?con=3" target="_self">
+            <ExternalLink href="https://www.diabetes.or.kr/general/dietary/dietary_03.php?con=3" target="_blank">
               대한당뇨병학회 바로가기
             </ExternalLink>
           </Paragraph>

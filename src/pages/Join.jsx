@@ -58,6 +58,7 @@ const Explanation = styled.div`
 `
 
 const AgreeLabel = styled.label`
+  font-family: 'WavvePADO-Regular';
   font-size: 20px;
   font-weight: 400;
   color: #737373;
@@ -182,6 +183,7 @@ const Join = () => {
   };
 
   const handleModalClose = () => {
+    setAgree(false);
     setModalOpen(false); // 동의 안하고 모달 닫기
     setTitle('회원가입');
   };
@@ -192,10 +194,11 @@ const Join = () => {
   };
 
 
+
   return (
     <Container>
       <Title>{title}</Title>
-      <Form>
+      <Form onSubmit={handleJoin}>
         <FormItem>
           <ItemLabel htmlFor='nickname'>닉네임<RequireSpan>*</RequireSpan></ItemLabel>
           <Explanation />
@@ -204,6 +207,7 @@ const Join = () => {
             id='nickname'
             value={nickname}
             onChange={handleNicknameChange}
+            placeholder="닉네임"
             required />
         </FormItem>
         <FormItem>
@@ -215,6 +219,7 @@ const Join = () => {
             value={member_id}
             onChange={handleMember_idChange}
             onBlur={handleDoubleCheck} //ID 입력 후 포커스를 벗어나면 중복 체크
+            placeholder="아이디"
             required />
             {doubleCheckResult && <Explanation>{doubleCheckResult}</Explanation>} 
         </FormItem>
@@ -226,6 +231,7 @@ const Join = () => {
             id='password'
             value={password}
             onChange={handlePasswordChange}
+            placeholder="비밀번호"
             required />
         </FormItem>
         <FormItem>
@@ -236,6 +242,7 @@ const Join = () => {
             id='email'
             value={email}
             onChange={handleEmailChange}
+            placeholder="이메일"
             required />
         </FormItem>
         <SubmitButton type='submit' onClick={handleJoin}>회원가입하기</SubmitButton>

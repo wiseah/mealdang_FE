@@ -9,7 +9,8 @@ const ModalContainer = styled.div`
   width: 100vw;
   max-width:390px;
   min-height:100vh;
-  background-color: #D9D9D9;
+  background-color: rgba(0,0,0,0.7);
+  backdrop-filter: blur(6px);
   margin: 155px auto;
   color: black;
   font-size: 30px;
@@ -25,6 +26,7 @@ const ModalContent = styled.div`
   border: none;
   margin: 50px 0 0 0;
 `;
+
 
 const AgreeAllLabel = styled.label`
   font-family: 'WavvePADO-Regular';
@@ -71,6 +73,7 @@ const TermsList = styled.div`
 
 const TermItem = styled.div`
   margin-bottom: 10px;
+  font-family: 'NotoSansKR-Regular';
   font-size: 13px;
   color: #737373;
 `;
@@ -84,6 +87,7 @@ const AgreeButton = styled.button`
   color: #6A0DAD;
   border: none;
   border-radius: 10px;
+  font-family: 'WavvePADO-Regular';
   font-size: 20px;
   z-index: 1;
 `;
@@ -91,9 +95,15 @@ const AgreeButton = styled.button`
 const DisagreeButton = styled.button`
   background-color: transparent;
   border: none;
+  font-family: 'WavvePADO-Regular';
   font-size: 20px;
   margin-top: 20px;
-  color: #737373;
+  background-color: #ffffff ;
+  border: none;
+  border-radius: 10px;
+  color: #6A0DAD ;
+  width: 70px;
+  height: 30px;
 `;
 
 

@@ -31,6 +31,7 @@ const InputField = styled.input`
 `
 
 const Join = styled.span`
+  font-family: 'WavvePADO-Regular';
   font-size: 20px;
   font-weight: 400;
   color: #737373;
