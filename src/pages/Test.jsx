@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import ConfirmButton from '../components/ConfirmButton';
 
 const Container = styled.div`
   display: flex;
@@ -9,12 +9,16 @@ const Container = styled.div`
   width: 100vw;
   max-width: 390px;
   min-height: 100vh;
+  font-family: 'WavvePADO-Regular';
 `
 
 const Words = styled.div`
+  font-family: 'WavvePADO-Regular';
   font-size: 22px;
   font-weight: 400;
-  margin: 42px auto;
+  margin: 41px auto;
+  margin-left: 0px;
+  padding-left: 19px;
 `
 
 const Form = styled.form`
@@ -29,7 +33,6 @@ const FormItem = styled.div`
 `
 
 const ItemLabel = styled.label`
-  font-family: 'WavvePADO-Regular';
   font-size: 25px;
   color: #737373;
 `
@@ -44,6 +47,7 @@ const RadioContainer = styled.div`
 `
 
 const RadioLabel = styled.label`
+  font-family: 'WavvePADO-Regular';
   font-size: 25px;
   font-weight: 400;
   color: #000000;
@@ -78,21 +82,6 @@ const NumberInput = styled.input`
   font-size: 30px;
   font-weight: 400;
   font-family: 'WavvePADO-Regular';
-  text-align: center;
-`
-
-const SubmitButton = styled.button`
-  width: 350px;
-  height: 56px;
-  border: none;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px #B7B7B7;
-  box-sizing: border-box;
-  background-color: #6A0DAD;
-  font-size: 30px;
-  font-weight: 400;
-  font-family: 'WavvePADO-Regular';
-  color: #ffffff;
   text-align: center;
 `
 
@@ -182,6 +171,7 @@ const Test = () => {
               type="number"
               value={age}
               onChange={handleAgeChange}
+              placeholder="나이"
               required />
           </div>
         </FormItem>
@@ -193,6 +183,7 @@ const Test = () => {
               type="number"
               value={height}
               onChange={handleHeightChange}
+              placeholder="키"
               required />
           </div>
         </FormItem>
@@ -204,6 +195,7 @@ const Test = () => {
               type="number"
               value={weight}
               onChange={handleWeightChange}
+              placeholder="몸무게"
               required />
           </div>
         </FormItem>
@@ -241,6 +233,7 @@ const Test = () => {
                   type="number"
                   value={glucose_empty}
                   onChange={(e) => setGlucose_empty(e.target.value)}
+                  placeholder="공복 혈당"
                   required />
               </div>
             </FormItem>
@@ -251,13 +244,14 @@ const Test = () => {
                 <NumberInput
                   type="number"
                   value={glucose_2hour}
-                  onChange={(e) => setGlucose_2hour(e.target.value)} />
+                  onChange={(e) => setGlucose_2hour(e.target.value)}
+                  placeholder="식후 2시간 이후 혈당" />
               </div>
             </FormItem>
           </>
         )}
 
-        <SubmitButton type='submit' onClick={handleSubmit}>분석 결과 확인하기</SubmitButton>
+        <ConfirmButton type='submit' onClick={handleSubmit} text="분석 결과 확인하기"/>
       </Form>
     </Container>
   )

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiWinkSmile } from 'react-icons/bi';
+import SubmitButton from "../components/SubmitButton";
 
 const Container = styled.div`
   display: flex;
@@ -30,21 +31,6 @@ const Words = styled.div`
   margin-bottom: 57px;
 `
 
-const Login = styled.button`
-  width: 280px;
-  height: 56px;
-  border: none;
-  border-radius: 10px;
-  box-sizing: border-box;
-  background-color: #6A0DAD;
-  margin: 26.5px 35px 18px 35px;
-  font-size: 30px;
-  font-weight: 400;
-  font-family: 'WavvePADO-Regular';
-  color: #ffffff;
-  text-align: center;
-`
-
 const JoinSuccess = () => {
   const navigate = useNavigate();
 
@@ -53,7 +39,7 @@ const JoinSuccess = () => {
       <LogoContainer src='/images/mealdangLogo.png' alt="mealdang" />
       <IconWrapper><BiWinkSmile/></IconWrapper>
       <Words>회원가입 완료!</Words>
-      <Login onClick={() => navigate('/login')}>로그인하러 가기</Login>
+      <SubmitButton onClick={() => navigate('/login')}>로그인하러 가기</SubmitButton>
     </Container >
   )
 }
