@@ -15,6 +15,7 @@
 6. "feat/이슈번호" 브랜치 -> dev 브랜치로 이동 (git switch dev) 
 7. dev브랜치에서 master로 푸쉬 (git add . 후에 git push origin dev)
 8. master<-dev로 PR 작성
+**(6~8은 팀장만 추가로 진행합니다)**
 
 ## PR Convention
 
