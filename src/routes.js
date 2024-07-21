@@ -1,11 +1,15 @@
-import Main from "./pages/Main";
-import Login from "./pages/Login";
+import Main from "./pages/Main/Main";
+import Login from "./pages/Landing/Login";
 import Sitemap from "./pages/Sitemap";
-import Test from "./pages/Test";
-import FoodExchangeList from "./pages/FoodExchangeList";
-import Landing from "./pages/Landing";
-import Join from "./pages/Join";
-import JoinSuccess from "./pages/JoinSuccess";
+import Test from "./pages/Landing/Test";
+import FoodExchangeList from "./pages/Landing/FoodExchangeList";
+import Landing from "./pages/Landing/Landing";
+import Join from "./pages/Landing/Join";
+import JoinSuccess from "./pages/Landing/JoinSuccess";
+import Map from "./pages/Map/Map";
+import BloodSugar from "./pages/BloodSugar";
+import DiethonMain from "./pages/Diethon/DiethonMain";
+import MyPage from "./pages/MyPage/MyPage";
 
 
 
@@ -13,43 +17,78 @@ const routes = [
     {
         path: '/',
         element: <Sitemap />,
+        previous: false,
     },
     {
         path: '/main',
         element: <Main />,
-        name: '01. 메인 페이지'
+        name: '01. 메인 페이지',
+        previous: false,
     },
     {
         path: '/login',
         element: <Login />,
-        name: '02. 로그인 페이지'
+        logo: false,
+        name: '02. 로그인 페이지',
+        previous: false,
     },
     {
         path: '/test',
         element: <Test />,
-        name: '03. 진단테스트 페이지'
+        name: '03. 진단테스트 페이지',
+        previous: '/login'
     },
     {
         path: '/foodexchangelist',
         element: <FoodExchangeList />,
-        name: '04. 식품교환표 페이지'
+        name: '04. 식품교환표 페이지',
+        previous: '/test'
+
     },
     {
         path: '/landing',
         element: <Landing />,
-        name: '05. 랜딩 페이지'
+        logo: false,
+        name: '05. 랜딩 페이지',
+        previous: false,
     },
     {
         path: '/join',
         element: <Join />,
-        name: '06. 회원가입 페이지'
+        name: '06. 회원가입 페이지',
+        previous: '/login'
     },
     {
         path: '/joinsuccess',
         element: <JoinSuccess />,
-        name: '07. 회원가입 완료 페이지'
+        logo: false,
+        name: '07. 회원가입 완료 페이지',
+        previous: false,
     },
-
+    {
+        path: '/map',
+        element: <Map />,
+        name: '08. 밀당 맵 페이지',
+        previous: false,
+    },
+    {
+        path: '/bloodsugar',
+        element: <BloodSugar />,
+        name: '09. 혈당 관리 페이지',
+        previous: false,
+    },
+    {
+        path: '/diethon',
+        element: <DiethonMain />,
+        name: '10. 식단톤 메인 페이지',
+        previous: false,
+    },
+    {
+        path: '/mypage',
+        element: <MyPage />,
+        name: '11. 마이 페이지',
+        previous: false,
+    },
 ]
 
 export default routes;

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiWinkSmile } from 'react-icons/bi';
-import SubmitButton from "../components/SubmitButton";
+import SubmitButton from "../../components/SubmitButton";
 
 const Container = styled.div`
   display: flex;
