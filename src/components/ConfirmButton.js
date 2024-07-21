@@ -7,7 +7,7 @@ const StyledButton = styled.button`
   border-radius: 10px;
   box-shadow: 0px 4px 4px #B7B7B7;
   box-sizing: border-box;
-  background-color: #6A0DAD;
+  background-color: ${props => props.backgroundColor};
   font-size: 30px;
   font-weight: 400;
   font-family: 'WavvePADO-Regular';
@@ -16,9 +16,9 @@ const StyledButton = styled.button`
   margin-bottom: 20px;
 `
 
-const ConfirmButton = ({ text, onClick }) => {
+const ConfirmButton = ({ text, backgroundColor, onClick }) => {
   return (
-      <StyledButton onClick={onClick}>{text}</StyledButton>
+      <StyledButton onClick={onClick} backgroundColor={backgroundColor}>{text}</StyledButton>
   );
 };
 
