@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ConfirmButton from '../components/ConfirmButton';
+import ConfirmButton from '../../components/ConfirmButton';
 
 const Container = styled.div`
   display: flex;
