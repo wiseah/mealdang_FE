@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import { DashBoard } from '../components/Dashboard'
+import { DashBoard } from '../../components/Dashboard'
 import { BiSolidPlusCircle } from "react-icons/bi";
 
 const Container = styled.div`
