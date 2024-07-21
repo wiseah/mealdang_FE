@@ -22,6 +22,7 @@ const routes = [
     {
         path: '/login',
         element: <Login />,
+        logo: false,
         name: '02. 로그인 페이지'
     },
     {
@@ -37,6 +38,7 @@ const routes = [
     {
         path: '/landing',
         element: <Landing />,
+        logo: false,
         name: '05. 랜딩 페이지'
     },
     {
@@ -47,6 +49,7 @@ const routes = [
     {
         path: '/joinsuccess',
         element: <JoinSuccess />,
+        logo: false,
         name: '07. 회원가입 완료 페이지'
     },
 
