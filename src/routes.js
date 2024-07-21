@@ -45,7 +45,7 @@ const routes = [
         name: '06. 회원가입 페이지'
     },
     {
-        path: '/joinSuccess',
+        path: '/joinsuccess',
         element: <JoinSuccess />,
         name: '07. 회원가입 완료 페이지'
     },

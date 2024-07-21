@@ -79,10 +79,16 @@ const NumberInput = styled.input`
   box-sizing: border-box;
   box-shadow: 0px 4px 4px #B7B7B7;
   margin: 8px auto;
-  font-size: 30px;
+  font-size: 20px;
   font-weight: 400;
   font-family: 'WavvePADO-Regular';
   text-align: center;
+
+  &::placeholder {
+      font-size: 20px;
+      color: #B8B8B8;
+    }
+
 `
 
 
@@ -251,7 +257,7 @@ const Test = () => {
           </>
         )}
 
-        <ConfirmButton type='submit' onClick={handleSubmit} text="분석 결과 확인하기"/>
+        <ConfirmButton type='submit' onClick={handleSubmit} text="분석 결과 확인하기" backgroundColor="#6A0DAD"/>
       </Form>
     </Container>
   )
