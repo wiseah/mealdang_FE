@@ -37,7 +37,7 @@ const Mobile=()=>{
             <Container>
                 <Content>
                     <Header>
-                        헤더
+                    <div src='/images/mealdangHeaderLogo.png' alt="mealdang" />
                     </Header>
                     <Outlet /> 
                 </Content>
