@@ -58,7 +58,7 @@ const LinkItem = styled.div`
 `
 
 
-const My = ( onClick, text, color, backgroundColor) => {
+const MyPage = ( onClick, text, color, backgroundColor) => {
 
   const navigate = useNavigate();
 
@@ -99,4 +99,4 @@ const My = ( onClick, text, color, backgroundColor) => {
 
 }
 
-export default My;
+export default MyPage;
