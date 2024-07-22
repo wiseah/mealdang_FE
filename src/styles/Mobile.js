@@ -19,7 +19,7 @@ const Content = styled.div`
     width: 100%;
     max-width: 390px;
     min-height: 100vh;
-    padding-bottom: 120px;
+    padding-bottom: ${props => props.isMap ? '0px' : '110px'};
     overflow: auto;
     box-shadow: 0px 0px 32px #0000002f;
     background-color: #ffffff;
@@ -193,10 +193,12 @@ const Mobile = () => {
     // 현재 경로가 각 그룹에 속하는지 확인
     const isActive = (path, group) => group.includes(location.pathname) || location.pathname === path;
 
+    const isMapPage = location.pathname === '/map'; // 'map' 경로일 경우 true
+
     return (
         <>
             <Container>
-                <Content>
+                <Content isMap={isMapPage}>
                     <Header>
                         <BackButton
                             onClick={onBackButtonClick}
