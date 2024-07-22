@@ -19,10 +19,14 @@ const Content = styled.div`
     width: 100%;
     max-width: 390px;
     min-height: 100vh;
-    padding-bottom: ${props => props.isMap ? '0px' : '110px'};
+    padding-bottom: 110px;
     overflow: auto;
     box-shadow: 0px 0px 32px #0000002f;
     background-color: #ffffff;
+
+    &.map-page {
+        padding-bottom: 0px;
+    }
 
     scrollbar-width: none;
     .scroll::-webkit-scrollbar {
@@ -102,7 +106,7 @@ const ButtonContainer = styled(Link)`
     align-items: center;
     text-decoration: none;
     gap: 1.4vh;
-    color: ${props => props.active ? '#6A0DAD' : '#D6D6D6'}; // active 상태에 따른 색상 변경
+    color: ${(props) => (props.active === 'true' ? '#6A0DAD' : '#D6D6D6')}; // active 상태에 따른 색상 변경
     .icon {
         width: 32px;
         height: 32px;
@@ -130,7 +134,7 @@ const ButtonContainer2 = styled(Link)`
     align-items: center;
     text-decoration: none;
     gap: 1.2vh;
-    color: ${props => props.active ? '#6A0DAD' : '#D6D6D6'}; // active 상태에 따른 색상 변경
+    color: ${(props) => (props.active === 'true' ? '#6A0DAD' : '#D6D6D6')}; // active 상태에 따른 색상 변경
     .icon2 {
         width: 38px;
         height: 38px;
@@ -198,7 +202,7 @@ const Mobile = () => {
     return (
         <>
             <Container>
-                <Content isMap={isMapPage}>
+                <Content className={classNames({ 'map-page': isMapPage })}>
                     <Header>
                         <BackButton
                             onClick={onBackButtonClick}
@@ -221,23 +225,23 @@ const Mobile = () => {
                 </Content>
                 <Footer className={classNames({ hidden: !showFooter })}>
                     {/* 경로 그룹과 함께 isActive 함수를 사용해 버튼이 활성화 상태인지 확인 */}
-                    <ButtonContainer to="/map" active={isActive('/map', [])}>
+                    <ButtonContainer to="/map" active={isActive('/map', []).toString()}>
                         <FaMapMarkerAlt className='icon' />
                         <ButtonText>밀당 맵</ButtonText>
                     </ButtonContainer>
-                    <ButtonContainer2 style={{ paddingBottom: "4px" }} to="/bloodsugar" active={isActive('/bloodsugar', [])}>
+                    <ButtonContainer2 style={{ paddingBottom: "4px" }} to="/bloodsugar" active={isActive('/bloodsugar', []).toString()}>
                         <MdWaterDrop className='icon2' />
                         <ButtonText2>혈당 관리</ButtonText2>
                     </ButtonContainer2>
-                    <ButtonContainer2 to="/main" style={{ paddingBottom: "9px" }} active={isActive('/main', MAIN_GROUP)}>
+                    <ButtonContainer2 to="/main" style={{ paddingBottom: "9px" }} active={isActive('/main', MAIN_GROUP).toString()}>
                         <MdFoodBank className='icon3' />
                         <ButtonText2>홈</ButtonText2>
                     </ButtonContainer2>
-                    <ButtonContainer to="/diethon" active={isActive('/diethon', DIETHON_GROUP)}>
+                    <ButtonContainer to="/diethon" active={isActive('/diethon', DIETHON_GROUP).toString()}>
                         <FaMedal className='icon4' />
                         <ButtonText>식단톤</ButtonText>
                     </ButtonContainer>
-                    <ButtonContainer2 style={{ paddingBottom: "7px" }} to="/mypage" active={isActive('/mypage', MYPAGE_GROUP)}>
+                    <ButtonContainer2 style={{ paddingBottom: "7px" }} to="/mypage" active={isActive('/mypage', MYPAGE_GROUP).toString()}>
                         <BsFillPersonFill className='icon5' />
                         <ButtonText2>마이페이지</ButtonText2>
                     </ButtonContainer2>
