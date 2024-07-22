@@ -31,19 +31,21 @@ const routes = [
         logo: false,
         name: '02. 로그인 페이지',
         previous: false,
+        footer: false,
     },
     {
         path: '/test',
         element: <Test />,
         name: '03. 진단테스트 페이지',
-        previous: '/login'
+        previous: '/login',
+        footer: false,
     },
     {
         path: '/foodexchangelist',
         element: <FoodExchangeList />,
         name: '04. 식품교환표 페이지',
-        previous: '/test'
-
+        previous: '/test',
+        footer: false,
     },
     {
         path: '/landing',
@@ -51,12 +53,14 @@ const routes = [
         logo: false,
         name: '05. 랜딩 페이지',
         previous: false,
+        footer: false,
     },
     {
         path: '/join',
         element: <Join />,
         name: '06. 회원가입 페이지',
-        previous: '/login'
+        previous: '/login',
+        footer: false,
     },
     {
         path: '/joinsuccess',
@@ -64,6 +68,7 @@ const routes = [
         logo: false,
         name: '07. 회원가입 완료 페이지',
         previous: false,
+        footer: false,
     },
     {
         path: '/map',
@@ -93,8 +98,9 @@ const routes = [
         path: '/myinfo',
         element: <MyInfo />,
         name: '12. 내 정보 페이지',
-        previous: 'mypage',
+        previous: '/mypage',
     },
+    {
         path: '/myfoodexchangelist',
         element: <MyFoodExchangeList />,
         name: '13. 내 식품교환표 페이지',

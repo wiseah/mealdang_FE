@@ -72,7 +72,7 @@ const BackButton = styled.button`
     }
 
     &.hidden {
-        visibility: hidden;
+        visibility: hidden; //hidden 클래스가 적용되면 visibility를 hidden(공간차지O)으로 설정
     }
 `;
 
@@ -89,6 +89,10 @@ const Footer = styled.div`
     justify-content: space-around;
     align-items: center;
     background-color: #FFFFFF;
+
+    &.hidden {
+        display: none; /* 추가된 부분: hidden 클래스가 적용되면 display 속성을 none(공간차지x)으로 설정 */
+    }
 `;
 
 const ButtonContainer = styled(Link)`
@@ -147,20 +151,20 @@ const ButtonText2 = styled.div`
 `;
 
 const LOGO_DEFAULT = true;
-const FOOTER_DEFAULT = false;
+const FOOTER_DEFAULT = true;
 const BACKWARD_DEFAULT = '/';
 
 // 특정 경로들과 연결된 페이지들도 버튼이 활성화되도록 경로 그룹을 정의
-const MAIN_GROUP = ['/main', '/login']; //로그인은 테스트용으로 둔거임. 나중에 수정 꼭!!
+const MAIN_GROUP = ['/main']; //각 그룹에 해당되는 주소 넣어야 그 페이지일때도 색 활성화
 const DIETHON_GROUP = ['/diethon'];
-const MYPAGE_GROUP = ['/mypage']; 
+const MYPAGE_GROUP = ['/mypage', '/myinfo', '/myfoodexchangelist']; 
 
 const Mobile = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const [showLogo, setLogo] = useState(LOGO_DEFAULT);
-    const [showFooter, setFooter] = useState(FOOTER_DEFAULT);
+    const [showLogo, setLogo] = useState(LOGO_DEFAULT); //useEffect에서 route.logo 값을 확인하여 showLogo 상태를 업데이트
+    const [showFooter, setFooter] = useState(FOOTER_DEFAULT); //useEffect에서 route.footer 값을 확인하여 showFooter 상태를 업데이트
     const [backwardUrl, setBackwardUrl] = useState(BACKWARD_DEFAULT);
 
     useEffect(() => {
@@ -213,7 +217,7 @@ const Mobile = () => {
                     </Header>
                     <Outlet />
                 </Content>
-                <Footer>
+                <Footer className={classNames({ hidden: !showFooter })}>
                     {/* 경로 그룹과 함께 isActive 함수를 사용해 버튼이 활성화 상태인지 확인 */}
                     <ButtonContainer to="/map" active={isActive('/map', [])}>
                         <FaMapMarkerAlt className='icon' />
