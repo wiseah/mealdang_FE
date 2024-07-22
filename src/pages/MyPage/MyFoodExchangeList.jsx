@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiLink } from 'react-icons/bi';
-import FoodExchangeListModal from './FoodExchangeListModal';
+import FoodExchangeListModal from '../Landing/FoodExchangeListModal';
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -32,6 +32,7 @@ const Words2 = styled.div`
   font-weight: 400;
   margin: 21px auto;
 `
+
 
 const ExchangeList = styled.div`
   background-color: #E6E6FA;
@@ -64,10 +65,9 @@ const Start = styled.button`
   font-family: 'WavvePADO-Regular';
   color: #ffffff;
   text-align: center;
-  cursor: pointer;
 `
 
-const FoodExchangeList = () => {
+const MyFoodExchangeList = () => {
   const navigate = useNavigate();
 
   const [nickname, setNickname] = useState('')
@@ -87,8 +87,7 @@ const FoodExchangeList = () => {
       <Words>
         <Words1>{nickname}님의 하루 권장 섭취량은 <br /> <PointWords>{daily_calorie}Kcal</PointWords>입니다</Words1>
         <Words2>
-          식품교환표<BiLink size={19} color="black" onClick={() => setModalOpen(true)} />에 따른 식품군 당
-          <br /> 섭취량은..
+          식품교환표<BiLink size={19} color="black" onClick={() => setModalOpen(true)} />에 따른 식품군 당 <br /> 섭취량은..
         </Words2>
       </Words>
 
@@ -102,7 +101,11 @@ const FoodExchangeList = () => {
         <ListItems>과일군 {'\u00A0'}{'\u00A0'} {fruit}</ListItems>
       </ExchangeList>
 
-      <Start onClick={() => navigate('/main')}>밀당 시작하기</Start>
+      <Words>
+        <Words2>
+          몸무게가 변화할 경우, 권장 섭취량도 <br/> 변경됩니다.
+        </Words2>
+      </Words>
 
       {modalOpen && <FoodExchangeListModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />}
 
@@ -110,4 +113,4 @@ const FoodExchangeList = () => {
   )
 }
 
-export default FoodExchangeList;
+export default MyFoodExchangeList;

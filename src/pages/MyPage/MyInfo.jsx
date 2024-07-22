@@ -3,22 +3,19 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfirmButton from '../../components/ConfirmButton';
 
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100vw;
   max-width: 390px;
   min-height: 100vh;
-  font-family: 'WavvePADO-Regular';
 `
 
 const Words = styled.div`
-  font-family: 'WavvePADO-Regular';
   font-size: 22px;
   font-weight: 400;
-  margin: 41px auto;
-  margin-left: 0px;
-  padding-left: 19px;
+  margin: 42px auto;
 `
 
 const Form = styled.form`
@@ -33,8 +30,9 @@ const FormItem = styled.div`
 `
 
 const ItemLabel = styled.label`
+  font-family: 'WavvePADO-Regular';
   font-size: 25px;
-  color: #737373;
+  color: #FF6A4A;
 `
 
 const RequireSpan = styled.span`
@@ -50,8 +48,11 @@ const RadioLabel = styled.label`
   font-family: 'WavvePADO-Regular';
   font-size: 25px;
   font-weight: 400;
-  color: #000000;
+  color: #FF6A4A;
   padding: 0 50px 0 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
 `
 
 const RadioInput = styled.input`
@@ -59,50 +60,71 @@ const RadioInput = styled.input`
   height: 22px;
   appearance: none;
   -webkit-appearance: none;
-  border: 2px solid #000000;
+  -moz-appearance: none;
+  border: 2px solid #FF6A4A;
   outline: none;
   border-radius: 50%;
   margin: 10px 10px 0 0;
+  cursor: pointer;
 
   &:checked {
-    background-color: #000000;
+    background-color: #FF6A4A;
     border: 3.9px solid #ffffff;
-    box-shadow: 0 0 0 1.6px #000000;
+    box-shadow: 0 0 0 1.3px #FF6A4A;
   }
 `
 
-const NumberInput = styled.input`
+const Text = styled.div`
+  display: flex;
+  margin-top: 7px;
+`
+
+
+const InputField = styled.input`
   width: 350px;
   height: 56px;
-  border: 1px solid #737373;
+  border: 1px solid #FF6A4A;
   border-radius: 10px;
   box-sizing: border-box;
   box-shadow: 0px 4px 4px #B7B7B7;
   margin: 8px auto;
   font-size: 20px;
   font-weight: 400;
+  color: #FF6A4A;
   font-family: 'WavvePADO-Regular';
   text-align: center;
+`
 
-  &::placeholder {
-      font-size: 20px;
-      color: #B8B8B8;
-    }
-
+const NumberInput = styled.input`
+  width: 350px;
+  height: 56px;
+  border: 1px solid #FF6A4A;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0px 4px 4px #B7B7B7;
+  margin: 8px auto;
+  font-size: 20px;
+  font-weight: 400;
+  color: #FF6A4A;
+  font-family: 'WavvePADO-Regular';
+  text-align: center;
 `
 
 
-const Test = () => {
+const MyInfo = () => {
   const navigate = useNavigate();
 
+  const [nickname, setNickname] = useState('');
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [diabetes, setDiabetes] = useState('no');
-  const [glucose_empty, setGlucose_empty] = useState('');
-  const [glucose_2hour, setGlucose_2hour] = useState('');
 
+
+  const handleNicknameChange = (e) => {
+    setNickname(e.target.value);
+  }
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -122,30 +144,37 @@ const Test = () => {
 
   const handleDiabetesChange = (e) => {
     setDiabetes(e.target.value);
-    if (e.target.value === 'no') {
-      setGlucose_empty('');
-      setGlucose_2hour('');
-    }
   };
+
+    // 데이터 불러오기
 
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!gender || !age || !height || !weight || (diabetes === 'yes' && !glucose_empty)) {
+    if (!nickname || !gender || !age || !height || !weight || !diabetes) {
       alert('필수 항목을 모두 입력하세요.');
     } else {
-      console.log('data save success');
-      navigate('/foodExchangeList');
+      
+      // 로컬 저장소에 데이터 저장
+
+      console.log('Updated successfully.');
+      navigate('/my');
     }
   }
 
   return (
     <Container>
-      <Words>
-        맞춤형 식단을 제공해드릴 수 있도록 <br /> 정확한 정보를 입력해주세요
-      </Words>
       <Form>
+        <FormItem>
+          <ItemLabel htmlFor='nickname'>닉네임<RequireSpan>*</RequireSpan></ItemLabel>
+          <InputField
+            type='text'
+            id='nickname'
+            value={nickname}
+            onChange={handleNicknameChange}
+            required />
+        </FormItem>
         <FormItem>
           <ItemLabel>성별<RequireSpan>*</RequireSpan></ItemLabel>
           <RadioContainer>
@@ -156,7 +185,7 @@ const Test = () => {
                 value="male"
                 checked={gender === 'male'}
                 onChange={handleGenderChange}
-              /> 남성
+              /><Text>남성</Text>
             </RadioLabel>
             <RadioLabel>
               <RadioInput
@@ -165,7 +194,7 @@ const Test = () => {
                 value="female"
                 checked={gender === 'female'}
                 onChange={handleGenderChange}
-              /> 여성
+              /> <Text>여성</Text>
             </RadioLabel>
           </RadioContainer>
         </FormItem>
@@ -177,7 +206,6 @@ const Test = () => {
               type="number"
               value={age}
               onChange={handleAgeChange}
-              placeholder="나이"
               required />
           </div>
         </FormItem>
@@ -189,7 +217,6 @@ const Test = () => {
               type="number"
               value={height}
               onChange={handleHeightChange}
-              placeholder="키"
               required />
           </div>
         </FormItem>
@@ -201,7 +228,6 @@ const Test = () => {
               type="number"
               value={weight}
               onChange={handleWeightChange}
-              placeholder="몸무게"
               required />
           </div>
         </FormItem>
@@ -216,7 +242,7 @@ const Test = () => {
                 value="yes"
                 checked={diabetes === 'yes'}
                 onChange={handleDiabetesChange}
-              /> 예
+              /> <Text>예</Text>
             </RadioLabel>
             <RadioLabel>
               <RadioInput
@@ -225,42 +251,15 @@ const Test = () => {
                 value="no"
                 checked={diabetes === 'no'}
                 onChange={handleDiabetesChange}
-              /> 아니요
+              /> <Text>아니요</Text>
             </RadioLabel>
           </RadioContainer>
         </FormItem>
 
-        {diabetes === 'yes' && (
-          <>
-            <FormItem>
-              <ItemLabel>공복 혈당<RequireSpan>*</RequireSpan></ItemLabel>
-              <div>
-                <NumberInput
-                  type="number"
-                  value={glucose_empty}
-                  onChange={(e) => setGlucose_empty(e.target.value)}
-                  placeholder="공복 혈당"
-                  required />
-              </div>
-            </FormItem>
-
-            <FormItem>
-              <ItemLabel>식후 2시간 이후 혈당</ItemLabel>
-              <div>
-                <NumberInput
-                  type="number"
-                  value={glucose_2hour}
-                  onChange={(e) => setGlucose_2hour(e.target.value)}
-                  placeholder="식후 2시간 이후 혈당" />
-              </div>
-            </FormItem>
-          </>
-        )}
-
-        <ConfirmButton type='submit' onClick={handleSubmit} text="분석 결과 확인하기" textAlign="center" paddingLeft="0" color="#ffffff" backgroundColor="#6A0DAD"/>
+        <ConfirmButton type='submit' onClick={handleSubmit} text="수정하기" color="#ffffff" backgroundColor="#FF6A4A"/>
       </Form>
     </Container>
   )
 }
 
-export default Test;
+export default MyInfo;
