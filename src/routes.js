@@ -10,9 +10,8 @@ import Map from "./pages/Map/Map";
 import BloodSugar from "./pages/BloodSugar";
 import DiethonMain from "./pages/Diethon/DiethonMain";
 import MyPage from "./pages/MyPage/MyPage";
+import MyInfo from "./pages/MyPage/MyInfo";
 import MyFoodExchangeList from './pages/MyPage/MyFoodExchangeList';
-
-
 
 const routes = [
     {
@@ -91,9 +90,14 @@ const routes = [
         previous: false,
     },
     {
+        path: '/myinfo',
+        element: <MyInfo />,
+        name: '12. 내 정보 페이지',
+        previous: 'mypage',
+    },
         path: '/myfoodexchangelist',
         element: <MyFoodExchangeList />,
-        name: '12. 내 식품교환표 페이지',
+        name: '13. 내 식품교환표 페이지',
         previous: '/mypage',
     },
 ]
