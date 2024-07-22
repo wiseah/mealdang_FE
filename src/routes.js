@@ -10,7 +10,7 @@ import Map from "./pages/Map/Map";
 import BloodSugar from "./pages/BloodSugar";
 import DiethonMain from "./pages/Diethon/DiethonMain";
 import MyPage from "./pages/MyPage/MyPage";
-
+import MyInfo from "./pages/MyPage/MyInfo";
 
 
 const routes = [
@@ -88,6 +88,12 @@ const routes = [
         element: <MyPage />,
         name: '11. 마이 페이지',
         previous: false,
+    },
+    {
+        path: '/myinfo',
+        element: <MyInfo />,
+        name: '12. 내 정보 페이지',
+        previous: 'mypage',
     },
 ]
 
