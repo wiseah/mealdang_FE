@@ -106,8 +106,7 @@ const routes = [
         element: <MyFoodExchangeList />,
         name: '13. 내 식품교환표 페이지',
     },
-        {
-        feat/29
+    {
         path: '/aftermain',
         element: <AfterMain/>,
         name: '14. 식단 추천 이후의 메인페이지',
