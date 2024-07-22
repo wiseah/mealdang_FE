@@ -257,7 +257,7 @@ const Test = () => {
           </>
         )}
 
-        <ConfirmButton type='submit' onClick={handleSubmit} text="분석 결과 확인하기" backgroundColor="#6A0DAD"/>
+        <ConfirmButton type='submit' onClick={handleSubmit} text="분석 결과 확인하기" textAlign="center" paddingLeft="0" color="#ffffff" backgroundColor="#6A0DAD"/>
       </Form>
     </Container>
   )
