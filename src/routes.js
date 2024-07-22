@@ -12,6 +12,7 @@ import DiethonMain from "./pages/Diethon/DiethonMain";
 import MyPage from "./pages/MyPage/MyPage";
 import MyInfo from "./pages/MyPage/MyInfo";
 import MyFoodExchangeList from './pages/MyPage/MyFoodExchangeList';
+import AfterMain from "./pages/Main/AfterMain";
 
 const routes = [
     {
@@ -104,7 +105,13 @@ const routes = [
         path: '/myfoodexchangelist',
         element: <MyFoodExchangeList />,
         name: '13. 내 식품교환표 페이지',
-        previous: '/mypage',
+    },
+        {
+        feat/29
+        path: '/aftermain',
+        element: <AfterMain/>,
+        name: '14. 식단 추천 이후의 메인페이지',
+        previous: false,
     },
 ]
 
