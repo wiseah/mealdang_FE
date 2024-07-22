@@ -10,6 +10,7 @@ import Map from "./pages/Map/Map";
 import BloodSugar from "./pages/BloodSugar";
 import DiethonMain from "./pages/Diethon/DiethonMain";
 import MyPage from "./pages/MyPage/MyPage";
+import AfterMain from "./pages/Main/AfterMain";
 
 
 
@@ -87,6 +88,12 @@ const routes = [
         path: '/mypage',
         element: <MyPage />,
         name: '11. 마이 페이지',
+        previous: false,
+    },
+    {
+        path: '/aftermain',
+        element: <AfterMain/>,
+        name: '12. 식단 추천 이후의 메인페이지',
         previous: false,
     },
 ]
