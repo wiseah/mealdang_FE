@@ -18,22 +18,58 @@ const CategoryWrapper = styled.div`
   top: 10px;
   left: 10px;
   z-index: 2;
-  background: white;
+  background: none;
   padding: 5px;
   border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 136px;
+  /* border: 1px solid; */
 `;
-
-// 카테고리 버튼 스타일
-const CategoryButton = styled.button`
-  margin-right: 5px;
-  padding: 5px 10px;
-  background: ${props => props.active ? '#6A0DAD' : '#f8f9fa'};
-  color: ${props => props.active ? 'white' : 'black'};
-  border: none;
+// const CategoryDiv = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+// `
+// // 카테고리 버튼 스타일
+// const CategoryButton = styled.button`
+//   /* margin-right: 5px; */
+//   padding: 5px 10px;
+//   background: ${props => props.active ? '#6A0DAD' : '#f8f9fa'};
+//   color: ${props => props.active ? 'white' : 'black'};
+//   border: none;
+//   border-radius: 3px;
+//   cursor: pointer;
+// `;
+const CategoryDiv = styled.button`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: ${props => props.active ? '#D9D9D9' : '#fff'};
+  border: 1px solid;
   border-radius: 3px;
   cursor: pointer;
-`;
+  &:hover{
+    background-color: #ffe6e6;
+  }
+  gap: 0.4vh;
+  padding: 6px 8px;
+`
+// 카테고리 버튼 스타일
+const CategoryButton = styled.div`
+  /* margin-right: 5px; */
+  /* padding: 5px 10px; */
+  color: ${props => props.active ? 'white' : 'black'};
 
+`;
+//버튼의 아이콘
+const CategoryImg = styled.img`
+    width: 46px;
+    height: 46px;
+`;
 // 마커 기본 스타일
 const MarkerWrapper = styled.div`
   width: 46px;
@@ -56,33 +92,76 @@ const CafeMarker = styled(MarkerWrapper)`
 
 // 장소 정보 표시를 위한 스타일 컴포넌트
 const PlaceInfoWrapper = styled.div`
-  padding: 10px;
+  position: relative;
+  margin-bottom: 5px;
   background: white;
-  border-radius: 5px;
+  border-radius: 6px;
   border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 6px;
+  box-shadow: 0px 1px 2px #888;
+  width: 260px;
+
+  &:after {
+  content: '';
+  position: absolute;
+  border-style: solid;
+  border-width: 12px 12px 0;
+  border-color: white transparent;
+  border-bottom-color: #ccc; /* 삼각형 모양의 테두리 색상 추가 */
+  display: block;
+  width: 0;
+  z-index: 1;
+  bottom: -12px;
+  left: 50%;
+  margin-left: -12px;
+}
 `;
 
 const PlaceTitle = styled.a`
-  font-size: 16px;
-  font-weight: bold;
-  color: #0068c3;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   text-decoration: none;
+  color: white;
+  background: #6A0DAD;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px 6px 0 0;
+  margin: -1px -1px 0 -1px;
+  font-weight: bold;
+  &:after {
+    content: '>';
+    font-size: 24px;
+  }
+`;
+
+const PlaceContent = styled.div`
+  padding: 10px 15px;
+`;
+
+const PlaceAddress1 = styled.span`
   display: block;
-  margin-bottom: 5px;
+  margin-top: 6px;
+  font-size: 16px;
+  color: #000;
+  /* font-weight: bold; */
 `;
 
 const PlaceAddress = styled.span`
+  display: block;
+  margin-top: 6px;
   font-size: 13px;
   color: #8a8a8a;
-  display: block;
-  margin-bottom: 3px;
+  /* font-weight: bold; */
 `;
 
 const PlacePhone = styled.span`
+  display: block;
+  margin-top: 14px;
   font-size: 13px;
   color: #009900;
-  display: block;
 `;
 
 function Map() {
@@ -90,7 +169,6 @@ function Map() {
   const [placeOverlay, setPlaceOverlay] = useState(null);
   const [categories, setCategories] = useState(['FD6', 'CE7']); // 기본적으로 두 카테고리 모두 선택
   const [markers, setMarkers] = useState([]);
-  const [selectedMarker, setSelectedMarker] = useState(null); // 선택된 마커 상태
 
   useEffect(() => {
     const mapContainer = document.getElementById('map');
@@ -103,7 +181,10 @@ function Map() {
     setMap(newMap);
 
     const ps = new kakao.maps.services.Places(newMap);
-    const customOverlay = new kakao.maps.CustomOverlay({ zIndex: 1 });
+    const customOverlay = new kakao.maps.CustomOverlay({
+      zIndex: 1,
+      yAnchor: 1.3
+    });
     setPlaceOverlay(customOverlay);
 
     // 지도 idle 이벤트 리스너 등록
@@ -147,7 +228,10 @@ function Map() {
       const MarkerComponent = place.category_group_code === 'FD6' ? RestaurantMarker : CafeMarker;
 
       const markerContent = document.createElement('div');
-      ReactDOM.render(<MarkerComponent onClick={() => displayPlaceInfo(place, position)} />, markerContent);
+      ReactDOM.render(
+        <MarkerComponent onClick={() => displayPlaceInfo(place, position)} />,
+        markerContent
+      );
 
       const marker = new kakao.maps.CustomOverlay({
         position: position,
@@ -171,27 +255,25 @@ function Map() {
           <PlaceTitle href={place.place_url} target="_blank" title={place.place_name}>
             {place.place_name}
           </PlaceTitle>
-          <PlaceAddress>
-            {place.road_address_name ? place.road_address_name : place.address_name}
-          </PlaceAddress>
-          <PlacePhone>{place.phone}</PlacePhone>
+          <PlaceContent>
+            {place.road_address_name && (
+              <>
+                <PlaceAddress1>{place.road_address_name}</PlaceAddress1>
+                <PlaceAddress>(지번 : {place.address_name})</PlaceAddress>
+              </>
+            )}
+            {!place.road_address_name && <PlaceAddress>{place.address_name}</PlaceAddress>}
+            <PlacePhone>{place.phone}</PlacePhone>
+          </PlaceContent>
         </PlaceInfoWrapper>
       );
       
       const contentElement = document.createElement('div');
       ReactDOM.render(content, contentElement);
 
-      // 이전에 선택된 마커의 정보 박스 제거
-      if (selectedMarker) {
-        selectedMarker.setMap(null);
-      }
-
       customOverlay.setContent(contentElement);
       customOverlay.setPosition(position);
       customOverlay.setMap(newMap);
-
-      // 선택된 마커 상태 업데이트
-      setSelectedMarker(customOverlay);
     }
 
     // 초기 검색 실행
@@ -216,18 +298,26 @@ function Map() {
   return (
     <Container>
       <CategoryWrapper>
-        <CategoryButton 
+        <CategoryDiv 
           onClick={() => onClickCategory('FD6')} 
           active={categories.includes('FD6')}
         >
-          음식점
-        </CategoryButton>
-        <CategoryButton 
+          <CategoryButton>
+            음식점
+          </CategoryButton>
+          <CategoryImg src={restaurantIcon}/>
+        </CategoryDiv>
+        <CategoryDiv
           onClick={() => onClickCategory('CE7')} 
           active={categories.includes('CE7')}
         >
-          카페
-        </CategoryButton>
+          <CategoryButton>
+            카페
+          </CategoryButton>
+          <CategoryImg src={cafeIcon}/>
+        </CategoryDiv>
+        
+
       </CategoryWrapper>
       <div id="map" style={{width: "100%", height:"100%"}}></div>
     </Container>

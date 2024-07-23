@@ -93,6 +93,7 @@ const Footer = styled.div`
     justify-content: space-around;
     align-items: center;
     background-color: #FFFFFF;
+    z-index: 1;
 
     &.hidden {
         display: none; /* 추가된 부분: hidden 클래스가 적용되면 display 속성을 none(공간차지x)으로 설정 */
