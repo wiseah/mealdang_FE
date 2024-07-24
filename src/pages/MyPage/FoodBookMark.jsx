@@ -33,7 +33,7 @@ export function FoodBookMark(){
     return(
         <Container>
             <Introduction>
-                여러분들이 맛있게 먹었던 <br/>식단을 두고두고 볼 수 있어요
+                여러분들이 맛있게 먹었던<br/>식단을 두고두고 볼 수 있어요
             </Introduction>
             {foodRecommendDates.map((date,index) => (
                 <>
