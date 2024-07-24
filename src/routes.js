@@ -10,9 +10,9 @@ import Map from "./pages/Map/Map";
 import BloodSugar from "./pages/BloodSugar";
 import DiethonMain from "./pages/Diethon/DiethonMain";
 import MyPage from "./pages/MyPage/MyPage";
+import MyInfo from "./pages/MyPage/MyInfo";
+import MyFoodExchangeList from './pages/MyPage/MyFoodExchangeList';
 import AfterMain from "./pages/Main/AfterMain";
-
-
 
 const routes = [
     {
@@ -32,19 +32,21 @@ const routes = [
         logo: false,
         name: '02. 로그인 페이지',
         previous: false,
+        footer: false,
     },
     {
         path: '/test',
         element: <Test />,
         name: '03. 진단테스트 페이지',
-        previous: '/login'
+        previous: '/login',
+        footer: false,
     },
     {
         path: '/foodexchangelist',
         element: <FoodExchangeList />,
         name: '04. 식품교환표 페이지',
-        previous: '/test'
-
+        previous: '/test',
+        footer: false,
     },
     {
         path: '/landing',
@@ -52,12 +54,14 @@ const routes = [
         logo: false,
         name: '05. 랜딩 페이지',
         previous: false,
+        footer: false,
     },
     {
         path: '/join',
         element: <Join />,
         name: '06. 회원가입 페이지',
-        previous: '/login'
+        previous: '/login',
+        footer: false,
     },
     {
         path: '/joinsuccess',
@@ -65,6 +69,7 @@ const routes = [
         logo: false,
         name: '07. 회원가입 완료 페이지',
         previous: false,
+        footer: false,
     },
     {
         path: '/map',
@@ -91,9 +96,21 @@ const routes = [
         previous: false,
     },
     {
+        path: '/myinfo',
+        element: <MyInfo />,
+        name: '12. 내 정보 페이지',
+        previous: '/mypage',
+    },
+    {
+        path: '/myfoodexchangelist',
+        element: <MyFoodExchangeList />,
+        name: '13. 내 식품교환표 페이지',
+    },
+        {
+        feat/29
         path: '/aftermain',
         element: <AfterMain/>,
-        name: '12. 식단 추천 이후의 메인페이지',
+        name: '14. 식단 추천 이후의 메인페이지',
         previous: false,
     },
 ]
