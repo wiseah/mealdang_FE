@@ -1,14 +1,16 @@
 import styled from "styled-components";
-import { useRef,useState } from "react";
+import { useRef,useState,useEffect } from "react";
 import { BsImages } from "react-icons/bs";
 import { TotalFoodToggle } from "../../components/TotalFoodToggle";
 import { FoodToggle } from "../../components/FoodToggle";
+import { useNavigate } from "react-router-dom";
 
 // 전체 공간
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
 `
 // 공통 사용 
 
@@ -26,6 +28,7 @@ const PictureContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 `
 const PictureIcon = styled(BsImages)`
     width: 60px;
@@ -44,9 +47,36 @@ const PictureText = styled.div`
     cursor: pointer;
 `
 
+const UploadedImage = styled.img`
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    position: absolute; /* PictureContainer 내에서 위치 조정을 위한 absolute 설정 */
+    top: 0;
+    left: 0;
+`;
+
 export function FoodDetail(){
+    const [uploadImage, setUploadImage] = useState();
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);
+    
+    useEffect(() => {
+        const image = localStorage.getItem("image");
+        if(image){
+            setUploadImage(image);
+        }
+      }, []);
+    
+      useEffect(() => {
+        if (file) {
+          const url = URL.createObjectURL(file);
+          setUploadImage(url);
+          localStorage.setItem('image', url);
+        }
+      }, [file])
+
+     
 
     const handleFileChange = event => {
         setFile(event.target.files[0]);
@@ -61,6 +91,8 @@ export function FoodDetail(){
             <TotalFoodToggle/>
             <FoodToggle/>
             <PictureContainer onClick={triggerFileInput}>
+                {uploadImage &&(<UploadedImage src = {uploadImage} alt="Uploaded"/>
+            )}
                 <PictureIcon/>
                 <PictureText>식단 인증 사진 업로드 하기 </PictureText>
             </PictureContainer>

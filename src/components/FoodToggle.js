@@ -99,9 +99,9 @@ export function FoodToggle(){
     // 음식 정보
     const FoodInfo = styled.span`
         color:  #FF6A4A;
-        font-family: Inter;
+        font-family: "Wavve PADO TTF";
         font-size: 24px;
-        font-weight: 600;
+        font-weight: 400;
         padding-top: 14px;
         padding-left: 16px;
     `
@@ -122,9 +122,9 @@ export function FoodToggle(){
     // 레시피 제목 
     const RecipeTitle = styled.span`
         color:  #FF6A4A;
-        font-family: Inter;
+        font-family: "Wavve PADO TTF";
         font-size: 24px;
-        font-weight: 600;
+        font-weight: 400;
         padding-left: 16px;
         padding-bottom: 5px;
     `
