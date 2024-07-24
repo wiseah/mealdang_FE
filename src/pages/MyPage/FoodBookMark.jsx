@@ -24,20 +24,20 @@ const Date = styled.div`
     font-size: 30px;
     font-weight: 400;
     align-self: flex-start;
-    padding-left: 30px;
-    padding-top: 20px;
-    padding-bottom: 10px;
+    padding: 20px 0px 10px 30px;
 `
 
 
 export function FoodBookMark(){
+
+    const foodRecommendDates = ['2024.7.13'];
 
     return(
         <Container>
             <Introduction>
                 여러분들이 맛있게 먹었던 <br/>식단을 두고두고 볼 수 있어요
             </Introduction>
-            <Date>2024.07.13</Date>
+            {foodRecommendDates.map((date,index) => (<Date key = {index}>{date}</Date>))}
             <FoodRecommendBack/>
         </Container>
     )
