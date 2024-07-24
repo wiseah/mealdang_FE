@@ -95,6 +95,7 @@ const routes = [
         name: '12. 내 정보 페이지',
         previous: 'mypage',
     },
+    {
         path: '/myfoodexchangelist',
         element: <MyFoodExchangeList />,
         name: '13. 내 식품교환표 페이지',
