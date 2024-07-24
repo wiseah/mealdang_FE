@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PrivacyTermsModal from './PrivacyTermsModal';
+import SubmitButton from "../../components/SubmitButton";
 
 const Container = styled.div`
   display: flex;
@@ -88,28 +89,13 @@ const AgreeInfo = styled.input`
       content: '\u2713';
       display: block;
       text-align: center;
-      line-height: 18px;
+      line-height: 20px;
       color: white;
       font-size: 25px;
     }
   }
 `;
 
-const SubmitButton = styled.button`
-  width: 280px;
-  height: 56px;
-  border: none;
-  border-radius: 10px;
-  box-sizing: border-box;
-  box-shadow: 0px 4px 4px #B7B7B7;
-  background-color: #6A0DAD;
-  margin: 26.5px 35px 18px 35px;
-  font-size: 30px;
-  font-weight: 400;
-  font-family: 'WavvePADO-Regular';
-  color: #ffffff;
-  text-align: center;
-`
 
 const Join = () => {
   const navigate = useNavigate();
@@ -123,7 +109,6 @@ const Join = () => {
 
   const [agree, setAgree] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [title, setTitle] = useState('회원가입'); 
 
 
   const handleNicknameChange = (e) => {
@@ -190,19 +175,17 @@ const Join = () => {
   const handleModalClose = () => {
     setAgree(false);
     setModalOpen(false); // 동의 안하고 모달 닫기
-    setTitle('회원가입');
   };
 
   const handleModalOpen = () => {
     setModalOpen(true);
-    setTitle('약관동의');
   };
 
 
 
   return (
     <Container>
-      <Title>{title}</Title>
+      <Title>회원가입</Title>
       <Form onSubmit={handleJoin}>
         <FormItem>
           <ItemLabel htmlFor='nickname'>닉네임<RequireSpan>*</RequireSpan></ItemLabel>
