@@ -10,6 +10,7 @@ const Container = styled.div`
   width: 390px;
   height: 628px;
   position: relative;
+  box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25);
 `;
 
 // 카테고리 버튼 래퍼 스타일
@@ -25,24 +26,8 @@ const CategoryWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 136px;
-  /* border: 1px solid; */
 `;
-// const CategoryDiv = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-// `
-// // 카테고리 버튼 스타일
-// const CategoryButton = styled.button`
-//   /* margin-right: 5px; */
-//   padding: 5px 10px;
-//   background: ${props => props.active ? '#6A0DAD' : '#f8f9fa'};
-//   color: ${props => props.active ? 'white' : 'black'};
-//   border: none;
-//   border-radius: 3px;
-//   cursor: pointer;
-// `;
+
 const CategoryDiv = styled.button`
   display: flex;
   flex-direction: column;
@@ -58,18 +43,18 @@ const CategoryDiv = styled.button`
   gap: 0.4vh;
   padding: 6px 8px;
 `
+
 // 카테고리 버튼 스타일
 const CategoryButton = styled.div`
-  /* margin-right: 5px; */
-  /* padding: 5px 10px; */
   color: ${props => props.active ? 'white' : 'black'};
-
 `;
+
 //버튼의 아이콘
 const CategoryImg = styled.img`
     width: 46px;
     height: 46px;
 `;
+
 // 마커 기본 스타일
 const MarkerWrapper = styled.div`
   width: 46px;
@@ -93,29 +78,40 @@ const CafeMarker = styled(MarkerWrapper)`
 // 장소 정보 표시를 위한 스타일 컴포넌트
 const PlaceInfoWrapper = styled.div`
   position: relative;
-  margin-bottom: 5px;
   background: white;
-  border-radius: 6px;
+  border-radius: 5px;
   border: 1px solid #ccc;
-  border-bottom: 2px solid #ddd;
-  padding-bottom: 6px;
   box-shadow: 0px 1px 2px #888;
   width: 260px;
+  margin-bottom: 12px;
 
   &:after {
-  content: '';
-  position: absolute;
-  border-style: solid;
-  border-width: 12px 12px 0;
-  border-color: white transparent;
-  border-bottom-color: #ccc; /* 삼각형 모양의 테두리 색상 추가 */
-  display: block;
-  width: 0;
-  z-index: 1;
-  bottom: -12px;
-  left: 50%;
-  margin-left: -12px;
-}
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 11px 8px 0;
+    border-color: white transparent;
+    display: block;
+    width: 0;
+    z-index: 1;
+    bottom: -11px;
+    left: 50%;
+    margin-left: -8px;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    border-style: solid;
+    border-width: 12px 9px 0;
+    border-color: #ccc transparent;
+    display: block;
+    width: 0;
+    z-index: 0;
+    bottom: -12px;
+    left: 50%;
+    margin-left: -9px;
+  }
 `;
 
 const PlaceTitle = styled.a`
@@ -126,14 +122,13 @@ const PlaceTitle = styled.a`
   color: white;
   background: #6A0DAD;
   padding: 10px 15px;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
-  border-radius: 6px 6px 0 0;
-  margin: -1px -1px 0 -1px;
-  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+
   &:after {
     content: '>';
-    font-size: 24px;
+    font-size: 16px;
   }
 `;
 
@@ -144,30 +139,28 @@ const PlaceContent = styled.div`
 const PlaceAddress1 = styled.span`
   display: block;
   margin-top: 6px;
-  font-size: 16px;
+  font-size: 13px;
   color: #000;
-  /* font-weight: bold; */
 `;
 
 const PlaceAddress = styled.span`
   display: block;
   margin-top: 6px;
-  font-size: 13px;
+  font-size: 11px;
   color: #8a8a8a;
-  /* font-weight: bold; */
 `;
 
 const PlacePhone = styled.span`
   display: block;
-  margin-top: 14px;
-  font-size: 13px;
+  margin-top: 6px;
+  font-size: 11px;
   color: #009900;
 `;
 
 function Map() {
   const [map, setMap] = useState(null);
   const [placeOverlay, setPlaceOverlay] = useState(null);
-  const [categories, setCategories] = useState(['FD6', 'CE7']); // 기본적으로 두 카테고리 모두 선택
+  const [categories, setCategories] = useState(['FD6', 'CE7']);
   const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
@@ -183,20 +176,17 @@ function Map() {
     const ps = new kakao.maps.services.Places(newMap);
     const customOverlay = new kakao.maps.CustomOverlay({
       zIndex: 1,
-      yAnchor: 1.3
+      yAnchor: 1.1
     });
     setPlaceOverlay(customOverlay);
 
-    // 지도 idle 이벤트 리스너 등록
     kakao.maps.event.addListener(newMap, 'idle', searchPlaces);
 
-    // 장소 검색 함수
     function searchPlaces() {
       if (categories.length === 0) {
         return;
       }
 
-      // 현재 지도에서 모든 마커를 제거
       customOverlay.setMap(null);
       removeMarkers();
 
@@ -205,7 +195,6 @@ function Map() {
       });
     }
 
-    // 장소 검색 콜백 함수
     function placesSearchCB(data, status) {
       if (status === kakao.maps.services.Status.OK) {
         displayPlaces(data);
@@ -214,7 +203,6 @@ function Map() {
       }
     }
 
-    // 검색 결과 표시 함수
     function displayPlaces(places) {
       const newMarkers = places.map(place => {
         const marker = addMarker(new kakao.maps.LatLng(place.y, place.x), place);
@@ -223,7 +211,6 @@ function Map() {
       setMarkers(prevMarkers => [...prevMarkers, ...newMarkers]);
     }
 
-    // 마커 추가 함수
     function addMarker(position, place) {
       const MarkerComponent = place.category_group_code === 'FD6' ? RestaurantMarker : CafeMarker;
 
@@ -242,13 +229,11 @@ function Map() {
       return marker;
     }
 
-    // 마커 제거 함수
     function removeMarkers() {
       markers.forEach(marker => marker.setMap(null));
       setMarkers([]);
     }
 
-    // 장소 정보 표시 함수
     function displayPlaceInfo(place, position) {
       const content = (
         <PlaceInfoWrapper>
@@ -262,7 +247,7 @@ function Map() {
                 <PlaceAddress>(지번 : {place.address_name})</PlaceAddress>
               </>
             )}
-            {!place.road_address_name && <PlaceAddress>{place.address_name}</PlaceAddress>}
+            {!place.road_address_name && <PlaceAddress1>{place.address_name}</PlaceAddress1>}
             <PlacePhone>{place.phone}</PlacePhone>
           </PlaceContent>
         </PlaceInfoWrapper>
@@ -276,17 +261,14 @@ function Map() {
       customOverlay.setMap(newMap);
     }
 
-    // 초기 검색 실행
     searchPlaces();
 
-    // 컴포넌트 언마운트 시 마커 제거
     return () => {
       removeMarkers();
     };
 
   }, [categories]);
 
-  // 카테고리 클릭 핸들러
   const onClickCategory = (category) => {
     setCategories(prevCategories => 
       prevCategories.includes(category) ? 
@@ -316,8 +298,6 @@ function Map() {
           </CategoryButton>
           <CategoryImg src={cafeIcon}/>
         </CategoryDiv>
-        
-
       </CategoryWrapper>
       <div id="map" style={{width: "100%", height:"100%"}}></div>
     </Container>
