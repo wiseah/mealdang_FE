@@ -17,17 +17,16 @@ import { BiSolidMoon } from "react-icons/bi";
 export function FoodRecommendBack(){
 
     const FoodContainer = styled.div`
-    width: 350px;
-    height: 326px;
-    flex-shrink: 0;
+    width: 340px;
+    height: 290px;
     margin: 0px 20px 14px 20px;
     border-radius: 15px;
     background-color: #FFE3C4;
     display: flex; 
     justify-content: flex-start; 
     align-items: center; 
-    overflow-x: auto;
-    padding-left: 13px;
+    overflow-x: hidden;
+    padding-left: 10px;
   `
 
   const FoodList = styled.div`
@@ -41,7 +40,7 @@ export function FoodRecommendBack(){
       <FoodList>
         <FoodRecommend
           title = '아침|한식'
-          Icon = {<BsSun/>}
+          Icon = {<BsSunFill/>}
           Content = {'잡곡밥 1/2공기 \n 된장국 \n 김치 50g \n 참기름 무침 나물 50g'}
           Calories='총 600칼로리'
           />
