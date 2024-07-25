@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { IoMdArrowForward } from "react-icons/io";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
     display: flex;
@@ -106,6 +107,11 @@ const ExchangeBtn = styled.div`
 `
 
 export function GrapeExchange({ name, initialAmount }) {
+    const navigate = useNavigate();
+
+    // const handleNavigate = () => {
+            // navigate(''); 
+    // };
     
     // 포도 갯수
     const [amount, setAmount] = useState(initialAmount);
@@ -137,6 +143,7 @@ export function GrapeExchange({ name, initialAmount }) {
                     <br />
                     사용할 수 있습니다.
                 </UserText>
+                {/* <GrapeUse onClick={handleNavigate}> */}
                 <GrapeUse>
                     <GrapeUseText>포도 교환 내역 확인하기</GrapeUseText><GrapeUseIcon />
                 </GrapeUse>
