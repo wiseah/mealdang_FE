@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SubmitButton from "../../components/SubmitButton";
 import login from '../../APIs/post/login.js';
@@ -95,15 +95,15 @@ const Login = () => {
       sessionStorage.setItem("userName", userInfo.userName);
 
       navigate('/main'); // 로그인 성공 시 메인 페이지로 이동
-    } catch {
-      console.error('message: ', response.message)
+    } catch (error) {
+      console.error('message: ', error.message);
       setErrorText('아이디 또는 비밀번호가 잘못되었습니다.');
       alert('로그인에 실패했습니다.');
     }
   }
 
   const handleIdChange = (e) => {
-    setMember_id(e.target.value);
+    setId(e.target.value);
   }
 
   const handlePasswordChange = (e) => {
