@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 // 전체 공간
 const Container = styled.div`
+
     display: flex;
     flex-direction: column;
     align-items: center;

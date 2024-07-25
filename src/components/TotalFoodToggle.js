@@ -8,6 +8,7 @@ export function TotalFoodToggle(){
     const handleTotalToggle=()=>{
         setTotalToggled(prevState=>!prevState);
     }
+    
     const Data = [
         { name: '곡류군', quantity: 3 },
         { name: '채소군', quantity: 2 },
