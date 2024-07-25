@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
+import React, { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import restaurantIcon from './restaurant-icon.png';
 import cafeIcon from './cafe-icon.png';
+import { dummyData } from './MapList';
 const { kakao } = window;
 
-// 컨테이너 스타일
+// 스타일 컴포넌트 정의
 const Container = styled.div`
   width: 390px;
   height: 628px;
@@ -13,7 +13,6 @@ const Container = styled.div`
   box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.25);
 `;
 
-// 카테고리 버튼 래퍼 스타일
 const CategoryWrapper = styled.div`
   position: absolute;
   top: 10px;
@@ -42,75 +41,41 @@ const CategoryDiv = styled.button`
   }
   gap: 0.4vh;
   padding: 6px 8px;
-`
+`;
 
-// 카테고리 버튼 스타일
 const CategoryButton = styled.div`
   color: ${props => props.active ? 'white' : 'black'};
 `;
 
-//버튼의 아이콘
 const CategoryImg = styled.img`
     width: 46px;
     height: 46px;
 `;
 
-// 마커 기본 스타일
-const MarkerWrapper = styled.div`
-  width: 46px;
-  height: 46px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  cursor: pointer;
-`;
-
-// 음식점 마커 스타일
-const RestaurantMarker = styled(MarkerWrapper)`
-  background-image: url(${restaurantIcon});
-`;
-
-// 카페 마커 스타일
-const CafeMarker = styled(MarkerWrapper)`
-  background-image: url(${cafeIcon});
-`;
-
 // 장소 정보 표시를 위한 스타일 컴포넌트
 const PlaceInfoWrapper = styled.div`
   position: relative;
+  margin-bottom: 5px;
   background: white;
-  border-radius: 5px;
+  border-radius: 6px;
   border: 1px solid #ccc;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 10px;
   box-shadow: 0px 1px 2px #888;
   width: 260px;
-  margin-bottom: 12px;
 
   &:after {
     content: '';
     position: absolute;
     border-style: solid;
-    border-width: 11px 8px 0;
+    border-width: 12px 12px 0;
     border-color: white transparent;
     display: block;
     width: 0;
     z-index: 1;
-    bottom: -11px;
-    left: 50%;
-    margin-left: -8px;
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-width: 12px 9px 0;
-    border-color: #ccc transparent;
-    display: block;
-    width: 0;
-    z-index: 0;
     bottom: -12px;
     left: 50%;
-    margin-left: -9px;
+    margin-left: -12px;
   }
 `;
 
@@ -122,13 +87,14 @@ const PlaceTitle = styled.a`
   color: white;
   background: #6A0DAD;
   padding: 10px 15px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: bold;
-  border-radius: 5px 5px 0 0;
+  border-radius: 6px 6px 0 0;
+  margin: -1px -1px 0 -1px;
 
   &:after {
     content: '>';
-    font-size: 16px;
+    font-size: 12px;
   }
 `;
 
@@ -139,136 +105,210 @@ const PlaceContent = styled.div`
 const PlaceAddress1 = styled.span`
   display: block;
   margin-top: 6px;
-  font-size: 13px;
+  font-size: 16px;
   color: #000;
+  /* font-weight: bold; */
 `;
 
 const PlaceAddress = styled.span`
   display: block;
   margin-top: 6px;
-  font-size: 11px;
+  font-size: 13px;
   color: #8a8a8a;
+  /* font-weight: bold; */
 `;
 
 const PlacePhone = styled.span`
   display: block;
-  margin-top: 6px;
-  font-size: 11px;
+  margin-top: 14px;
+  font-size: 13px;
   color: #009900;
 `;
 
 function Map() {
   const [map, setMap] = useState(null);
-  const [placeOverlay, setPlaceOverlay] = useState(null);
   const [categories, setCategories] = useState(['FD6', 'CE7']);
   const [markers, setMarkers] = useState([]);
+  const customOverlayRef = useRef(null);
 
   useEffect(() => {
+    // 지도 초기화
     const mapContainer = document.getElementById('map');
     const mapOption = {
-      center: new kakao.maps.LatLng(37.57224, 127.01442),
-      level: 3
+      center: new kakao.maps.LatLng(37.566826, 126.9786567), // 서울 시청
+      level: 7
     };
 
     const newMap = new kakao.maps.Map(mapContainer, mapOption);
     setMap(newMap);
 
-    const ps = new kakao.maps.services.Places(newMap);
-    const customOverlay = new kakao.maps.CustomOverlay({
-      zIndex: 1,
-      yAnchor: 1.1
-    });
-    setPlaceOverlay(customOverlay);
-
-    kakao.maps.event.addListener(newMap, 'idle', searchPlaces);
-
+    // 장소 검색 및 마커 표시 함수
     function searchPlaces() {
-      if (categories.length === 0) {
-        return;
-      }
-
-      customOverlay.setMap(null);
       removeMarkers();
 
       categories.forEach(category => {
-        ps.categorySearch(category, placesSearchCB, { useMapBounds: true });
+        const data = category === 'FD6' ? dummyData.restaurant : dummyData.cafe;
+        data.forEach(item => {
+          const position = new kakao.maps.LatLng(item.latitude, item.longitude);
+          const marker = addMarker(position, category);
+          setMarkers(prevMarkers => [...prevMarkers, marker]);
+        });
       });
     }
 
-    function placesSearchCB(data, status) {
-      if (status === kakao.maps.services.Status.OK) {
-        displayPlaces(data);
-      } else {
-        console.error("검색 중 오류가 발생했습니다.");
-      }
-    }
-
-    function displayPlaces(places) {
-      const newMarkers = places.map(place => {
-        const marker = addMarker(new kakao.maps.LatLng(place.y, place.x), place);
-        return marker;
-      });
-      setMarkers(prevMarkers => [...prevMarkers, ...newMarkers]);
-    }
-
-    function addMarker(position, place) {
-      const MarkerComponent = place.category_group_code === 'FD6' ? RestaurantMarker : CafeMarker;
-
-      const markerContent = document.createElement('div');
-      ReactDOM.render(
-        <MarkerComponent onClick={() => displayPlaceInfo(place, position)} />,
-        markerContent
+    // 마커 추가 함수
+    function addMarker(position, category) {
+      const markerImage = new kakao.maps.MarkerImage(
+        category === 'FD6' ? restaurantIcon : cafeIcon,
+        new kakao.maps.Size(46, 46),
+        { offset: new kakao.maps.Point(23, 23) }
       );
 
-      const marker = new kakao.maps.CustomOverlay({
+      const marker = new kakao.maps.Marker({
         position: position,
-        content: markerContent
+        image: markerImage,
+        map: newMap
       });
 
-      marker.setMap(newMap);
+      kakao.maps.event.addListener(marker, 'click', function() {
+        displayPlaceInfo(position, category);
+      });
+
       return marker;
     }
 
+    // 마커 제거 함수
     function removeMarkers() {
       markers.forEach(marker => marker.setMap(null));
       setMarkers([]);
+      if (customOverlayRef.current) {
+        customOverlayRef.current.setMap(null);
+      }
     }
 
-    function displayPlaceInfo(place, position) {
-      const content = (
-        <PlaceInfoWrapper>
-          <PlaceTitle href={place.place_url} target="_blank" title={place.place_name}>
-            {place.place_name}
-          </PlaceTitle>
-          <PlaceContent>
-            {place.road_address_name && (
-              <>
-                <PlaceAddress1>{place.road_address_name}</PlaceAddress1>
-                <PlaceAddress>(지번 : {place.address_name})</PlaceAddress>
-              </>
-            )}
-            {!place.road_address_name && <PlaceAddress1>{place.address_name}</PlaceAddress1>}
-            <PlacePhone>{place.phone}</PlacePhone>
-          </PlaceContent>
-        </PlaceInfoWrapper>
-      );
+    // 장소 정보 표시 함수
+    function displayPlaceInfo(position, category) {
+      const ps = new kakao.maps.services.Places();
       
-      const contentElement = document.createElement('div');
-      ReactDOM.render(content, contentElement);
+      ps.categorySearch(category, (data, status) => {
+        if (status === kakao.maps.services.Status.OK) {
+          // 가장 가까운 장소 찾기
+          const nearestPlace = data.reduce((nearest, place) => {
+            const placePosition = new kakao.maps.LatLng(place.y, place.x);
+            const distance = calculateDistance(position, placePosition);
+            return (distance < nearest.distance) ? { place, distance } : nearest;
+          }, { place: null, distance: Infinity }).place;
 
-      customOverlay.setContent(contentElement);
-      customOverlay.setPosition(position);
-      customOverlay.setMap(newMap);
+          if (nearestPlace) {
+            const content = `
+              <div style="
+                position: relative; 
+                margin-bottom: 5px; 
+                background: white; 
+                border-radius: 6px; 
+                border: 1px solid #ccc; 
+                border-bottom: 2px solid #ddd; 
+                box-shadow: 0px 1px 2px #888; 
+                width: 260px;"
+              >
+                <div style="
+                  content: '';
+                  position: absolute;
+                  border-style: solid;
+                  border-width: 12px 12px 0;
+                  border-color: white transparent;
+                  display: block;
+                  width: 0;
+                  z-index: 1;
+                  bottom: -12px;
+                  left: 50%;
+                  margin-left: -12px;
+                "></div>
+                <div style="
+                  display: flex; 
+                  justify-content: space-between; 
+                  align-items: center; 
+                  text-decoration: none; 
+                  color: white; 
+                  background: #6A0DAD;
+                  font-size: 14px; 
+                  font-weight: bold; 
+                  border-radius: 6px 6px 0 0; 
+                  margin: -1px -1px 0 -1px;"
+                >
+                  <a href="${nearestPlace.place_url}" 
+                    target="_blank" 
+                    style="display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                      text-decoration: none;
+                      color: white;
+                      background: #6A0DAD;
+                      padding: 10px 15px;
+                      font-size: 14px;
+                      font-weight: bold;
+                      border-radius: 6px 6px 0 0;
+                      width: 260px;
+                      "
+                  >${nearestPlace.place_name}
+                  <span style="float: right; color:#fff; font-size: 24px;">></span>
+                  </a>
+                </div>
+                <div style="background-color: white; padding: 10px 15px;">
+                  <p style="margin: 5px 0; font-size: 13px;">${nearestPlace.road_address_name || nearestPlace.address_name}</p>
+                  ${nearestPlace.road_address_name ? `<p style="margin: 5px 0; font-size: 11px; color: #8a8a8a;">(지번 : ${nearestPlace.address_name})</p>` : ''}
+                  <p style="margin: 5px 0; font-size: 11px; color: #009900;">${nearestPlace.phone}</p>
+                </div>
+              </div>
+            `;
+
+            // 기존 오버레이 제거
+            if (customOverlayRef.current) {
+              customOverlayRef.current.setMap(null);
+            }
+
+            // 새 오버레이 생성 및 표시
+            const newOverlay = new kakao.maps.CustomOverlay({
+              content: content,
+              position: position,
+              yAnchor: 1.15
+            });
+
+            newOverlay.setMap(newMap);
+            customOverlayRef.current = newOverlay;
+          }
+        }
+      }, {
+        location: position,
+        radius: 1000
+      });
     }
 
     searchPlaces();
 
+    // 컴포넌트 언마운트 시 마커 제거
     return () => {
       removeMarkers();
     };
 
   }, [categories]);
 
+  // 두 지점 간의 거리를 계산하는 함수
+  function calculateDistance(pos1, pos2) {
+    const deg2rad = deg => deg * (Math.PI/180);
+    const R = 6371; // 지구의 반경 (km)
+    const dLat = deg2rad(pos2.getLat() - pos1.getLat());
+    const dLon = deg2rad(pos2.getLng() - pos1.getLng());
+    const a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(pos1.getLat())) * Math.cos(deg2rad(pos2.getLat())) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2); 
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    const distance = R * c; // Distance in km
+    return distance;
+  }
+
+  // 카테고리 클릭 핸들러
   const onClickCategory = (category) => {
     setCategories(prevCategories => 
       prevCategories.includes(category) ? 
