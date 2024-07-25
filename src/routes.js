@@ -13,6 +13,8 @@ import MyPage from "./pages/MyPage/MyPage";
 import MyInfo from "./pages/MyPage/MyInfo";
 import MyFoodExchangeList from './pages/MyPage/MyFoodExchangeList';
 import AfterMain from "./pages/Main/AfterMain";
+import FoodBookMark from "./pages/MyPage/FoodBookMark";
+import FoodDetail from "./pages/Main/FoodDetail";
 
 const routes = [
     {
@@ -110,6 +112,17 @@ const routes = [
         path: '/aftermain',
         element: <AfterMain/>,
         name: '14. 식단 추천 이후의 메인페이지',
+        previous: false,
+    },
+    {
+        path: '/foodbookmark',
+        element: <FoodBookMark/>,
+        name: '15. 추천 식단 즐겨찾기',
+    },
+    {
+        path: '/foodDetail',
+        element: <FoodDetail/>,
+        name: '16. 식단 상세 페이지 ',
         previous: false,
     },
 ]
