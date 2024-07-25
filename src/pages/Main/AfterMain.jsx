@@ -169,4 +169,4 @@ function AfterMain() {
   )
 }
 
-export default AfterMain;
+export default AfterMain

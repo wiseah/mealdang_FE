@@ -13,6 +13,7 @@ import MyPage from "./pages/MyPage/MyPage";
 import MyInfo from "./pages/MyPage/MyInfo";
 import MyFoodExchangeList from './pages/MyPage/MyFoodExchangeList';
 import AfterMain from "./pages/Main/AfterMain";
+import { FoodDetail } from "./pages/Main/FoodDetail";
 
 const routes = [
     {
@@ -106,11 +107,16 @@ const routes = [
         element: <MyFoodExchangeList />,
         name: '13. 내 식품교환표 페이지',
     },
-        {
-        feat/29
+    {
         path: '/aftermain',
         element: <AfterMain/>,
         name: '14. 식단 추천 이후의 메인페이지',
+        previous: false,
+    },
+    {
+        path: '/foodDetail',
+        element: <FoodDetail/>,
+        name: '15. 식단 상세 페이지 ',
         previous: false,
     },
 ]
