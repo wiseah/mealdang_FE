@@ -35,6 +35,7 @@ const Join = styled.span`
   font-size: 20px;
   font-weight: 400;
   color: #737373;
+  cursor: pointer; 
 `
 
 const Login = () => {
