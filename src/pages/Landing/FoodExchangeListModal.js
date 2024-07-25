@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { RxExternalLink } from 'react-icons/rx';
 
 const ModalContainer = styled.div`
   position: fixed;
@@ -43,19 +44,30 @@ const Explanation = styled.div`
   margin-top: 30px;
 `;
 
+
 const Paragraph = styled.p`
   margin: 20px auto;
 `;
 
+const Important = styled.span`
+  color: #6A0DAD;
+  font-weight: bold;
+`
+
+const P = styled.div`
+  display: flex;
+  align-items: center;
+  color: #6A0DAD;
+`;
 
 const ExternalLink = styled.a`
-  color: #6A0DAD;
   text-decoration: none;
 
   &:hover {
     text-decoration: underline;
   }
 `;
+
 
 
 const FoodExchangeListModal = ({ isOpen, onClose }) => {
@@ -70,13 +82,15 @@ const FoodExchangeListModal = ({ isOpen, onClose }) => {
           <Paragraph>
             {'\u00A0'} 식품들을 영양소 구성이 비슷한 것끼리 6가지 식품군으로 나누어 묶은 표입니다. <br />
             {'\u00A0'} 6가지 식품군은 곡류군, 어육류군, 채소군, 지방군, 우유군, 과일군을 말하며,
-            같은 군 내에서는 자유롭게 바꿔 먹을 수 있도록 설정되어 있습니다.
+            같은 군 내에서는 자유롭게 바꿔 먹을 수 있도록 설정되어 있습니다. <br />
+            {'\u00A0'} 식품교환표는 <Important>제2형 당뇨인</Important>을 기준으로 제공됩니다.
           </Paragraph>
           <Paragraph>
             더 많은 정보를 알고 싶다면? <br />
-            <ExternalLink href="https://www.diabetes.or.kr/general/dietary/dietary_03.php?con=3" target="_blank">
-              대한당뇨병학회 바로가기
-            </ExternalLink>
+            <P>
+              <ExternalLink href="https://www.diabetes.or.kr/general/dietary/dietary_03.php?con=3" target="_blank">
+              대한당뇨병학회 바로가기</ExternalLink> <RxExternalLink size={17} />
+            </P>
           </Paragraph>
         </Explanation>
       </ModalContent>
