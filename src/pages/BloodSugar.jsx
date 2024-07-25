@@ -1,11 +1,33 @@
-import React from 'react'
+import styled from "styled-components";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import DailyDataUpdate from '../components/BloodSugarComponents/DailyDataUpdate';
+import WeeklyDataChart from '../components/BloodSugarComponents/WeeklyDataChart';
+import PercentageChart from '../components/BloodSugarComponents/PercentageChart';
 
-function BloodSugar() {
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  max-width: 390px;
+  min-height: 100vh;
+  place-items: center;
+`
+
+const ContainerItem = styled.div`
+  margin-bottom: 13px;
+`
+
+
+const BloodSugar = () => {
+
   return (
-    <div>
-      혈당관리 페이지
-    </div>
-  )
-}
+    <Container>
+      <ContainerItem> <DailyDataUpdate /> </ContainerItem>
+      <ContainerItem> <WeeklyDataChart /> </ContainerItem>
+      <ContainerItem> <PercentageChart /> </ContainerItem>
+    </Container>
+  );
+};
 
-export default BloodSugar
+export default BloodSugar;
