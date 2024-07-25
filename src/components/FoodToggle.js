@@ -5,6 +5,7 @@ import styled from "styled-components";
 
 
 export function FoodToggle(){
+    
 
     const [MainToggled, setMainToggled] = useState(false);
     const [SubToggled,setSubToggled] = useState(false);
