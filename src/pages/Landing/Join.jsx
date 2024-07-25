@@ -95,6 +95,7 @@ const AgreeLabel = styled.label`
   font-size: 20px;
   font-weight: 400;
   color: #737373;
+  cursor: pointer;
 `
 
 const AgreeInfo = styled.input`
@@ -108,6 +109,7 @@ const AgreeInfo = styled.input`
   border-radius: 4px;
   vertical-align: middle;
   margin: 0 10px 2px 0;
+  cursor: pointer;
 
   &:checked {
     background-color: #737373;

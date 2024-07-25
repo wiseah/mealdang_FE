@@ -31,6 +31,7 @@ const AgreeAllLabel = styled.label`
   font-family: 'WavvePADO-Regular';
   font-size: 24px;
   color: #000000;
+  cursor: pointer;
 `;
 
 const AgreeAllCheckbox = styled.input`
@@ -42,6 +43,7 @@ const AgreeAllCheckbox = styled.input`
   border-radius: 4px;
   vertical-align: middle;
   margin: 0 10px 2px 0;
+  cursor: pointer;
 
   &:checked {
     background-color: #000000;
@@ -89,6 +91,7 @@ const AgreeButton = styled.button`
   font-family: 'WavvePADO-Regular';
   font-size: 20px;
   z-index: 1;
+  cursor: pointer;
 `;
 
 const DisagreeButton = styled.button`
@@ -103,6 +106,7 @@ const DisagreeButton = styled.button`
   color: #6A0DAD ;
   width: 70px;
   height: 30px;
+  cursor: pointer;
 `;
 
 
@@ -178,3 +182,4 @@ const PrivacyTermsModal = ({ isOpen, onClose, onAgree }) => {
 };
 
 export default PrivacyTermsModal;
+
