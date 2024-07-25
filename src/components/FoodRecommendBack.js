@@ -17,16 +17,16 @@ import { BiSolidMoon } from "react-icons/bi";
 export function FoodRecommendBack(){
 
     const FoodContainer = styled.div`
-    width: 350px;
-    height: 326px;
+    width: 340px;
+    height: 290px;
     margin: 0px 20px 14px 20px;
     border-radius: 15px;
     background-color: #FFE3C4;
     display: flex; 
     justify-content: flex-start; 
     align-items: center; 
-    overflow-x: auto;
-    padding-left: 13px;
+    overflow-x: hidden;
+    padding-left: 10px;
   `
 
   const FoodList = styled.div`

@@ -5,13 +5,13 @@ import { useNavigate } from 'react-router-dom';
 const Container = styled.div`
   display: flex;
   height: 100vh;
-  margin-top: 376px;
   justify-content: center;
 `
 
 const LogoContainer = styled.img`
   width: 304.12px;
   height: 91.78px;
+  margin-top: 200px;
 `
 
 const LandingPage = () => {

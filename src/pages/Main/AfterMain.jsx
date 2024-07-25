@@ -13,40 +13,26 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  .Greeting{
-    padding-bottom: 16px;
-  }
-  .FoodTitle{
-    padding: 34px 0px 10px 33px;
-    align-self: flex-start;
-  }
-  .RecommendBtn{
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    padding: 0px 50px 8px 0px;
-  }
 `
 
-const Greeting = styled.text`
+const Greeting = styled.div`
   color: #000;
   font-family: "Wavve PADO TTF";
   font-size: 30px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
-  margin-bottom: 16px;
-`
-const FoodTitle = styled.text`
-  color: #000;
-  font-family: "Wavve PADO TTF";
-  font-size: 30px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-self: flex-start;
+  padding-bottom: 16px;
+  padding-left: 33px;
+`
+const FoodTitle = styled.div`
+  color: #000;
+  font-family: "Wavve PADO TTF";
+  font-size: 30px;
+  font-weight: 400;
+  display: flex;
+  align-self: flex-start;
+  padding: 34px 0px 10px 33px;
 `
 const FillStarIcon = styled(BsFillStarFill)`
     padding-left: 7px;
@@ -61,17 +47,16 @@ const EmptyStarIcon = styled(BsStar)`
   cursor: pointer;
 `
 const RecommendButton = styled.div`
+  width: 100%;
   color: #000;
-  text-align: center;
   font-family: "Wavve PADO TTF";
   font-size: 18px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
-  justify-content: center;
   cursor: pointer;
+  padding: 3px 50px 15px 0px;
 `
 
 // 이전, 다음 버튼 관련 내용
@@ -93,39 +78,35 @@ const Next = styled.div`
   cursor: pointer;
 `
 
-const PreviousBtn = styled.text`
-  color: var(--unnamed, #F74A25);
+const PreviousBtn = styled.div`
+  color: #F74A25;
   text-align: center;
   font-family: "Wavve PADO TTF";
-  font-size: 13px;
-  font-style: normal;
+  font-size: 17px;
   font-weight: 400;
-  line-height: normal;
   padding-right: 16px;
 `
 
 const PreviousIcon = styled(BiChevronLeft)`
   color:#F74A25;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
 `
 
 
-const NextBtn = styled.text`
-  color: var(--unnamed, #F74A25);
+const NextBtn = styled.div`
+  color:  #F74A25;
   text-align: center;
   font-family: "Wavve PADO TTF";
-  font-size: 13px;
-  font-style: normal;
+  font-size: 17px;
   font-weight: 400;
-  line-height: normal;
   padding-left: 16px;
 `
 
 const NextIcon = styled(BiChevronRight)`
   color:#F74A25;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
 `
 
 
@@ -165,28 +146,24 @@ function AfterMain() {
 
   return (
     <Container>
-      <div className='Greeting'>
-        <Greeting>오늘도 반가워요, 승민님</Greeting>
-      </div>
-      <div className='DashBoardContainer'>
+        <Greeting>
+          오늘도 반가워요, 승민님
+        </Greeting>
         <DashBoard/>
-      </div>
-      <div className='FoodTitle'>
-        <FoodTitle>오늘의 추천식단{StarActive ?(<FillStarIcon active = {true} onClick = {StarClick}/>) : (<EmptyStarIcon onClick={StarClick}/>)}</FoodTitle> 
-      </div>
-      <div className='RecommendBtn' onClick={RecommendBtnClick}>
-        <RecommendButton>다시 추천받기<IoIosArrowRoundForward/></RecommendButton>
-        </div>
-      <div className='FoodContainer'>
-        <FoodRecommendBack></FoodRecommendBack>
-      </div>
-      <TurnContainer>
-        <Previous onClick={PreviousClick} >
-          <PreviousIcon/><PreviousBtn>이전</PreviousBtn>
-        </Previous>
-        <Next onClick={NextClick}>
-          <NextBtn>다음</NextBtn><NextIcon/>
-        </Next>
+        <FoodTitle>
+          오늘의 추천식단{StarActive ?(<FillStarIcon active = {true} onClick = {StarClick}/>) : (<EmptyStarIcon onClick={StarClick}/>)}
+        </FoodTitle> 
+        <RecommendButton onClick={RecommendBtnClick}>
+          다시 추천받기<IoIosArrowRoundForward/>
+        </RecommendButton>
+        <FoodRecommendBack/>
+        <TurnContainer>
+          <Previous onClick={PreviousClick} >
+            <PreviousIcon/><PreviousBtn>이전</PreviousBtn>
+          </Previous>
+          <Next onClick={NextClick}>
+            <NextBtn>다음</NextBtn><NextIcon/>
+          </Next>
       </TurnContainer>
     </Container>
   )
