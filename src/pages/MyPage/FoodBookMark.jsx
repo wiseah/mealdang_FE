@@ -26,7 +26,7 @@ const Date = styled.div`
 `
 
 
-export function FoodBookMark(){
+export default function FoodBookMark(){
 
     const foodRecommendDates = ['2024.7.13','2024.7.12','2024.7.10'];
 
