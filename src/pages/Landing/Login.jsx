@@ -79,7 +79,7 @@ const Login = () => {
     
     // 리코일에 최초 로그인 시 진단테스트로 가는 거 추가해야 함
     // else {
-    //   navigate('/test');
+    //   navigate('/diagnosis');
     // }
 
 

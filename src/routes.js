@@ -1,7 +1,7 @@
 import Main from "./pages/Main/Main";
 import Login from "./pages/Landing/Login";
 import Sitemap from "./pages/Sitemap";
-import Test from "./pages/Landing/Test";
+import Diagnosis from "./pages/Landing/Diagnosis";
 import FoodExchangeList from "./pages/Landing/FoodExchangeList";
 import Landing from "./pages/Landing/Landing";
 import Join from "./pages/Landing/Join";
@@ -37,8 +37,8 @@ const routes = [
         footer: false,
     },
     {
-        path: '/test',
-        element: <Test />,
+        path: '/diagnosis',
+        element: <Diagnosis />,
         name: '03. 진단테스트 페이지',
         previous: '/login',
         footer: false,
@@ -47,7 +47,7 @@ const routes = [
         path: '/foodexchangelist',
         element: <FoodExchangeList />,
         name: '04. 식품교환표 페이지',
-        previous: '/test',
+        previous: '/diagnosis',
         footer: false,
     },
     {

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfirmButton from '../../components/ConfirmButton';
+import diagnosis from "../../APIs/patch/diagnosis";
 
 const Container = styled.div`
   display: flex;
@@ -92,16 +93,16 @@ const NumberInput = styled.input`
 `
 
 
-const Test = () => {
+const Diagnosis = () => {
   const navigate = useNavigate();
 
   const [gender, setGender] = useState('');
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
-  const [diabetes, setDiabetes] = useState('no');
-  const [glucose_empty, setGlucose_empty] = useState('');
-  const [glucose_2hour, setGlucose_2hour] = useState('');
+  const [is_diabetes, setIs_diabetes] = useState('no');
+  const [fasting_blood_sugar, setFasting_blood_sugar] = useState('');
+  const [post_meal_blood_sugar, setPost_meal_blood_sugar] = useState('');
 
 
   const handleGenderChange = (e) => {
@@ -120,24 +121,35 @@ const Test = () => {
     setWeight(e.target.value);
   }
 
-  const handleDiabetesChange = (e) => {
-    setDiabetes(e.target.value);
+  const handleIs_diabetesChange = (e) => {
+    setIs_diabetes(e.target.value);
     if (e.target.value === 'no') {
-      setGlucose_empty('');
-      setGlucose_2hour('');
+      setFasting_blood_sugar('');
+      setPost_meal_blood_sugar('');
     }
   };
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!gender || !age || !height || !weight || (diabetes === 'yes' && !glucose_empty)) {
-      alert('필수 항목을 모두 입력하세요.');
-    } else {
-      console.log('data save success');
-      navigate('/foodExchangeList');
+    try {
+      if (!gender || !age || !height || !weight || (is_diabetes === 'yes' && !fasting_blood_sugar)) {
+        alert('필수 항목을 모두 입력하세요.');
+      } else {
+        console.log('data save success');
+        navigate('/foodExchangeList');
+      }
+
+      const response = await diagnosis(gender, age, height, weight, is_diabetes, fasting_blood_sugar, post_meal_blood_sugar)
+      console.log(response)
+      console.log('진단테스트가 완료되었습니다.');
+      navigate('/joinSuccess');
+    } catch {
+      console.error('messages: ', response.messages)
+      alert('진단테스트 저장에 실패했습니다.')
     }
+
   }
 
   return (
@@ -212,33 +224,33 @@ const Test = () => {
             <RadioLabel>
               <RadioInput
                 type="radio"
-                name="diabetes"
+                name="is_diabetes"
                 value="yes"
-                checked={diabetes === 'yes'}
-                onChange={handleDiabetesChange}
+                checked={is_diabetes === 'yes'}
+                onChange={handleIs_diabetesChange}
               /> 예
             </RadioLabel>
             <RadioLabel>
               <RadioInput
                 type="radio"
-                name="diabetes"
+                name="is_diabetes"
                 value="no"
-                checked={diabetes === 'no'}
-                onChange={handleDiabetesChange}
+                checked={is_diabetes === 'no'}
+                onChange={handleIs_diabetesChange}
               /> 아니요
             </RadioLabel>
           </RadioContainer>
         </FormItem>
 
-        {diabetes === 'yes' && (
+        {is_diabetes === 'yes' && (
           <>
             <FormItem>
               <ItemLabel>공복 혈당<RequireSpan>*</RequireSpan></ItemLabel>
               <div>
                 <NumberInput
                   type="number"
-                  value={glucose_empty}
-                  onChange={(e) => setGlucose_empty(e.target.value)}
+                  value={fasting_blood_sugar}
+                  onChange={(e) => setFasting_blood_sugar(e.target.value)}
                   placeholder="공복 혈당"
                   required />
               </div>
@@ -249,18 +261,18 @@ const Test = () => {
               <div>
                 <NumberInput
                   type="number"
-                  value={glucose_2hour}
-                  onChange={(e) => setGlucose_2hour(e.target.value)}
+                  value={post_meal_blood_sugar}
+                  onChange={(e) => setPost_meal_blood_sugar(e.target.value)}
                   placeholder="식후 2시간 이후 혈당" />
               </div>
             </FormItem>
           </>
         )}
 
-        <ConfirmButton type='submit' onClick={handleSubmit} text="분석 결과 확인하기" textAlign="center" paddingLeft="0" color="#ffffff" backgroundColor="#6A0DAD"/>
+        <ConfirmButton type='submit' onClick={handleSubmit} text="분석 결과 확인하기" textAlign="center" paddingLeft="0" color="#ffffff" backgroundColor="#6A0DAD" />
       </Form>
     </Container>
   )
 }
 
-export default Test;
+export default Diagnosis;

@@ -175,10 +175,10 @@ const Join = () => {
     setPassword(value);
 
     const regex = /^(?=.*[a-zA-Z\d])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
-    const hasUpperCase = /[A-Z]/.test(value);
-    const hasLowerCase = /[a-z]/.test(value);
-    const hasDigit = /\d/.test(value);
-    const hasSpecialChar = /[@$!%*?&]/.test(value);
+    const hasUpperCase = /[A-Z]/.diagnosis(value);
+    const hasLowerCase = /[a-z]/.diagnosis(value);
+    const hasDigit = /\d/.diagnosis(value);
+    const hasSpecialChar = /[@$!%*?&]/.diagnosis(value);
 
     if ((hasUpperCase + hasLowerCase + hasDigit + hasSpecialChar >= 2) && value.length >= 10) {
       setPasswordValid(true);
@@ -200,7 +200,7 @@ const Join = () => {
   };
 
   const handleEmailBlur = () => {
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+    if (!email || !/\S+@\S+\.\S+/.diagnosis(email)) {
       setEmailError('올바른 이메일 형식을 입력해주세요.');
     } else {
       setEmailError('');
@@ -228,7 +228,7 @@ const Join = () => {
         setPasswordError('대문자/소문자, 특수기호, 숫자 중 최소 두 가지를 포함하여 10자 이상 입력해주세요.');
         return;
       }
-      if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      if (!email || !/\S+@\S+\.\S+/.diagnosis(email)) {
         setEmailError('올바른 이메일 형식을 입력해주세요.');
         return;
       }
