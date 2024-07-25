@@ -52,6 +52,7 @@ const RadioLabel = styled.label`
   font-weight: 400;
   color: #000000;
   padding: 0 50px 0 0;
+  cursor: pointer;
 `
 
 const RadioInput = styled.input`
@@ -63,6 +64,7 @@ const RadioInput = styled.input`
   outline: none;
   border-radius: 50%;
   margin: 10px 10px 0 0;
+  cursor: pointer;
 
   &:checked {
     background-color: #000000;
