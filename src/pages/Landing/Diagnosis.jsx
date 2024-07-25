@@ -145,8 +145,8 @@ const Diagnosis = () => {
       console.log(response)
       console.log('진단테스트가 완료되었습니다.');
       navigate('/joinSuccess');
-    } catch {
-      console.error('messages: ', response.messages)
+    } catch (error) {
+      console.error('message: ', error.message);
       alert('진단테스트 저장에 실패했습니다.')
     }
 
