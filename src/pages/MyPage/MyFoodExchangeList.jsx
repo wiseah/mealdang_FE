@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiLink } from 'react-icons/bi';
 import FoodExchangeListModal from '../Landing/FoodExchangeListModal';
+import getFoodExchangeList from '../../APIs/get/getFoodExchangeList';
+
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -18,9 +20,9 @@ const Words = styled.div`
 
 const Words1 = styled.div`
   color: #6A0DAD;
-  font-size: 30px;
+  font-size: 27px;
   font-weight: 400;
-  margin: 42px auto;
+  margin: 42px 18px;
 `
 
 const PointWords = styled.span`
@@ -30,9 +32,8 @@ const PointWords = styled.span`
 const Words2 = styled.div`
   font-size: 22px;
   font-weight: 400;
-  margin: 21px auto;
+  margin: 21px 18px;
 `
-
 
 const ExchangeList = styled.div`
   background-color: #E6E6FA;
@@ -43,7 +44,6 @@ const ExchangeList = styled.div`
   box-shadow: 0px 4px 4px #B7B7B7;
   font-family: 'WavvePADO-Regular';
   font-size: 30px;
-
 `
 
 const ListItems = styled.li`
@@ -65,40 +65,65 @@ const Start = styled.button`
   font-family: 'WavvePADO-Regular';
   color: #ffffff;
   text-align: center;
+  cursor: pointer;
 `
 
-const MyFoodExchangeList = () => {
+const FoodExchangeList = () => {
   const navigate = useNavigate();
 
-  const [nickname, setNickname] = useState('')
-  const [daily_calorie, setDaily_calorie] = useState('');
-  const [grain, setGrain] = useState('');
-  const [fish_meat_low_fat, setFish_meat_low_fat] = useState('')
-  const [fish_meat_medium_fat, setFish_meat_medium_fat] = useState('');
-  const [vegetable, setVegetable] = useState('');
-  const [fat, setFat] = useState('')
-  const [dairy, setDairy] = useState('');
-  const [fruit, setFruit] = useState('');
-
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [content, setContent] = useState({
+    "nickname": "닉네임",
+    "energy_calorie": "?",
+    "grain": "?",
+    "fish_meat_low_fat": "?",
+    "fish_meat_medium_fat": "?",
+    "vegetable": "?",
+    "fat": "?",
+    "dairy": "?",
+    "fruit": "?",
+  })
+
+
+
+  useEffect(() => {
+    const fetchFoodExchangeListData = async () => {
+      try {
+
+        const response = await getFoodExchangeList();
+        setContent(response);
+
+        console.log(response);
+
+      } catch (error) {
+        console.error('message:', error.message);
+        alert('매칭되는 식품교환표를 찾지 못했습니다.');
+      }
+    };
+
+    fetchFoodExchangeListData();
+  }, []);
+
 
   return (
     <Container>
       <Words>
-        <Words1>{nickname}님의 하루 권장 섭취량은 <br /> <PointWords>{daily_calorie}Kcal</PointWords>입니다</Words1>
+        <Words1>{content.nickname}님의 하루 권장 섭취량은  <PointWords>{content.energy_calorie}Kcal</PointWords>입니다</Words1>
         <Words2>
-          식품교환표<BiLink size={19} color="black" onClick={() => setModalOpen(true)} />에 따른 식품군 당 <br /> 섭취량은..
+          식품교환표<BiLink size={19} color="black" onClick={() => setModalOpen(true)} />에 따른 식품군 당
+          <br /> 섭취량은..
         </Words2>
       </Words>
 
       <ExchangeList>
-        <ListItems>곡류군 {'\u00A0'}{'\u00A0'} {grain}</ListItems>
-        <ListItems>어육류군(저지방군) {'\u00A0'}{'\u00A0'} {fish_meat_low_fat}</ListItems>
-        <ListItems>어육류군(중지방군) {'\u00A0'}{'\u00A0'} {fish_meat_medium_fat}</ListItems>
-        <ListItems>채소군 {'\u00A0'}{'\u00A0'} {vegetable}</ListItems>
-        <ListItems>지방군 {'\u00A0'}{'\u00A0'} {fat}</ListItems>
-        <ListItems>우유군 {'\u00A0'}{'\u00A0'} {dairy}</ListItems>
-        <ListItems>과일군 {'\u00A0'}{'\u00A0'} {fruit}</ListItems>
+        <ListItems>곡류군 {'\u00A0'}{'\u00A0'} {content.grain}</ListItems>
+        <ListItems>어육류군(저지방군) {'\u00A0'}{'\u00A0'} {content.fish_meat_low_fat}</ListItems>
+        <ListItems>어육류군(중지방군) {'\u00A0'}{'\u00A0'} {content.fish_meat_medium_fat}</ListItems>
+        <ListItems>채소군 {'\u00A0'}{'\u00A0'} {content.vegetable}</ListItems>
+        <ListItems>지방군 {'\u00A0'}{'\u00A0'} {content.fat}</ListItems>
+        <ListItems>우유군 {'\u00A0'}{'\u00A0'} {content.dairy}</ListItems>
+        <ListItems>과일군 {'\u00A0'}{'\u00A0'} {content.fruit}</ListItems>
       </ExchangeList>
 
       <Words>
@@ -107,10 +132,14 @@ const MyFoodExchangeList = () => {
         </Words2>
       </Words>
 
+
+      <Start onClick={() => navigate('/main')}>밀당 시작하기</Start>
+
+
       {modalOpen && <FoodExchangeListModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />}
 
     </Container >
   )
 }
 
-export default MyFoodExchangeList;
+export default FoodExchangeList;
