@@ -1,7 +1,7 @@
 import Main from "./pages/Main/Main";
 import Login from "./pages/Landing/Login";
 import Sitemap from "./pages/Sitemap";
-import Test from "./pages/Landing/Test";
+import Diagnosis from "./pages/Landing/Diagnosis";
 import FoodExchangeList from "./pages/Landing/FoodExchangeList";
 import Landing from "./pages/Landing/Landing";
 import Join from "./pages/Landing/Join";
@@ -12,6 +12,9 @@ import DiethonMain from "./pages/Diethon/DiethonMain";
 import MyPage from "./pages/MyPage/MyPage";
 import MyInfo from "./pages/MyPage/MyInfo";
 import MyFoodExchangeList from './pages/MyPage/MyFoodExchangeList';
+import AfterMain from "./pages/Main/AfterMain";
+import FoodBookMark from "./pages/MyPage/FoodBookMark";
+import FoodDetail from "./pages/Main/FoodDetail";
 
 const routes = [
     {
@@ -34,8 +37,8 @@ const routes = [
         footer: false,
     },
     {
-        path: '/test',
-        element: <Test />,
+        path: '/diagnosis',
+        element: <Diagnosis />,
         name: '03. 진단테스트 페이지',
         previous: '/login',
         footer: false,
@@ -44,7 +47,7 @@ const routes = [
         path: '/foodexchangelist',
         element: <FoodExchangeList />,
         name: '04. 식품교환표 페이지',
-        previous: '/test',
+        previous: '/diagnosis',
         footer: false,
     },
     {
@@ -104,7 +107,23 @@ const routes = [
         path: '/myfoodexchangelist',
         element: <MyFoodExchangeList />,
         name: '13. 내 식품교환표 페이지',
-        previous: '/mypage',
+    },
+    {
+        path: '/aftermain',
+        element: <AfterMain/>,
+        name: '14. 식단 추천 이후의 메인페이지',
+        previous: false,
+    },
+    {
+        path: '/foodbookmark',
+        element: <FoodBookMark/>,
+        name: '15. 추천 식단 즐겨찾기',
+    },
+    {
+        path: '/foodDetail',
+        element: <FoodDetail/>,
+        name: '16. 식단 상세 페이지 ',
+        previous: false,
     },
 ]
 

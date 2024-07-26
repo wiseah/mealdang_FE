@@ -11,7 +11,6 @@ const ModalContainer = styled.div`
   min-height:100vh;
   background-color: rgba(0,0,0,0.7);
   backdrop-filter: blur(6px);
-  margin: 155px auto;
   color: black;
   font-size: 30px;
   align-items: center;
@@ -24,7 +23,7 @@ const ModalContent = styled.div`
   padding: 20px;
   border-radius: 15px 15px 0 0;
   border: none;
-  margin: 50px 0 0 0;
+  margin-top: 150px;
 `;
 
 
@@ -32,6 +31,7 @@ const AgreeAllLabel = styled.label`
   font-family: 'WavvePADO-Regular';
   font-size: 24px;
   color: #000000;
+  cursor: pointer;
 `;
 
 const AgreeAllCheckbox = styled.input`
@@ -43,6 +43,7 @@ const AgreeAllCheckbox = styled.input`
   border-radius: 4px;
   vertical-align: middle;
   margin: 0 10px 2px 0;
+  cursor: pointer;
 
   &:checked {
     background-color: #000000;
@@ -86,10 +87,11 @@ const AgreeButton = styled.button`
   background-color: #E6E6FF;
   color: #6A0DAD;
   border: none;
-  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
   font-family: 'WavvePADO-Regular';
   font-size: 20px;
   z-index: 1;
+  cursor: pointer;
 `;
 
 const DisagreeButton = styled.button`
@@ -104,6 +106,7 @@ const DisagreeButton = styled.button`
   color: #6A0DAD ;
   width: 70px;
   height: 30px;
+  cursor: pointer;
 `;
 
 
@@ -171,7 +174,7 @@ const PrivacyTermsModal = ({ isOpen, onClose, onAgree }) => {
         <AgreeAllSection/>
         <TermDetail />
       </ModalContent>
-      <AgreeButton onClick={onAgree}>회원가입 완료</AgreeButton>
+      <AgreeButton onClick={onAgree}>완료</AgreeButton>
       <DisagreeButton onClick={onClose}>취소</DisagreeButton>
     </ModalContainer>
 
@@ -179,3 +182,4 @@ const PrivacyTermsModal = ({ isOpen, onClose, onAgree }) => {
 };
 
 export default PrivacyTermsModal;
+
