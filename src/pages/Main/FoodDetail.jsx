@@ -57,7 +57,7 @@ const UploadedImage = styled.img`
     left: 0;
 `;
 
-export function FoodDetail(){
+export default function FoodDetail(){
     const [uploadImage, setUploadImage] = useState();
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);
