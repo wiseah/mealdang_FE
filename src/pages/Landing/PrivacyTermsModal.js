@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const ModalContainer = styled.div`
@@ -31,7 +31,6 @@ const AgreeAllLabel = styled.label`
   font-family: 'WavvePADO-Regular';
   font-size: 24px;
   color: #000000;
-  cursor: pointer;
 `;
 
 const AgreeAllCheckbox = styled.input`
@@ -43,7 +42,6 @@ const AgreeAllCheckbox = styled.input`
   border-radius: 4px;
   vertical-align: middle;
   margin: 0 10px 2px 0;
-  cursor: pointer;
 
   &:checked {
     background-color: #000000;
@@ -91,7 +89,6 @@ const AgreeButton = styled.button`
   font-family: 'WavvePADO-Regular';
   font-size: 20px;
   z-index: 1;
-  cursor: pointer;
 `;
 
 const DisagreeButton = styled.button`
@@ -106,14 +103,17 @@ const DisagreeButton = styled.button`
   color: #6A0DAD ;
   width: 70px;
   height: 30px;
-  cursor: pointer;
 `;
 
 
-const AgreeAllSection = () => (
+const AgreeAllSection = ({ checked, setChecked }) => (
   <div>
     <AgreeAllLabel>
-      <AgreeAllCheckbox type="checkbox"/> 전체 동의하기
+      <AgreeAllCheckbox 
+        type="checkbox" 
+        checked={checked} 
+        onChange={(e)=> setChecked(e.target.checked)}
+        /> 전체 동의하기
     </AgreeAllLabel>
     <TermsList>
       <TermItem>
@@ -166,15 +166,25 @@ const TermDetail = () => (
 
 
 const PrivacyTermsModal = ({ isOpen, onClose, onAgree }) => {
+  const [checked, setChecked] = useState(false)
+
+  const handleAgreeButtonClick = () => {
+    if (checked) {
+      onAgree();
+    } else {
+      alert('전체 동의 후 진행해주세요.')
+    }
+  }
+
   if (!isOpen) return null;
 
   return (
     <ModalContainer>
       <ModalContent>
-        <AgreeAllSection/>
+        <AgreeAllSection checked={checked} setChecked={setChecked} />
         <TermDetail />
       </ModalContent>
-      <AgreeButton onClick={onAgree}>완료</AgreeButton>
+      <AgreeButton onClick={handleAgreeButtonClick}>완료</AgreeButton>
       <DisagreeButton onClick={onClose}>취소</DisagreeButton>
     </ModalContainer>
 
@@ -182,4 +192,3 @@ const PrivacyTermsModal = ({ isOpen, onClose, onAgree }) => {
 };
 
 export default PrivacyTermsModal;
-
