@@ -13,12 +13,14 @@ const StyledButton = styled.button`
   font-family: 'WavvePADO-Regular';
   color: #ffffff;
   text-align: center;
+  background-color: ${(props) => (props.disabled ? '#CCCCCC' : '#6A0DAD')};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 `
 
 
-const SubmitButton = ({ onClick, ...props }) => {
+const SubmitButton = ({ onClick, disabled, ...props }) => {
     return (
-        <StyledButton {...props} onClick={onClick} />
+        <StyledButton onClick={onClick} disabled={disabled} {...props} />
     );
 };
 

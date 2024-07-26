@@ -1,7 +1,7 @@
 import Main from "./pages/Main/Main";
 import Login from "./pages/Landing/Login";
 import Sitemap from "./pages/Sitemap";
-import Test from "./pages/Landing/Test";
+import Diagnosis from "./pages/Landing/Diagnosis";
 import FoodExchangeList from "./pages/Landing/FoodExchangeList";
 import Landing from "./pages/Landing/Landing";
 import Join from "./pages/Landing/Join";
@@ -15,6 +15,9 @@ import MyFoodExchangeList from './pages/MyPage/MyFoodExchangeList';
 import AfterMain from "./pages/Main/AfterMain";
 import GrapeExchange  from "./pages/MyPage/GrapeExchange";
 import GraepUse from "./pages/MyPage/GrapeUse";
+import FoodBookMark from "./pages/MyPage/FoodBookMark";
+import FoodDetail from "./pages/Main/FoodDetail";
+
 
 const routes = [
     {
@@ -37,8 +40,8 @@ const routes = [
         footer: false,
     },
     {
-        path: '/test',
-        element: <Test />,
+        path: '/diagnosis',
+        element: <Diagnosis />,
         name: '03. 진단테스트 페이지',
         previous: '/login',
         footer: false,
@@ -47,7 +50,7 @@ const routes = [
         path: '/foodexchangelist',
         element: <FoodExchangeList />,
         name: '04. 식품교환표 페이지',
-        previous: '/test',
+        previous: '/diagnosis',
         footer: false,
     },
     {
@@ -115,6 +118,17 @@ const routes = [
         previous: false,
     },
     {
+        path: '/foodbookmark',
+        element: <FoodBookMark/>,
+        name: '15. 추천 식단 즐겨찾기',
+    },
+    {
+        path: '/foodDetail',
+        element: <FoodDetail/>,
+        name: '16. 식단 상세 페이지 ',
+        previous: false,
+    },
+    {
         path: '/grapeexchange',
         element: <GrapeExchange/>,
         name: '17. 포도 사용 페이지',
@@ -124,7 +138,6 @@ const routes = [
         path: '/grapeuse',
         element: <GraepUse/>,
         name: '18. 포도 내역 페이지',
-        previous: false,
     },
 ]
 
