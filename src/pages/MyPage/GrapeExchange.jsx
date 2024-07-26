@@ -1,7 +1,9 @@
 import styled from "styled-components";
 import { IoMdArrowForward } from "react-icons/io";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import React from "react";
+
 
 const Container = styled.div`
     display: flex;
@@ -106,15 +108,22 @@ const ExchangeBtn = styled.div`
     cursor: pointer;
 `
 
-export function GrapeExchange({ name, initialAmount }) {
+export default function GrapeExchange({ name, initialAmount }) {
     const navigate = useNavigate();
-
-    // const handleNavigate = () => {
-            // navigate(''); 
-    // };
     
     // 포도 갯수
-    const [amount, setAmount] = useState(initialAmount);
+    const [amount, setAmount] = useState(10000);
+    const [exchangeHistory, setExchangeHistory] = useState([]);
+    const [totalUsed, setTotalUsed] = useState(0);
+
+    const handleNavigate = () => {
+        navigate('/GrapeUse', { 
+            state: { 
+                history: exchangeHistory, 
+                currentAmount : amount, 
+                totalUsed: totalUsed 
+            } }); 
+        };
 
     const coupons = [        
         { title: "밀당 프리미엄 구독권 30% 할인권", cost: 3000 },
@@ -126,10 +135,21 @@ export function GrapeExchange({ name, initialAmount }) {
         ];
 
 // 일단 교환 기능 alert로 구현
-    const Exchange = (cost) => {
-        if (amount >= cost) {
-            setAmount(amount - cost);
-            alert(`쿠폰이 교환되었습니다. 남은 포도: ${amount - cost}개`);
+    const Exchange = (cost,title) => {
+        if (amount >= cost) { 
+            const newAmount = amount - cost;
+            setAmount(newAmount);
+            setTotalUsed(prevTotal => prevTotal + cost);
+            setExchangeHistory(prevHistory =>{ 
+                const updatedHistory = [
+                ...prevHistory,
+                {title, cost, present: newAmount, date: new Date().toLocaleDateString()}
+            ];
+            console.log('Updated History:', updatedHistory)
+            return updatedHistory;
+            
+        });
+            alert("쿠폰이 교환되었습니다.");
         } else {
             alert("포도가 부족합니다.");
         }
@@ -139,12 +159,11 @@ export function GrapeExchange({ name, initialAmount }) {
         <Container>
             <UserContainer>
                 <UserText>
-                    승민님은{' '}<ColorWord>총 80개의 포도</ColorWord>를
-                    <br />
+                    {name}님은{' '}<ColorWord>총 {amount}개의 포도</ColorWord>를
+                    <br/>
                     사용할 수 있습니다.
                 </UserText>
-                {/* <GrapeUse onClick={handleNavigate}> */}
-                <GrapeUse>
+                <GrapeUse onClick={handleNavigate}>
                     <GrapeUseText>포도 교환 내역 확인하기</GrapeUseText><GrapeUseIcon />
                 </GrapeUse>
             </UserContainer>
@@ -156,7 +175,7 @@ export function GrapeExchange({ name, initialAmount }) {
                         </ExchangeTitle>
                         <RightSection>
                             <Grape>{coupon.cost}포도</Grape>
-                            <ExchangeBtn onClick={() => Exchange(coupon.cost)}>교환</ExchangeBtn>
+                            <ExchangeBtn onClick={() => Exchange(coupon.cost, coupon.title)}>교환</ExchangeBtn>
                         </RightSection>
                     </CouponContainer>
                 ))}
