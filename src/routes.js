@@ -13,8 +13,11 @@ import MyPage from "./pages/MyPage/MyPage";
 import MyInfo from "./pages/MyPage/MyInfo";
 import MyFoodExchangeList from './pages/MyPage/MyFoodExchangeList';
 import AfterMain from "./pages/Main/AfterMain";
+import GrapeExchange  from "./pages/MyPage/GrapeExchange";
+import GraepUse from "./pages/MyPage/GrapeUse";
 import FoodBookMark from "./pages/MyPage/FoodBookMark";
 import FoodDetail from "./pages/Main/FoodDetail";
+
 
 const routes = [
     {
@@ -124,6 +127,17 @@ const routes = [
         element: <FoodDetail/>,
         name: '16. 식단 상세 페이지 ',
         previous: false,
+    },
+    {
+        path: '/grapeexchange',
+        element: <GrapeExchange/>,
+        name: '17. 포도 사용 페이지',
+        previous: false,
+    },
+    {
+        path: '/grapeuse',
+        element: <GraepUse/>,
+        name: '18. 포도 내역 페이지',
     },
 ]
 
