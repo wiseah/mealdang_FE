@@ -1,13 +1,15 @@
 import axiosInstance from "../axiosInstance";  
-  
-export default async function join(id){
+
+
+export default async function postIdCheck(id){
   try {
+
       const response = await axiosInstance.post(
           `/api/accounts/id-check/`,
           {
               id: id,
           }
-      )
+        );
       return response.data;
   } catch (error) {
     console.error('아이디 중복 체크 요청 실패:', error);
