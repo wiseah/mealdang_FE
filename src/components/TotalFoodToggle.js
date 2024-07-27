@@ -15,16 +15,6 @@ export function TotalFoodToggle(){
         { name: '어육류군', quantity: 3 },
     ];
 
-    // 소개글
-    const Introduce = styled.span`
-    width: 264px;
-    height: 70px;
-    color: #3F006C;
-    text-align: center;
-    font-family: "Wavve PADO TTF";
-    font-size: 30px;
-    font-weight: 400;
-    `
 
     // 총 식품군
     const TotalFood = styled.div`
@@ -49,6 +39,7 @@ export function TotalFoodToggle(){
     height: 24px;
     margin:auto 14px auto auto;
     cursor: pointer;
+    
     `
 
     const TotalFoodContainer = styled.div`
@@ -83,7 +74,6 @@ export function TotalFoodToggle(){
 
     return(
         <>
-        <Introduce>추천 식단 만들어먹고 인증까지 해보세요!</Introduce>
             <TotalFood>
                 <TotalFoodTitle>총 식품군</TotalFoodTitle>
                 <TotalFoodIcon onClick={handleTotalToggle}>
