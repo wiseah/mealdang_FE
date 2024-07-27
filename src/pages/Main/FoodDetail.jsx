@@ -13,8 +13,18 @@ const Container = styled.div`
     align-items: center;
 
 `
-// 공통 사용 
 
+// 소개글
+const Introduce = styled.span`
+width: 264px;
+height: 70px;
+color: #3F006C;
+text-align: center;
+font-family: "Wavve PADO TTF";
+font-size: 30px;
+font-weight: 400;
+
+`
 
 
 // 사진 업로드
@@ -52,7 +62,7 @@ const UploadedImage = styled.img`
     width: 100%;
     height: 100%;
     border-radius: 15px;
-    position: absolute; /* PictureContainer 내에서 위치 조정을 위한 absolute 설정 */
+    position: absolute; 
     top: 0;
     left: 0;
 `;
@@ -89,6 +99,7 @@ export default function FoodDetail(){
 
     return(
         <Container>
+            <Introduce>추천 식단 만들어먹고 인증까지 해보세요!</Introduce>
             <TotalFoodToggle/>
             <FoodToggle/>
             <PictureContainer onClick={triggerFileInput}>
