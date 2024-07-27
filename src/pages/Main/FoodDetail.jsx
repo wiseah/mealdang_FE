@@ -23,6 +23,7 @@ text-align: center;
 font-family: "Wavve PADO TTF";
 font-size: 30px;
 font-weight: 400;
+
 `
 
 
