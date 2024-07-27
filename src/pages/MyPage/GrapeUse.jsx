@@ -17,7 +17,6 @@ const Introduce = styled.div`
     align-self: flex-start;
     margin-left: 27px;
     margin-bottom: 18px;
-    
 `
 
 // 포도 사용 현황 
