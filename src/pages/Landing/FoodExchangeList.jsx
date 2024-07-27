@@ -42,7 +42,6 @@ const ExchangeList = styled.div`
   box-shadow: 0px 4px 4px #B7B7B7;
   font-family: 'WavvePADO-Regular';
   font-size: 30px;
-
 `
 
 const ListItems = styled.li`
@@ -87,7 +86,7 @@ const FoodExchangeList = () => {
       <Words>
         <Words1>{nickname}님의 하루 권장 섭취량은 <br /> <PointWords>{daily_calorie}Kcal</PointWords>입니다</Words1>
         <Words2>
-          식품교환표<BiLink size={19} color="black" onClick={() => setModalOpen(true)} />에 따른 식품군 당
+          식품교환표<BiLink size={19} color="black" onClick={() => setModalOpen(true)} cursor="pointer" />에 따른 식품군 당
           <br /> 섭취량은..
         </Words2>
       </Words>
