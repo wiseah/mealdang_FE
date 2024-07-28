@@ -17,8 +17,8 @@ import GrapeExchange  from "./pages/MyPage/GrapeExchange";
 import GraepUse from "./pages/MyPage/GrapeUse";
 import FoodBookMark from "./pages/MyPage/FoodBookMark";
 import FoodDetail from "./pages/Main/FoodDetail";
+import FoodRegistration from "./pages/MyPage/FoodRegistraition";
 import FavoriteFoodDetail from "./pages/MyPage/FavoriteFoodDetail";
-
 
 const routes = [
     {
@@ -133,17 +133,23 @@ const routes = [
         path: '/grapeexchange',
         element: <GrapeExchange/>,
         name: '17. 포도 사용 페이지',
-        previous: false,
+        previous: '/mypage',
     },
     {
         path: '/grapeuse',
         element: <GraepUse/>,
         name: '18. 포도 내역 페이지',
+        previous: '/grapeexchange',
     },
     {
         path: '/favoritefooddetail',
         element: <FavoriteFoodDetail/>,
         name: '19. 즐겨찾기 식단 상세보기 페이지',
+    },
+    {
+        path: '/foodregistration',
+        element: <FoodRegistration/>,
+        name: '20. 나만의 식단 등록하기',
     },
 ]
 
