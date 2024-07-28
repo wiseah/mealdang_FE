@@ -1,12 +1,12 @@
 import axiosInstance from "../axiosInstance";
 
-export default async function join(nickname, member_id, password, email){
+export default async function join(nickname, id, password, email){
     try {
         const response = await axiosInstance.post(
             `/api/accounts/join/`,
             {
                 nickname: nickname,
-                member_id: member_id,
+                id: id,
                 password: password,
                 email: email
             }

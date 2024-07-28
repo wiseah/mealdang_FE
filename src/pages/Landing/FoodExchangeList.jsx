@@ -94,7 +94,7 @@ const FoodExchangeList = () => {
         const response = await getFoodExchangeList();
         setContent(response);
 
-        console.log(response);
+        console.log(content);
 
       } catch (error) {
         console.error('message:', error.message);
