@@ -17,6 +17,7 @@ import GrapeExchange  from "./pages/MyPage/GrapeExchange";
 import GraepUse from "./pages/MyPage/GrapeUse";
 import FoodBookMark from "./pages/MyPage/FoodBookMark";
 import FoodDetail from "./pages/Main/FoodDetail";
+import FavoriteFoodDetail from "./pages/MyPage/FavoriteFoodDetail";
 
 
 const routes = [
@@ -138,6 +139,11 @@ const routes = [
         path: '/grapeuse',
         element: <GraepUse/>,
         name: '18. 포도 내역 페이지',
+    },
+    {
+        path: '/favoritefooddetail',
+        element: <FavoriteFoodDetail/>,
+        name: '19. 즐겨찾기 식단 상세보기 페이지',
     },
 ]
 
