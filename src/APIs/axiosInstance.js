@@ -10,7 +10,7 @@ axiosInstance.interceptors.request.use(
     config => {
         const accessToken = sessionStorage.getItem('accessToken');
         if (accessToken) {
-            config.headers['Authorization'] = `Bearer ${accessToken}`;
+            config.headers['Authorization'] = accessToken;
         }
         return config;
     },
@@ -21,7 +21,7 @@ axiosInstance.interceptors.request.use(
 
 axiosInstance.interceptors.response.use(
     response => response,
-    async function(error) {
+    async error => {
         const originalRequest = error.config;
     
         if (error.response.status === 401 && !originalRequest._retry) {
@@ -33,21 +33,19 @@ axiosInstance.interceptors.response.use(
                     throw new Error('리프레시 토큰이 없습니다.');
                 }
 
-                const refreshResponse = await axiosInstance.get('/api/user/refresh', {
-                    params: {
+                const refreshResponse = await axiosInstance.post('/api/accounts/refresh/', {
                         refresh: refreshToken
                     }
-                });
+                )
+                const newAccessToken = refreshResponse.data.access_token;
+                console.log(newAccessToken)
         
-                const newAccessToken = refreshResponse.data.access;
+                sessionStorage.setItem('accessToken', `Bearer ${newAccessToken}`);
         
-                sessionStorage.setItem('accessToken', newAccessToken);
-        
-                originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-        
+                originalRequest.headers['Authorization'] = newAccessToken;
                 return axiosInstance(originalRequest);
             } catch (refreshError) {
-                if (refreshError.response && refreshError.response.status === 401) {
+                if (refreshError.response && refreshError.response.status === 407) {
                     // 리프레시 토큰 만료 또는 잘못된 경우
                     sessionStorage.removeItem('accessToken');
                     Cookies.remove('refreshToken');

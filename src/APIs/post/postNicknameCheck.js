@@ -1,13 +1,15 @@
 import axiosInstance from "../axiosInstance";  
-  
-export default async function join(nickname){
+
+
+export default async function postNicknameCheck(nickname){
   try {
+
       const response = await axiosInstance.post(
           `/api/accounts/nickname-check/`,
           {
               nickname: nickname,
           }
-      )
+      );
       return response.data;
   } catch (error) {
     console.error('닉네임 중복 체크 요청 실패:', error);

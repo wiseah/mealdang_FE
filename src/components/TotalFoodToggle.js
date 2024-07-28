@@ -39,6 +39,7 @@ export function TotalFoodToggle(){
     height: 24px;
     margin:auto 14px auto auto;
     cursor: pointer;
+    
     `
 
     const TotalFoodContainer = styled.div`

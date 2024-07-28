@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import SubmitButton from "../../components/SubmitButton";
 import login from '../../APIs/post/login.js';
 import Cookies from 'js-cookie';
-import getUserInfo from '../../APIs/get/getUserInfo.js';
+
 
 const Container = styled.div`
   display: flex;
@@ -70,13 +70,14 @@ const Login = () => {
     } else if (!password) {
       alert('비밀번호를 입력해야 합니다.')
       return;
-    } else if (id !== 'id') {
-      alert('회원이 아닙니다.')
-      return;
-    } else if (password !== 'password') {
-      alert('비밀번호가 틀렸습니다.')
-      return;
     } 
+    // else if (id !== 'id') {
+    //   alert('회원이 아닙니다.')
+    //   return;
+    // } else if (password !== 'password') {
+    //   alert('비밀번호가 틀렸습니다.')
+    //   return;
+    // } 
     
     // 리코일에 최초 로그인 시 진단테스트로 가는 거 추가해야 함
     // else {
@@ -85,14 +86,12 @@ const Login = () => {
 
 
       const response = await login(id, password);
-      const accessToken = response.accessToken;
-      const refreshToken = response.refreshToken;
+      const accessToken = response.access_token;
+      console.log(accessToken)
+      const refreshToken = response.refresh_token;
 
-      sessionStorage.setItem('accessToken', `Coffee ${accessToken}`, { expires: 7 });
-      Cookies.set('refreshToken', `Coffee ${refreshToken}`, { expires: 7 });
-
-      const userInfo = await getUserInfo();
-      sessionStorage.setItem("userName", userInfo.userName);
+      sessionStorage.setItem('accessToken', `Bearer ${accessToken}`);
+      Cookies.set('refreshToken', refreshToken, { expires: 14 });
 
       navigate('/main'); // 로그인 성공 시 메인 페이지로 이동
     } catch (error) {
