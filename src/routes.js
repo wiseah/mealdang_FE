@@ -17,6 +17,7 @@ import GrapeExchange  from "./pages/MyPage/GrapeExchange";
 import GraepUse from "./pages/MyPage/GrapeUse";
 import FoodBookMark from "./pages/MyPage/FoodBookMark";
 import FoodDetail from "./pages/Main/FoodDetail";
+import FoodRegistration from "./pages/MyPage/FoodRegistraition";
 
 
 const routes = [
@@ -138,6 +139,11 @@ const routes = [
         path: '/grapeuse',
         element: <GraepUse/>,
         name: '18. 포도 내역 페이지',
+    },
+    {
+        path: '/foodregistration',
+        element: <FoodRegistration/>,
+        name: '20. 나만의 식단 등록하기',
     },
 ]
 
