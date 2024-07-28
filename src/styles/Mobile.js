@@ -160,7 +160,7 @@ const FOOTER_DEFAULT = true;
 const BACKWARD_DEFAULT = '/';
 
 // 특정 경로들과 연결된 페이지들도 버튼이 활성화되도록 경로 그룹을 정의
-const MAIN_GROUP = ['/main']; //각 그룹에 해당되는 주소 넣어야 그 페이지일때도 색 활성화
+const MAIN_GROUP = ['/main', '/aftermain', '/aftermain/foodDetail']; //각 그룹에 해당되는 주소 넣어야 그 페이지일때도 색 활성화
 const DIETHON_GROUP = ['/diethon'];
 const MYPAGE_GROUP = ['/mypage', '/myinfo', '/myfoodexchangelist', '/foodbookmark', '/grapeexchange', '/grapeuse']; 
 
