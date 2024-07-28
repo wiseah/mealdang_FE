@@ -123,7 +123,7 @@ const routes = [
         path: '/myfoodexchangelist',
         element: <MyFoodExchangeList />,
         name: '13. 내 식품교환표 페이지',
-        // previous: '/mypage',(현재 04. 식품교환표 페이지랑 13.내 식품교환표 페이지가 동일해서 밀당시작하기 버튼 빼면 다시 활성화시킬것)
+        previous: '/mypage',
     },
     {
         path: '/foodbookmark',
