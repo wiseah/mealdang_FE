@@ -117,7 +117,7 @@ export default function GrapeExchange({ name, initialAmount }) {
     const [totalUsed, setTotalUsed] = useState(0);
 
     const handleNavigate = () => {
-        navigate('/GrapeUse', { 
+        navigate('/grapeuse', { 
             state: { 
                 history: exchangeHistory, 
                 currentAmount : amount, 
