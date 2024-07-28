@@ -100,7 +100,7 @@ const Diagnosis = () => {
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
-  const [is_diabetes, setIs_diabetes] = useState('no');
+  const [is_diabetes, setIs_diabetes] = useState(false);
   const [fasting_blood_sugar, setFasting_blood_sugar] = useState('');
   const [post_meal_blood_sugar, setPost_meal_blood_sugar] = useState('');
 
@@ -123,7 +123,7 @@ const Diagnosis = () => {
 
   const handleIs_diabetesChange = (e) => {
     setIs_diabetes(e.target.value);
-    if (e.target.value === 'no') {
+    if (e.target.value === false) {
       setFasting_blood_sugar('');
       setPost_meal_blood_sugar('');
     }
@@ -134,19 +134,20 @@ const Diagnosis = () => {
     e.preventDefault();
 
     try {
-      if (!gender || !age || !height || !weight || (is_diabetes === 'yes' && !fasting_blood_sugar)) {
+
+      const response = await diagnosis(gender, age, height, weight, is_diabetes, fasting_blood_sugar, post_meal_blood_sugar)
+      console.log(response)
+      console.log('진단테스트가 완료되었습니다.');
+      navigate('/foodexchangelist');
+
+      if (!gender || !age || !height || !weight || (is_diabetes === true && !fasting_blood_sugar)) {
         alert('필수 항목을 모두 입력하세요.');
       } else {
         console.log('data save success');
         navigate('/foodExchangeList');
       }
 
-      const response = await diagnosis(gender, age, height, weight, is_diabetes, fasting_blood_sugar, post_meal_blood_sugar)
-      console.log(response)
-      console.log('진단테스트가 완료되었습니다.');
-      navigate('/joinSuccess');
-    } catch (error) {
-      console.error('message: ', error.message);
+    } catch {
       alert('진단테스트 저장에 실패했습니다.')
     }
 
@@ -165,8 +166,8 @@ const Diagnosis = () => {
               <RadioInput
                 type="radio"
                 name="gender"
-                value="male"
-                checked={gender === 'male'}
+                value="남성"
+                checked={gender === '남성'}
                 onChange={handleGenderChange}
               /> 남성
             </RadioLabel>
@@ -174,8 +175,8 @@ const Diagnosis = () => {
               <RadioInput
                 type="radio"
                 name="gender"
-                value="female"
-                checked={gender === 'female'}
+                value="여성"
+                checked={gender === '여성'}
                 onChange={handleGenderChange}
               /> 여성
             </RadioLabel>
@@ -225,8 +226,8 @@ const Diagnosis = () => {
               <RadioInput
                 type="radio"
                 name="is_diabetes"
-                value="yes"
-                checked={is_diabetes === 'yes'}
+                value= "true"
+                checked={is_diabetes}
                 onChange={handleIs_diabetesChange}
               /> 예
             </RadioLabel>
@@ -234,15 +235,15 @@ const Diagnosis = () => {
               <RadioInput
                 type="radio"
                 name="is_diabetes"
-                value="no"
-                checked={is_diabetes === 'no'}
+                value="false"
+                checked={!is_diabetes}
                 onChange={handleIs_diabetesChange}
               /> 아니요
             </RadioLabel>
           </RadioContainer>
         </FormItem>
 
-        {is_diabetes === 'yes' && (
+        {is_diabetes === 'true' && (
           <>
             <FormItem>
               <ItemLabel>공복 혈당<RequireSpan>*</RequireSpan></ItemLabel>
