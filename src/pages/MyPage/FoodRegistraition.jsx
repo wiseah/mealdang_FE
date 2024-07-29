@@ -141,7 +141,7 @@ const UploadedImage = styled.img`
 `;
 
 const ConfirmButton = styled.button`
-    width: 350px;
+    width: 312px;
     height: 56px;
     border: none;
     border-radius: 10px;
