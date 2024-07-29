@@ -2,6 +2,8 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfirmButton from '../../components/ConfirmButton';
+import getMyInfo from '../../APIs/get/getMyInfo';
+import postNicknameCheck from '../../APIs/post/postNicknameCheck';
 
 
 const Container = styled.div`
@@ -38,6 +40,33 @@ const ItemLabel = styled.label`
 const RequireSpan = styled.span`
   color: red;
 `
+
+const InputDiv = styled.div`
+  position: relative;
+  align-items: center;
+`
+
+const CheckButton = styled.button`
+  position: absolute;
+  top: 22px;
+  right: 32px;
+  width: 60px;
+  height: 28px;
+  border: none;
+  background-color: #FF6A4A;
+  color: white;
+  font-size: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+`;
+
+const Message = styled.div`
+  width: 330px;
+  font-size: 12px;
+  margin: 5px 0 0 10px;
+  color: #FF6A4A;
+`;
+
 
 const RadioContainer = styled.div`
   display: flex;
@@ -119,12 +148,31 @@ const MyInfo = () => {
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
-  const [diabetes, setDiabetes] = useState('no');
+  const [is_diabetes, setIs_diabetes] = useState(false);
+
+  const [nicknameError, setNicknameError] = useState('');
 
 
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
   }
+
+  const handleNicknameCheck = async () => {
+    try {
+      const response = await postNicknameCheck(nickname)
+      console.log(response)
+
+      if (response.message === "사용할 수 있는 닉네임입니다.") {
+        setNicknameError('사용할 수 있는 닉네임입니다.');
+      } else {
+        setNicknameError('이 닉네임은 사용하실 수 없어요. 다른 닉네임을 입력해주세요.');
+      }
+    } catch (error) {
+      console.error('닉네임 중복 체크 요청 실패:', error);
+      setNicknameError('닉네임 중복 체크를 할 수 없습니다.');
+    }
+  };
+
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -142,38 +190,46 @@ const MyInfo = () => {
     setWeight(e.target.value);
   }
 
-  const handleDiabetesChange = (e) => {
-    setDiabetes(e.target.value);
+  const handleIs_diabetesChange = (e) => {
+    setIs_diabetes(e.target.value);
   };
 
-    // 데이터 불러오기
 
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!nickname || !gender || !age || !height || !weight || !diabetes) {
-      alert('필수 항목을 모두 입력하세요.');
-    } else {
-      
-      // 로컬 저장소에 데이터 저장
+    try {
 
-      console.log('Updated successfully.');
-      navigate('/my');
+      if (!nickname || !gender || !age || !height || !weight || !is_diabetes) {
+        alert('필수 항목을 모두 입력하세요.');
+      } else {
+
+        const response = await getMyInfo()
+        console.log(response)
+        console.log('정보 수정에 성공했습니다.');
+        navigate('/mypage');
+      }
+    } catch {
+      alert('정보 수정에 실패했습니다.')
     }
   }
+
 
   return (
     <Container>
       <Form>
         <FormItem>
           <ItemLabel htmlFor='nickname'>닉네임<RequireSpan>*</RequireSpan></ItemLabel>
-          <InputField
-            type='text'
-            id='nickname'
-            value={nickname}
-            onChange={handleNicknameChange}
-            required />
+          <InputDiv>
+            <InputField
+              type='text'
+              id='nickname'
+              value={nickname}
+              onChange={handleNicknameChange}
+              required />
+            <CheckButton onClick={handleNicknameCheck}>중복 확인</CheckButton>
+            {nicknameError && <Message>{nicknameError}</Message>}
+          </InputDiv>
         </FormItem>
         <FormItem>
           <ItemLabel>성별<RequireSpan>*</RequireSpan></ItemLabel>
@@ -182,8 +238,8 @@ const MyInfo = () => {
               <RadioInput
                 type="radio"
                 name="gender"
-                value="male"
-                checked={gender === 'male'}
+                value="남성"
+                checked={gender === '남성'}
                 onChange={handleGenderChange}
               /><Text>남성</Text>
             </RadioLabel>
@@ -191,8 +247,8 @@ const MyInfo = () => {
               <RadioInput
                 type="radio"
                 name="gender"
-                value="female"
-                checked={gender === 'female'}
+                value="여성"
+                checked={gender === '여성'}
                 onChange={handleGenderChange}
               /> <Text>여성</Text>
             </RadioLabel>
@@ -238,25 +294,25 @@ const MyInfo = () => {
             <RadioLabel>
               <RadioInput
                 type="radio"
-                name="diabetes"
-                value="yes"
-                checked={diabetes === 'yes'}
-                onChange={handleDiabetesChange}
+                name="is_diabetes"
+                value="true"
+                checked={is_diabetes}
+                onChange={handleIs_diabetesChange}
               /> <Text>예</Text>
             </RadioLabel>
             <RadioLabel>
               <RadioInput
                 type="radio"
-                name="diabetes"
-                value="no"
-                checked={diabetes === 'no'}
-                onChange={handleDiabetesChange}
+                name="is_diabetes"
+                value="false"
+                checked={!is_diabetes}
+                onChange={handleIs_diabetesChange}
               /> <Text>아니요</Text>
             </RadioLabel>
           </RadioContainer>
         </FormItem>
 
-        <ConfirmButton type='submit' onClick={handleSubmit} text="수정하기" color="#ffffff" backgroundColor="#FF6A4A"/>
+        <ConfirmButton type='submit' onClick={handleSubmit} text="수정하기" color="#ffffff" backgroundColor="#FF6A4A" />
       </Form>
     </Container>
   )
