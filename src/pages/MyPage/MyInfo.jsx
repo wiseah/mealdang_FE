@@ -15,12 +15,6 @@ const Container = styled.div`
   min-height: 100vh;
 `
 
-const Words = styled.div`
-  font-size: 22px;
-  font-weight: 400;
-  margin: 42px auto;
-`
-
 const Form = styled.form`
   display: flex;
   flex-direction: column;
