@@ -1,8 +1,9 @@
 import styled from "styled-components";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BiWinkSmile } from 'react-icons/bi';
 import ConfirmButton from "../../components/ConfirmButton";
+import getMyPage from "../../APIs/get/getMyPage";
 
 
 const Container = styled.div`
@@ -58,28 +59,42 @@ const LinkItem = styled.div`
 `
 
 
-const MyPage = ( onClick, text, color, backgroundColor) => {
+const MyPage = () => {
 
   const navigate = useNavigate();
 
   const [nickname, setNickname] = useState('');
-  const [subscribe, setSubscribe] = useState('미구독');
-  const [remained_podo, setRemained_podo] = useState('없음');
+  const [is_subscribe, setIs_Subscribe] = useState(false);
+  const [remained_podo, setRemained_podo] = useState('');
+
+  useEffect(()=> {
+    async function fetchData() {
+      try {
+        const data = await getMyPage();
+        setNickname(data.nickname);
+        setIs_Subscribe(data.is_subscribe);
+        setRemained_podo(data.remained_podo);
+      } catch (error) {
+        console.error('에러 발생: ', error)
+      }
+    }
+    fetchData();
+  }, [])
+
 
   const handleNavigateToNowhere = () => {
     alert ('해당 기능은 아직 사용할 수 없어요!')
-
   }
 
   return (
 
     <Container>
       <InfoContainer>
-        <IconWrapper><BiWinkSmile /></IconWrapper>
+        <IconWrapper/>
         <Info>
           오늘도 반가워요 <br />
           <PointSpan>{nickname}님</PointSpan> <br />
-          현재 등급: <PointSpan>{subscribe}</PointSpan> <br />
+          현재 등급: <PointSpan>{is_subscribe ? '구독자' : '비구독'}</PointSpan> <br />
           사용 가능 포도: <PointSpan>{remained_podo}</PointSpan>
         </Info>
       </InfoContainer>
@@ -87,9 +102,7 @@ const MyPage = ( onClick, text, color, backgroundColor) => {
         <LinkItem><ConfirmButton onClick={() => navigate('/myinfo')} text="내 정보" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem>
         <LinkItem><ConfirmButton onClick={() => navigate('/myfoodexchangelist')} text="내 식품교환표" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem>
         <LinkItem><ConfirmButton onClick={() => navigate('/foodbookmark')} text="추천 식단 즐겨찾기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem> 
-        {/* 이동주소로 변경필요 */}
         <LinkItem><ConfirmButton onClick={() => navigate('/grapeexchange')} text="포도 쓰러 가기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem> 
-        {/* 이동주소로 변경필요 */}
         <LinkItem><ConfirmButton onClick={handleNavigateToNowhere} text="프리미엄 구독하기" textAlign="left" paddingLeft="25px" color="#ffffff" backgroundColor="#6A0DAD" /></LinkItem>
         <LinkItem><ConfirmButton onClick={handleNavigateToNowhere} text="캐릭터 커스텀하러 가기" textAlign="left" paddingLeft="25px" color="#ffffff" backgroundColor="#6A0DAD" /></LinkItem>
       </LinkContainer>
