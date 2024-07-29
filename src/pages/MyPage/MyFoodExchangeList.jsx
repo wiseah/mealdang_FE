@@ -132,10 +132,6 @@ const FoodExchangeList = () => {
         </Words2>
       </Words>
 
-
-      <Start onClick={() => navigate('/main')}>밀당 시작하기</Start>
-
-
       {modalOpen && <FoodExchangeListModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />}
 
     </Container >
