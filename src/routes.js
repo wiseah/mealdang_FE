@@ -133,7 +133,7 @@ const routes = [
     },
     {
         path: '/foodbookmark/foodDetail',
-        element: <FoodDetail/>,
+        element: <FavoriteFoodDetail/>,
         name: '14-1. 식단 상세 페이지(마이페이지)',
         previous: '/foodbookmark',
     },
