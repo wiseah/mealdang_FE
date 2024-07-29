@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { LuGrape } from "react-icons/lu";
 import { useLocation } from "react-router-dom";
-import { useState } from "react";
 
 const Container = styled.div`
     display: flex;
@@ -9,11 +8,11 @@ const Container = styled.div`
     align-items: center;
 `
 const Introduce = styled.div`
-    width: 275px;
+    width: 300px;
     height: 23px;
     color: #000;
-    font-family: Inter;
-    font-size: 17px;
+    font-family: "Wavve PADO TTF";
+    font-size: 21px;
     font-weight: 400;
     align-self: flex-start;
     margin-left: 27px;

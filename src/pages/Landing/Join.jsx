@@ -133,12 +133,12 @@ const Join = () => {
   const navigate = useNavigate();
 
   const [nickname, setNickname] = useState('');
-  const [member_id, setMember_id] = useState('');
+  const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
   const [nicknameError, setNicknameError] = useState('');
-  const [member_idError, setMember_idError] = useState('');
+  const [idError, setIdError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [emailError, setEmailError] = useState('');
 
@@ -160,15 +160,15 @@ const Join = () => {
     }
   };
 
-  const handleMember_idChange = (e) => {
-    setMember_id(e.target.value);
+  const handleIdChange = (e) => {
+    setId(e.target.value);
   }
 
-  const handleMember_idBlur = () => {
-    if (!member_id) {
-      setMember_idError('아이디를 입력해주세요.');
+  const handleIdBlur = () => {
+    if (!id) {
+      setIdError('아이디를 입력해주세요.');
     } else {
-      setMember_idError('');
+      setIdError('');
     }
   };
 
@@ -177,10 +177,10 @@ const Join = () => {
     setPassword(value);
 
     const regex = /^(?=.*[a-zA-Z\d])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{10,}$/;
-    const hasUpperCase = /[A-Z]/.diagnosis(value);
-    const hasLowerCase = /[a-z]/.diagnosis(value);
-    const hasDigit = /\d/.diagnosis(value);
-    const hasSpecialChar = /[@$!%*?&]/.diagnosis(value);
+    const hasUpperCase = /[A-Z]/.test(value);
+    const hasLowerCase = /[a-z]/.test(value);
+    const hasDigit = /\d/.test(value);
+    const hasSpecialChar = /[@$!%*?&]/.test(value);
 
     if ((hasUpperCase + hasLowerCase + hasDigit + hasSpecialChar >= 2) && value.length >= 10) {
       setPasswordValid(true);
@@ -202,7 +202,7 @@ const Join = () => {
   };
 
   const handleEmailBlur = () => {
-    if (!email || !/\S+@\S+\.\S+/.diagnosis(email)) {
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
       setEmailError('올바른 이메일 형식을 입력해주세요.');
     } else {
       setEmailError('');
@@ -217,20 +217,27 @@ const Join = () => {
   const handleJoin = async (e) => {
     e.preventDefault();
 
+
     try {
+
+      const response = await join(nickname, id, password, email)
+      console.log(response)
+      console.log('회원가입이 완료되었습니다.');
+      navigate('/joinsuccess');
+
       if (!nickname) {
         setNicknameError('닉네임을 입력해주세요.');
         return;
       }
-      if (!member_id) {
-        setMember_idError('아이디를 입력해주세요.');
+      if (!id) {
+        setIdError('아이디를 입력해주세요.');
         return;
       }
       if (!password || !passwordValid) {
         setPasswordError('대문자/소문자, 특수기호, 숫자 중 최소 두 가지를 포함하여 10자 이상 입력해주세요.');
         return;
       }
-      if (!email || !/\S+@\S+\.\S+/.diagnosis(email)) {
+      if (!email || !/\S+@\S+\.\S+/.test(email)) {
         setEmailError('올바른 이메일 형식을 입력해주세요.');
         return;
       }
@@ -240,10 +247,10 @@ const Join = () => {
         return;
       }
 
-      const response = await join(nickname, member_id, password, email)
-      console.log(response)
-      console.log('회원가입이 완료되었습니다.');
-      navigate('/joinSuccess');
+      // const response = await join(nickname, member_id, password, email)
+      // console.log(response)
+      // console.log('회원가입이 완료되었습니다.');
+      // navigate('/joinsuccess');
 
     } catch {
         alert('회원가입에 실패했습니다.')
@@ -270,19 +277,19 @@ const Join = () => {
 
 
   // 아이디 중복 체크
-  const handleMember_idCheck = async () => {
+  const handleIdCheck = async () => {
     try {
-      const response = await postIdCheck(nickname)
+      const response = await postIdCheck(id)
       console.log(response)
 
       if (response.message === "사용할 수 있는 아이디입니다.") {
-        setMember_idError('사용할 수 있는 아이디입니다.');
+        setIdError('사용할 수 있는 아이디입니다.');
       } else {
-        setMember_idError('이 아이디는 사용하실 수 없어요. 다른 아이디를 입력해주세요.');
+        setIdError('이 아이디는 사용하실 수 없어요. 다른 아이디를 입력해주세요.');
       }
     } catch (error) {
       console.error('아이디 중복 체크 요청 실패:', error);
-      setMember_idError('아이디 중복 체크를 할 수 없습니다.');
+      setIdError('아이디 중복 체크를 할 수 없습니다.');
     }
   };
 
@@ -323,18 +330,18 @@ const Join = () => {
           </InputDiv>
         </FormItem>
         <FormItem>
-          <ItemLabel htmlFor='member_id'>아이디<RequireSpan>*</RequireSpan></ItemLabel>
+          <ItemLabel htmlFor='id'>아이디<RequireSpan>*</RequireSpan></ItemLabel>
           <InputDiv>
             <InputField
               type='text'
-              id='member_id'
-              value={member_id}
-              onChange={handleMember_idChange}
-              onBlur={handleMember_idBlur}
+              id='id'
+              value={id}
+              onChange={handleIdChange}
+              onBlur={handleIdBlur}
               placeholder="아이디"
               required />
-            <CheckButton onClick={handleMember_idCheck}>중복 확인</CheckButton>
-            {member_idError && <Message>{member_idError}</Message>}
+            <CheckButton onClick={handleIdCheck}>중복 확인</CheckButton>
+            {idError && <Message>{idError}</Message>}
           </InputDiv>
         </FormItem>
         <FormItem>
@@ -365,7 +372,7 @@ const Join = () => {
             required />
           {emailError && <Message>{emailError}</Message>}
         </FormItem>
-        <SubmitButton type='submit' disabled={!nickname || !member_id || !password || !email || !agree} onClick={handleJoin}>회원가입하기</SubmitButton>
+        <SubmitButton type='submit' disabled={!nickname || !id || !password || !email || !agree} onClick={handleJoin}>회원가입하기</SubmitButton>
 
         <FormItem>
           <AgreeLabel>

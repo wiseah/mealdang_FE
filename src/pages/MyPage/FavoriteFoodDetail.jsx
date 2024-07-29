@@ -3,28 +3,13 @@ import { useRef,useState,useEffect } from "react";
 import { BsImages } from "react-icons/bs";
 import { TotalFoodToggle } from "../../components/TotalFoodToggle";
 import { FoodToggle } from "../../components/FoodToggle";
-import { useNavigate } from "react-router-dom";
 
 // 전체 공간
 const Container = styled.div`
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
 `
-
-// 소개글
-const Introduce = styled.span`
-width: 264px;
-height: 70px;
-color: #3F006C;
-text-align: center;
-font-family: "Wavve PADO TTF";
-font-size: 30px;
-font-weight: 400;
-`
-
 
 // 사진 업로드
 const PictureContainer = styled.div`
@@ -66,7 +51,22 @@ const UploadedImage = styled.img`
     left: 0;
 `;
 
-export default function FoodDetail(){
+const Title = styled.div`
+    width : 284px;
+    height: 34px;
+    font-family: "Wavve PADO TTF";
+    font-size: 30px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    color: #6A0DAD;
+`
+const FoodDate = styled.div`
+    color: #000;
+    padding-right: 10px;
+`
+
+export default function FavoriteFoodDetail(){
     const [uploadImage, setUploadImage] = useState();
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);
@@ -98,7 +98,9 @@ export default function FoodDetail(){
 
     return(
         <Container>
-            <Introduce>추천 식단 만들어먹고 인증까지 해보세요!</Introduce>
+            <Title>
+                <FoodDate>2024.07.13</FoodDate>추천식단
+            </Title>
             <TotalFoodToggle/>
             <FoodToggle/>
             <PictureContainer onClick={triggerFileInput}>
