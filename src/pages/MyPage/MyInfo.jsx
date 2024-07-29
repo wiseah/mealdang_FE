@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfirmButton from '../../components/ConfirmButton';
+import myinfo from "../../APIs/patch/myinfo";
 
 
 const Container = styled.div`
@@ -119,7 +120,7 @@ const MyInfo = () => {
   const [age, setAge] = useState('');
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
-  const [diabetes, setDiabetes] = useState('no');
+  const [is_diabetes, setIs_Diabetes] = useState('no');
 
 
   const handleNicknameChange = (e) => {
@@ -142,26 +143,40 @@ const MyInfo = () => {
     setWeight(e.target.value);
   }
 
-  const handleDiabetesChange = (e) => {
-    setDiabetes(e.target.value);
+  const handleIs_DiabetesChange = (e) => {
+    setIs_Diabetes(e.target.value);
   };
 
     // 데이터 불러오기
 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!nickname || !gender || !age || !height || !weight || !diabetes) {
+    if (!nickname || !gender || !age || !height || !weight || !is_diabetes) {
       alert('필수 항목을 모두 입력하세요.');
     } else {
-      
-      // 로컬 저장소에 데이터 저장
+ 
 
       console.log('Updated successfully.');
-      navigate('/my');
+      navigate('/mypage');
     }
-  }
+
+    try {
+
+      const response = await myinfo (nickname,gender, age, height, weight, is_diabetes) 
+      console.log(response)
+      console.log('정보 수정이 완료되었습니다.');
+      navigate('/mypage');
+
+
+    } catch {
+        alert('정보 수정에 실패했습니다.')
+      }
+  };
+  
+
+
 
   return (
     <Container>
@@ -238,10 +253,10 @@ const MyInfo = () => {
             <RadioLabel>
               <RadioInput
                 type="radio"
-                name="diabetes"
+                name="is_diabetes"
                 value="yes"
-                checked={diabetes === 'yes'}
-                onChange={handleDiabetesChange}
+                checked={is_diabetes === 'yes'}
+                onChange={handleIs_DiabetesChange}
               /> <Text>예</Text>
             </RadioLabel>
             <RadioLabel>
@@ -249,8 +264,8 @@ const MyInfo = () => {
                 type="radio"
                 name="diabetes"
                 value="no"
-                checked={diabetes === 'no'}
-                onChange={handleDiabetesChange}
+                checked={is_diabetes === 'no'}
+                onChange={handleIs_DiabetesChange}
               /> <Text>아니요</Text>
             </RadioLabel>
           </RadioContainer>
