@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ConfirmButton from '../../components/ConfirmButton';
-import getMyInfo from '../../APIs/get/getMyInfo';
 import postNicknameCheck from '../../APIs/post/postNicknameCheck';
+import getMyInfo from '../../APIs/get/getMyInfo';
+import patchMyInfo from '../../APIs/patch/patchMyInfo';
 
 
 const Container = styled.div`
@@ -152,6 +153,24 @@ const MyInfo = () => {
 
   const [nicknameError, setNicknameError] = useState('');
 
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const data = await getMyInfo();
+        setNickname(data.nickname);
+        setGender(data.gender);
+        setAge(data.age);
+        setHeight(data.height);
+        setWeight(data.weight);
+        setIs_diabetes(data.is_diabetes);
+      } catch (error) {
+        console.error('정보 가져오기 실패:', error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
 
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
@@ -172,7 +191,6 @@ const MyInfo = () => {
       setNicknameError('닉네임 중복 체크를 할 수 없습니다.');
     }
   };
-
 
   const handleGenderChange = (e) => {
     setGender(e.target.value);
@@ -195,30 +213,29 @@ const MyInfo = () => {
   };
 
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-
-      if (!nickname || !gender || !age || !height || !weight || !is_diabetes) {
-        alert('필수 항목을 모두 입력하세요.');
-      } else {
-
-        const response = await getMyInfo()
-        console.log(response)
-        console.log('정보 수정에 성공했습니다.');
-        navigate('/mypage');
-      }
-    } catch {
-      alert('정보 수정에 실패했습니다.')
+    if (!nickname || !gender || !age || !height || !weight) {
+      alert('필수 항목을 모두 입력하세요.');
+      return;
     }
-  }
 
+    try {
+      await patchMyInfo(nickname, gender, age, height, weight, is_diabetes);
+      console.log('정보 수정에 성공했습니다.');
+      navigate('/mypage');
+    } catch (error) {
+      console.error('정보 수정 실패:', error);
+      alert('정보 수정에 실패했습니다.');
+    }
+  };
 
   return (
     <Container>
       <Form>
-        <FormItem>
+      <FormItem>
           <ItemLabel htmlFor='nickname'>닉네임<RequireSpan>*</RequireSpan></ItemLabel>
           <InputDiv>
             <InputField
@@ -312,7 +329,7 @@ const MyInfo = () => {
           </RadioContainer>
         </FormItem>
 
-        <ConfirmButton type='submit' onClick={handleSubmit} text="수정하기" color="#ffffff" backgroundColor="#FF6A4A" />
+        <ConfirmButton type='submit' onClick={handleSubmit} text="수정하기" color="#ffffff" backgroundColor="#FF6A4A"/>
       </Form>
     </Container>
   )
