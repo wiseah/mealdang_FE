@@ -7,6 +7,7 @@ import { BsImages } from "react-icons/bs";
 import { useState,useRef, useEffect } from "react";
 import DietToggle from "../../components/DietToggle";
 
+
 // 전체 공간 
 const Container = styled.div`
     display: flex;
@@ -139,6 +140,22 @@ const UploadedImage = styled.img`
     left: 0;
 `;
 
+const ConfirmButton = styled.button`
+    width: 350px;
+    height: 56px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0px 4px 4px #B7B7B7;
+    box-sizing: border-box;
+    font-size: 30px;
+    font-weight: 400;
+    font-family: 'Wavve PADO TTF';
+    margin-top: 20px;
+    cursor: pointer;
+    background: #FF6A4A;
+    color: #FFF;
+`
+
 export default function FoodRegistration(){
 
     const [MainToggled, setMainToggled] = useState(false);
@@ -268,7 +285,7 @@ export default function FoodRegistration(){
                 <PictureIcon/>
                 <PictureText>식단 인증 사진 업로드 하기 </PictureText>
             </PictureContainer>
-        <input type="file" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
+            <ConfirmButton>수정하기</ConfirmButton>
         </Container>
     )
 
