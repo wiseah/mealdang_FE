@@ -6,6 +6,9 @@ import { AiOutlineMinusSquare } from "react-icons/ai";
 import { BsImages } from "react-icons/bs";
 import { useState,useRef, useEffect } from "react";
 import DietToggle from "../../components/DietToggle";
+import postFoodRegistration from "../../APIs/post/postFoodRegistration";
+
+
 
 
 // 전체 공간 

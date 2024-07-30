@@ -3,7 +3,7 @@ import axiosInstance from "../axiosInstance";
 export default async function diagnosis (gender, age, height, weight, is_diabetes, fasting_blood_sugar, post_meal_blood_sugar){
     try {
         const response = await axiosInstance.patch(
-            '/api/accounts/diagnosis/',
+            `/api/accounts/diagnosis/`,
             {
               gender: gender,
               age: parseInt(age, 10), // 숫자로 변환
