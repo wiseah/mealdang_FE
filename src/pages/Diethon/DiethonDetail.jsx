@@ -1,27 +1,36 @@
 import styled from "styled-components";
-import { useRef,useState,useEffect } from "react";
-import { BsImages } from "react-icons/bs";
 import { TotalFoodToggle } from "../../components/TotalFoodToggle";
 import { FoodToggle } from "../../components/FoodToggle";
+import { AiTwotoneHeart } from "react-icons/ai";
+import { AiFillHeart } from "react-icons/ai";
+import { BsImages } from "react-icons/bs";
+import { useState,useRef,useEffect } from "react";
 
-// 전체 공간
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 `
-
-// 소개글
-const Introduce = styled.span`
-    width: 264px;
-    height: 70px;
-    color: #3F006C;
+const DietContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6A0DAD;
     text-align: center;
     font-family: "Wavve PADO TTF";
     font-size: 30px;
     font-weight: 400;
 `
 
+const LikeIcon = styled.div`
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 15px;
+`
 
 // 사진 업로드
 const PictureContainer = styled.div`
@@ -62,32 +71,32 @@ const UploadedImage = styled.img`
     top: 0;
     left: 0;
 `;
+export default function DiethonDetail(){
 
-export default function FoodDetail(){
+    const [Like,SetLike] = useState(false);
+
+    const ClickLike = () =>{
+        SetLike(!Like);
+    }
+
     const [uploadImage, setUploadImage] = useState();
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);
-    const [isCertified, setIsCertified] = useState(false);
-
+    
     useEffect(() => {
         const image = localStorage.getItem("image");
-        if (image) {
+        if(image){
             setUploadImage(image);
-            setIsCertified(true);
         }
-    }, []);
-
-    useEffect(() => {
+      }, []);
+    
+      useEffect(() => {
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setUploadImage(reader.result);
-                localStorage.setItem('image', reader.result); // Base64 이미지 저장
-                setIsCertified(true);
-            };
-            reader.readAsDataURL(file); // 파일을 Base64로 변환
+          const url = URL.createObjectURL(file);
+          setUploadImage(url);
+          localStorage.setItem('image', url);
         }
-    }, [file]);
+      }, [file])
 
      
 
@@ -99,9 +108,15 @@ export default function FoodDetail(){
         fileInputRef.current.click();
       };
 
+
     return(
         <Container>
-            <Introduce>추천 식단 만들어먹고 인증까지 해보세요!</Introduce>
+            <DietContainer>
+                칼로리 모험가의 식탁
+                <LikeIcon onClick={ClickLike}>
+                    {Like ? <AiFillHeart /> : <AiTwotoneHeart />}
+                </LikeIcon> 
+            </DietContainer>
             <TotalFoodToggle/>
             <FoodToggle/>
             <PictureContainer onClick={triggerFileInput}>
@@ -113,4 +128,5 @@ export default function FoodDetail(){
         <input type="file" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} />
         </Container>
     )
-};
+
+}

@@ -2,7 +2,7 @@ import axiosInstance from "../axiosInstance";
 
 export default async function getFoodExchangeList() {
   try {
-    const response = await axiosInstance.get('/api/accounts/food-exchange-list/'
+    const response = await axiosInstance.get(`/api/accounts/food-exchange-list/`
     );
 
     return response.data;

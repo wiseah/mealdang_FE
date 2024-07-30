@@ -6,14 +6,6 @@ import { FaIceCream } from "react-icons/fa";
 import { BiSolidMoon } from "react-icons/bi";
 
 
-/**
- * 생각해볼 것
- * 
- * 아이스크림 아이콘, 저녁 식사 아이콘은 Fill되어있는 아이콘밖에 없음 
- * FoodRecommend에 식단 인증시에 전체를 감싸고 있는 <FoodContainer>에 배경색 변경, 글씨색 변경 함수를 작성해놓은 상태인데 아이콘 어떻게 사용해야 할지 고민 필요 
- * 지금 사용중인 BsSun도 색상을 채우려면 사실상 다른 함수를 적용해야 함 
- */
-
 export function FoodRecommendBack(){
 
     const FoodContainer = styled.div`
@@ -25,8 +17,15 @@ export function FoodRecommendBack(){
     display: flex; 
     justify-content: flex-start; 
     align-items: center; 
-    overflow-x: hidden;
+    overflow-x: auto;
     padding-left: 10px;
+
+
+    &::-webkit-scrollbar {
+        display: none; /* 크롬, 사파리에서 스크롤바 숨기기 */
+    }
+    -ms-overflow-style: none;  /* IE 및 Edge에서 스크롤바 숨기기 */
+    scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
   `
 
   const FoodList = styled.div`
@@ -43,18 +42,22 @@ export function FoodRecommendBack(){
           Icon = {<BsSunFill/>}
           Content = {'잡곡밥 1/2공기 \n 된장국 \n 김치 50g \n 참기름 무침 나물 50g'}
           Calories='총 600칼로리'
+          Certification={true}
           />
           <FoodRecommend
           title = '점심|일식'
           Icon = {<BsSun/>}
           Content = {'생선 초밥 6개 \n 미소 된장국 \n 오이무침 1/2컵 \n 무절임 1/2컵'}
           Calories='총 600칼로리'
+          Certification={false}
+
           />
           <FoodRecommend
           title = '간식'
           Icon = {<FaIceCream/>}
           Content = {'그릭요거트 1/2컵 \n 블루베리 1/2컵 \n 견과류 혼합 1/4컵 \n '}
           Calories='총 600칼로리'
+          Certification={true}
           />
           
           <FoodRecommend
@@ -62,6 +65,7 @@ export function FoodRecommendBack(){
           Icon = {<BiSolidMoon/>}
           Content = {'채소 볶음밥 1/2 공기 \n 두부 마파두부 80g \n 청경채 볶음 1컵 \n 피망 볶음 1/2컵'}
           Calories='총 600칼로리'
+          Certification={false}
           />
         </FoodList>
     </FoodContainer>
