@@ -65,7 +65,7 @@ const MyPage = () => {
 
   const [nickname, setNickname] = useState('');
   const [is_subscribe, setIs_Subscribe] = useState(false);
-  const [remained_podo, setRemained_podo] = useState('');
+  const [remained_podo, setRemained_podo] = useState(0);
 
   useEffect(()=> {
     async function fetchData() {
