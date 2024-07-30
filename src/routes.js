@@ -9,6 +9,7 @@ import JoinSuccess from "./pages/Landing/JoinSuccess";
 import Map from "./pages/Map/Map";
 import BloodSugar from "./pages/BloodSugar";
 import DiethonMain from "./pages/Diethon/DiethonMain";
+import DiethonDetail from "./pages/Diethon/DiethonDetail";
 import MyPage from "./pages/MyPage/MyPage";
 import MyInfo from "./pages/MyPage/MyInfo";
 import MyFoodExchangeList from './pages/MyPage/MyFoodExchangeList';
@@ -108,6 +109,12 @@ const routes = [
         previous: false,
     },
     {
+        path: '/diethondetail',
+        element: <DiethonDetail />,
+        name: '10-1. 식단톤 식단 상세 페이지',
+        previous: false,
+    },
+    {
         path: '/mypage',
         element: <MyPage />,
         name: '11. 마이 페이지',
@@ -159,6 +166,7 @@ const routes = [
         element: <FoodRegistration/>,
         name: '20. 나만의 식단 등록하기',
     },
+    
 ]
 
 export default routes;
