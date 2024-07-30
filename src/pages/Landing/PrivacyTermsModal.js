@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 const ModalContainer = styled.div`
@@ -106,10 +106,14 @@ const DisagreeButton = styled.button`
 `;
 
 
-const AgreeAllSection = () => (
+const AgreeAllSection = ({ checked, setChecked }) => (
   <div>
     <AgreeAllLabel>
-      <AgreeAllCheckbox type="checkbox"/> 전체 동의하기
+      <AgreeAllCheckbox 
+        type="checkbox" 
+        checked={checked} 
+        onChange={(e)=> setChecked(e.target.checked)}
+        /> 전체 동의하기
     </AgreeAllLabel>
     <TermsList>
       <TermItem>
@@ -162,15 +166,25 @@ const TermDetail = () => (
 
 
 const PrivacyTermsModal = ({ isOpen, onClose, onAgree }) => {
+  const [checked, setChecked] = useState(false)
+
+  const handleAgreeButtonClick = () => {
+    if (checked) {
+      onAgree();
+    } else {
+      alert('전체 동의 후 진행해주세요.')
+    }
+  }
+
   if (!isOpen) return null;
 
   return (
     <ModalContainer>
       <ModalContent>
-        <AgreeAllSection/>
+        <AgreeAllSection checked={checked} setChecked={setChecked} />
         <TermDetail />
       </ModalContent>
-      <AgreeButton onClick={onAgree}>완료</AgreeButton>
+      <AgreeButton onClick={handleAgreeButtonClick}>완료</AgreeButton>
       <DisagreeButton onClick={onClose}>취소</DisagreeButton>
     </ModalContainer>
 

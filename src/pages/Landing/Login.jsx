@@ -1,7 +1,10 @@
 import styled from "styled-components";
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SubmitButton from "../../components/SubmitButton";
+import login from '../../APIs/post/login.js';
+import Cookies from 'js-cookie';
+
 
 const Container = styled.div`
   display: flex;
@@ -35,32 +38,71 @@ const Join = styled.span`
   font-size: 20px;
   font-weight: 400;
   color: #737373;
+  cursor: pointer; 
 `
 
 const Login = () => {
+
   const navigate = useNavigate();
 
-  const [member_id, setMember_id] = useState('');
+  const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  const [errorText, setErrorText] = useState(''); 
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    if (!member_id) {
-      alert('ID를 입력해야 합니다.');
-    } else if (!password) {
-      alert('비밀번호를 입력해야 합니다.');
-    } else if (member_id !== 'member_id') {
-      alert('회원이 아닙니다.');
-    } else if (password !== 'password') {
-      alert('비밀번호가 틀렸습니다.');
-    } else {
-      navigate('/test');
+  useEffect(() => {
+    const isLoggedIn = sessionStorage.getItem("accessToken")
+    if (!isLoggedIn) {
+      return;
     }
-  };
 
-  const handleMemberIdChange = (e) => {
-    setMember_id(e.target.value);
+    navigate("/main");
+  }, [])
+
+
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); 
+
+    try {
+    if (!id) {
+      alert('ID를 입력해야 합니다.')
+      return;
+    } else if (!password) {
+      alert('비밀번호를 입력해야 합니다.')
+      return;
+    } 
+    // else if (id !== 'id') {
+    //   alert('회원이 아닙니다.')
+    //   return;
+    // } else if (password !== 'password') {
+    //   alert('비밀번호가 틀렸습니다.')
+    //   return;
+    // } 
+    
+    // 리코일에 최초 로그인 시 진단테스트로 가는 거 추가해야 함
+    // else {
+    //   navigate('/diagnosis');
+    // }
+
+
+      const response = await login(id, password);
+      const accessToken = response.access_token;
+      console.log(accessToken)
+      const refreshToken = response.refresh_token;
+
+      sessionStorage.setItem('accessToken', `Bearer ${accessToken}`);
+      Cookies.set('refreshToken', refreshToken, { expires: 14 });
+
+      navigate('/main'); // 로그인 성공 시 메인 페이지로 이동
+    } catch (error) {
+      console.error('message: ', error.message);
+      setErrorText('아이디 또는 비밀번호가 잘못되었습니다.');
+      alert('로그인에 실패했습니다.');
+    }
+  }
+
+  const handleIdChange = (e) => {
+    setId(e.target.value);
   }
 
   const handlePasswordChange = (e) => {
@@ -75,12 +117,12 @@ const Login = () => {
       </div>
       <form>
         <div>
-          <label htmlFor='member_id' />
+          <label htmlFor='id' />
           <InputField
             type='text'
-            id='member_id'
-            value={member_id}
-            onChange={handleMemberIdChange}
+            id='id'
+            value={id}
+            onChange={handleIdChange}
             placeholder='아이디'
             required />
         </div>

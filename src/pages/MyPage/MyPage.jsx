@@ -86,9 +86,9 @@ const MyPage = ( onClick, text, color, backgroundColor) => {
       <LinkContainer>
         <LinkItem><ConfirmButton onClick={() => navigate('/myinfo')} text="내 정보" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem>
         <LinkItem><ConfirmButton onClick={() => navigate('/myfoodexchangelist')} text="내 식품교환표" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem>
-        <LinkItem><ConfirmButton onClick={() => navigate('')} text="추천 식단 즐겨찾기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem> 
+        <LinkItem><ConfirmButton onClick={() => navigate('/foodbookmark')} text="추천 식단 즐겨찾기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem> 
         {/* 이동주소로 변경필요 */}
-        <LinkItem><ConfirmButton onClick={() => navigate('')} text="포도 쓰러 가기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem> 
+        <LinkItem><ConfirmButton onClick={() => navigate('/grapeexchange')} text="포도 쓰러 가기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem> 
         {/* 이동주소로 변경필요 */}
         <LinkItem><ConfirmButton onClick={handleNavigateToNowhere} text="프리미엄 구독하기" textAlign="left" paddingLeft="25px" color="#ffffff" backgroundColor="#6A0DAD" /></LinkItem>
         <LinkItem><ConfirmButton onClick={handleNavigateToNowhere} text="캐릭터 커스텀하러 가기" textAlign="left" paddingLeft="25px" color="#ffffff" backgroundColor="#6A0DAD" /></LinkItem>

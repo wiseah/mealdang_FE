@@ -11,18 +11,6 @@ const Container = styled.div`
     align-items: center;
 `
 
-// 소개글
-const Introduce = styled.span`
-    width: 264px;
-    height: 70px;
-    color: #3F006C;
-    text-align: center;
-    font-family: "Wavve PADO TTF";
-    font-size: 30px;
-    font-weight: 400;
-`
-
-
 // 사진 업로드
 const PictureContainer = styled.div`
     width: 300px;
@@ -63,31 +51,40 @@ const UploadedImage = styled.img`
     left: 0;
 `;
 
-export default function FoodDetail(){
+const Title = styled.div`
+    width : 284px;
+    height: 34px;
+    font-family: "Wavve PADO TTF";
+    font-size: 30px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    color: #6A0DAD;
+`
+const FoodDate = styled.div`
+    color: #000;
+    padding-right: 10px;
+`
+
+export default function FavoriteFoodDetail(){
     const [uploadImage, setUploadImage] = useState();
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);
-    const [isCertified, setIsCertified] = useState(false);
-
+    
     useEffect(() => {
         const image = localStorage.getItem("image");
-        if (image) {
+        if(image){
             setUploadImage(image);
-            setIsCertified(true);
         }
-    }, []);
-
-    useEffect(() => {
+      }, []);
+    
+      useEffect(() => {
         if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setUploadImage(reader.result);
-                localStorage.setItem('image', reader.result); // Base64 이미지 저장
-                setIsCertified(true);
-            };
-            reader.readAsDataURL(file); // 파일을 Base64로 변환
+          const url = URL.createObjectURL(file);
+          setUploadImage(url);
+          localStorage.setItem('image', url);
         }
-    }, [file]);
+      }, [file])
 
      
 
@@ -101,7 +98,9 @@ export default function FoodDetail(){
 
     return(
         <Container>
-            <Introduce>추천 식단 만들어먹고 인증까지 해보세요!</Introduce>
+            <Title>
+                <FoodDate>2024.07.13</FoodDate>추천식단
+            </Title>
             <TotalFoodToggle/>
             <FoodToggle/>
             <PictureContainer onClick={triggerFileInput}>
