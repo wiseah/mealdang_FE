@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import CustomRadio from '../components/CustomDietRadio';
-import CustomCheckbox from '../components/CustomDietCheckbox';
+import CustomCheckbox from '../../components/CustomDietCheckbox';
+import CustomRadio from '../../components/CustomDietRadio';
 import { BsGeoFill, BsSunFill, BsSun, BsQuestionCircleFill } from 'react-icons/bs';
 import { BiSolidMoon } from 'react-icons/bi';
 
