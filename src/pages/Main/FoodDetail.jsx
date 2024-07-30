@@ -3,26 +3,23 @@ import { useRef,useState,useEffect } from "react";
 import { BsImages } from "react-icons/bs";
 import { TotalFoodToggle } from "../../components/TotalFoodToggle";
 import { FoodToggle } from "../../components/FoodToggle";
-import { useNavigate } from "react-router-dom";
 
 // 전체 공간
 const Container = styled.div`
-
     display: flex;
     flex-direction: column;
     align-items: center;
-
 `
 
 // 소개글
 const Introduce = styled.span`
-width: 264px;
-height: 70px;
-color: #3F006C;
-text-align: center;
-font-family: "Wavve PADO TTF";
-font-size: 30px;
-font-weight: 400;
+    width: 264px;
+    height: 70px;
+    color: #3F006C;
+    text-align: center;
+    font-family: "Wavve PADO TTF";
+    font-size: 30px;
+    font-weight: 400;
 `
 
 
@@ -70,21 +67,27 @@ export default function FoodDetail(){
     const [uploadImage, setUploadImage] = useState();
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);
-    
+    const [isCertified, setIsCertified] = useState(false);
+
     useEffect(() => {
         const image = localStorage.getItem("image");
-        if(image){
+        if (image) {
             setUploadImage(image);
+            setIsCertified(true);
         }
-      }, []);
-    
-      useEffect(() => {
+    }, []);
+
+    useEffect(() => {
         if (file) {
-          const url = URL.createObjectURL(file);
-          setUploadImage(url);
-          localStorage.setItem('image', url);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setUploadImage(reader.result);
+                localStorage.setItem('image', reader.result); // Base64 이미지 저장
+                setIsCertified(true);
+            };
+            reader.readAsDataURL(file); // 파일을 Base64로 변환
         }
-      }, [file])
+    }, [file]);
 
      
 

@@ -1,11 +1,4 @@
 
-/**
- * 식단 인증 체크 -> 식단 인증 있을 때 띄울 수 있도록
- * 받아오는 내용 생각해볼 것 
- * 상세보기 페이지 작성 후에 진행  
- * 식단 인증시 색상 변경 함수 
- * 상세보기 클릭버튼 
- */
 
 import styled from "styled-components"
 import { BsCheck } from "react-icons/bs";
@@ -21,8 +14,6 @@ const FoodContainer = styled.div`
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     display: flex;
     flex-direction: column;
-    
-    
 `
 
 // 타이틀 관련 내용 
@@ -40,13 +31,11 @@ const TitleContainer = styled.div`
 const IconContainer = styled.div`
     width: 20px;
     height: 20px;
-    color: #F74A25;
 `
 // 타이틀 내용 
 const TitleTextContainer = styled.div`
     width: 91px;
     height: 38px;
-    color: #F74A25;
     font-family: "Wavve PADO TTF";
     font-size: 20px;
     font-weight: 400;
@@ -57,7 +46,6 @@ const TitleTextContainer = styled.div`
 
 // 상세보기 버튼 
 const DetailButton = styled.text`
-    color: #F74A25;
     text-align: center;
     font-family: "Wavve PADO TTF";
     font-size: 10px;
@@ -104,7 +92,6 @@ const ContentContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
-    color: #F74A25;
     font-family: "Wavve PADO TTF";
     font-size: 15px;
     font-weight: 400;
@@ -114,7 +101,6 @@ const ContentContainer = styled.div`
 
 // 칼로리 내용
 const CalorieContainer = styled.div`
-    color: #F74A25 ;
     font-size: 16px;
     font-weight: 400;
     font-family: "Wavve PADO TTF";
@@ -123,7 +109,7 @@ const CalorieContainer = styled.div`
 `
 
 
-export function FoodRecommend({title, Icon, Content, Calories}){
+export function FoodRecommend({title, Icon, Content, Calories, Certification}){
     const navigate = useNavigate();
 
     const DetailClick = () => {
@@ -131,14 +117,17 @@ export function FoodRecommend({title, Icon, Content, Calories}){
     }
 
     return(
-        <FoodContainer>
+        <FoodContainer Certification={Certification}>
             <TitleContainer>      
                 <IconContainer>{Icon}</IconContainer>
                 <TitleTextContainer>{title}</TitleTextContainer>
             </TitleContainer>
             <DetailButton onClick={DetailClick}>상세보기</DetailButton>
             <CertificationContainer>
-                <CertificationIcon/><CertificationText>식단 인증</CertificationText>
+                {Certification && (
+                    <>
+                    <CertificationIcon/><CertificationText>식단 인증</CertificationText>
+                    </>)}
             </CertificationContainer>
             <ContentContainer>
                 {Content.split('\n').map((line, index) => (
