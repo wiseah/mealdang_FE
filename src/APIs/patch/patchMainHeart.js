@@ -5,7 +5,7 @@ export default async function patchMainHeart (is_like){
         const response = await axiosInstance.patch(
             `/api/diets/like/{diet_set_id}/`,
             {
-              is_liket: is_like
+              is_like: is_like
             }
         );
         console.log('Response:', response.data);

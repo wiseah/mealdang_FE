@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { DashBoard } from '../../components/Dashboard'
 import { BsFillStarFill } from "react-icons/bs";
@@ -7,6 +7,9 @@ import { FoodRecommendBack } from '../../components/FoodRecommendBack';
 import { IoIosArrowRoundForward } from "react-icons/io";
 import { BiChevronLeft } from "react-icons/bi";
 import { BiChevronRight } from "react-icons/bi";
+import getMain from '../../APIs/get/getMain';
+import patchMainHeart from '../../APIs/patch/patchMainHeart';
+
 
 const Container = styled.div`
   display: flex;
@@ -48,14 +51,14 @@ const EmptyStarIcon = styled(BsStar)`
 `
 const RecommendButton = styled.div`
   width: 100%;
-  color: #000;
+  color: ${props => (props.disabled ? '#B0B0B0' : '#000')};
   font-family: "Wavve PADO TTF";
   font-size: 18px;
   font-weight: 400;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   padding: 3px 50px 15px 0px;
 `
 
@@ -69,14 +72,17 @@ const TurnContainer = styled.div`
 const Previous = styled.div`
   display: flex;
   align-items: center;
-  cursor: pointer;
-  
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  color: ${props => (props.disabled ? '#B0B0B0' : '#F74A25')};
 `
+
 const Next = styled.div`
   display: flex;
   align-items: center;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
+  color: ${props => (props.disabled ? '#B0B0B0' : '#F74A25')};
 `
+
 
 const PreviousBtn = styled.div`
   color: #F74A25;
@@ -112,58 +118,120 @@ const NextIcon = styled(BiChevronRight)`
 
 function AfterMain() {
 
-  // 즐겨찾기 버튼 관련 함수
+  const [nickname, setNickname] = useState('닉네임');
+  const [recommendCount, setRecommendCount] = useState(0);
+  const [dietSets, setDietSets] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [is_like, setIs_like] = useState(false);
 
-  const [StarActive, setStarActive] = useState(false);
+  const [isPreviousDisabled, setIsPreviousDisabled] = useState(true);
+  const [isNextDisabled, setIsNextDisabled] = useState(true);
 
-  const StarClick = () =>{
-    setStarActive(!StarActive);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+
+        const response = await getMain();
+        setNickname(response.nickname);
+        setRecommendCount(response.recommend_count);
+        setDietSets(response.diet_sets);
+        setCurrentIndex(0); // 인덱스 초기화, 새로 추천 받은 식단이 인데스 0이게 만들기
+
+        console.log(response);
+
+      } catch (error) {
+        console.error('에러 발생:', error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
+
+const is_likeClick = async () => {
+    try {
+
+      setIs_like(!is_like);
+
+      const response = await patchMainHeart(response.diet_sets.diet_set_id, !is_like);
+
+      console.log(response.message);
+    } catch (error) {
+      console.error('즐겨찾기 업데이트 실패:', error);
+    }
   }
+  
 
-  // 다시 추천받기 버튼 관련 함수 
 
-  const [RecommendBtnActive, setRecommendBtnActive]= useState(false);
+  const RecommendBtnClick = async () => {
+    try {
+      if (recommendCount >= 3) {
+        alert('식단 추천은 세 번까지 받을 수 있습니다.');
+        return;
+      }
 
-  const RecommendBtnClick = () =>{
-    setRecommendBtnActive(true);
-  }
+      const response = await getMain();
+      setRecommendCount(response.recommend_count);
+      setDietSets(response.diet_sets);
+      setCurrentIndex(0);
+    } catch (error) {
+      console.error('추천 받기 실패:', error);
+    }
+  };
 
-  // 이전, 다음 버튼 관련 함수 
 
-  const [currentIndex, setCurrentIndex] = useState(0); 
+
+  useEffect(() => {
+    setIsPreviousDisabled(currentIndex <= 0);
+    setIsNextDisabled(currentIndex >= dietSets.length - 1);
+  }, [currentIndex, dietSets.length]);
+
 
   const PreviousClick = () => {
     if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1); 
+      setCurrentIndex(currentIndex - 1);
     }
   };
-  
+
   const NextClick = () => {
-    if(currentIndex<4){
-      setCurrentIndex(currentIndex +1);
+    if (currentIndex < dietSets.length - 1) {
+      setCurrentIndex(currentIndex + 1);
     }
-  }
+  };
 
   return (
     <Container>
-        <Greeting>
-          오늘도 반가워요, 승민님
-        </Greeting>
-        <DashBoard/>
-        <FoodTitle>
-          오늘의 추천식단{StarActive ?(<FillStarIcon active = {true} onClick = {StarClick}/>) : (<EmptyStarIcon onClick={StarClick}/>)}
-        </FoodTitle> 
-        <RecommendButton onClick={RecommendBtnClick}>
-          다시 추천받기<IoIosArrowRoundForward/>
-        </RecommendButton>
-        <FoodRecommendBack/>
-        <TurnContainer>
-          <Previous onClick={PreviousClick} >
-            <PreviousIcon/><PreviousBtn>이전</PreviousBtn>
-          </Previous>
-          <Next onClick={NextClick}>
-            <NextBtn>다음</NextBtn><NextIcon/>
-          </Next>
+      <Greeting>
+        오늘도 반가워요, {nickname}님
+      </Greeting>
+      <DashBoard />
+      {/* <FoodTitle>
+        오늘의 추천식단{is_like ? (<FillStarIcon active={true} onClick={is_likeClick} />) : (<EmptyStarIcon onClick={is_likeClick} />)}
+      </FoodTitle> */}
+       <FoodTitle>
+        오늘의 추천식단
+        {is_like ? (
+          <FillStarIcon onClick={is_likeClick} />
+        ) : (
+          <EmptyStarIcon onClick={is_likeClick} />
+        )}
+      </FoodTitle>
+      <RecommendButton
+        onClick={RecommendBtnClick}
+        disabled={recommendCount >= 3}>
+        다시 추천받기<IoIosArrowRoundForward />
+      </RecommendButton>
+      <FoodRecommendBack dietSet={dietSets[currentIndex]} />
+      <TurnContainer>
+        <Previous onClick={PreviousClick} disabled={isPreviousDisabled}>
+          <PreviousIcon /><PreviousBtn>이전</PreviousBtn>
+        </Previous>
+        <Next onClick={NextClick} disabled={isNextDisabled}>
+          <NextBtn>다음</NextBtn><NextIcon />
+        </Next>
+
       </TurnContainer>
     </Container>
   )
