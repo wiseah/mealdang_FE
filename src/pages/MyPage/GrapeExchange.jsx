@@ -113,7 +113,6 @@ const ExchangeBtn = styled.div`
 export default function GrapeExchange() {
     const navigate = useNavigate();
     
-
     const handleNavigate = () => {
         navigate('/grapeuse'); 
         };
@@ -156,15 +155,14 @@ export default function GrapeExchange() {
     ]
     })    
 
+
     useEffect(() => {
         const fetchGrapeExchangeData = async () => {
           try {
     
             const response = await getGrapeExchange();
             setExchanged(response);
-    
             console.log(Exchanged);
-    
           } catch (error) {
             console.error('message:', error.message);
             alert('매칭되는 포도 사용처 정보를 찾지 못했습니다.');
@@ -174,15 +172,28 @@ export default function GrapeExchange() {
         fetchGrapeExchangeData();
       }, []);
 
-    const Exchange = (cost) => {
-        if (Exchanged.remained_podo >= cost) { 
-           
-            alert("쿠폰이 교환되었습니다.");
+
+      const handleExchange = async (podoStoreId, cost) => {
+        if (Exchanged.remained_podo >= cost) {
+            try {
+                const response = await postGrapeUse(podoStoreId);
+                if (response.message === "Podo history data saved successfully.") {
+                    setExchanged(prevState => ({
+                        ...prevState,
+                        remained_podo: response.remained_podo
+                    }));
+                    alert("쿠폰이 교환되었습니다.");
+                } else {
+                    alert("쿠폰 교환에 실패했습니다.");
+                }
+            } catch (error) {
+                console.error('Exchange error:', error);
+                alert("쿠폰 교환 중 오류가 발생했습니다.");
+            }
         } else {
             alert("포도가 부족합니다.");
         }
     };
-
     return (
         <Container>
             <UserContainer>
@@ -202,7 +213,7 @@ export default function GrapeExchange() {
                         </ExchangeTitle>
                         <RightSection>
                             <Grape>{item.price}포도</Grape>
-                            <ExchangeBtn onClick={() => Exchange(item.price)}>교환</ExchangeBtn>
+                            <ExchangeBtn onClick={() => handleExchange(item.podo_store_id,item.price)}>교환</ExchangeBtn>
                         </RightSection>
                     </CouponContainer>
                 ))}

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { LuGrape } from "react-icons/lu";
-import { useLocation } from "react-router-dom";
 import getGrapeUse from "../../APIs/get/getGrapeUse";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
     display: flex;
@@ -142,13 +142,73 @@ const PresentGrape = styled.div`
 `
 
 export default function GraepUse(){
-    const location = useLocation();
-    const exchangeHistory = location.state?.history || [];
-    const CurrentAmount = location.state?.currentAmount || 0;
-    const totalUsed = location.state?.totalUsed || 0;
-    
 
+    const [Podo,setPodo] = useState(
+        {
+        "cumulative_podo": 3000,
+	    "used_podo": 1000,
+	    "remained_podo": 80,	
+	    "purchased_list":[
+		{
+			"date": "2024-07-12",
+			"items": "프리미엄 구독권 10% 할인권",
+			"item_price": 1000,
+			"remaining_points": 580	
+		},
+		{
+			"date": "2024-07-13",
+			"items": "맞춤 식단에 재료 5개 추가",
+			"item_price": 500,
+			"remaining_points": 80	
+		}
+	    ],
+	    "received_list":[
+        {       
+			"date": "2024-07-12",
+			"items": "식단톤 1등",
+			"received_points": 1000,
+			"remaining_points": 1580	
+		},
+		{
+			"date": "2024-07-13",
+			"items": "출석",
+			"received_points": 50,
+			"remaining_points": 130
+		}
+	    ]
+        }
+    )
     
+    const combinedList = [
+        ...Podo.purchased_list.map(item => ({
+            date: item.date,
+            title: item.items,
+            amount: -item.item_price, 
+            remaining: item.remaining_points
+        })),
+        ...Podo.received_list.map(item => ({
+            date: item.date,
+            title: item.items,
+            amount: item.received_points, 
+            remaining: item.remaining_points
+        }))
+    ];
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getGrapeUse();
+                setPodo(response);
+                console.log(Podo)
+            } catch (error) {
+                console.error('message:', error.message);
+                alert('포도 사용 내역 데이터를 찾지 못했습니다.')
+            } 
+        };
+
+        fetchData();
+    }, []);
+
     return(
         <Container>
             <Introduce>포도 교환 내역을 확인할 수 있어요 </Introduce>
@@ -156,32 +216,30 @@ export default function GraepUse(){
                 <Accumulate>
                     <FillGrapeIcon/>
                     <GrapeText>누적 포도</GrapeText>
-                    <Amount>{totalUsed+CurrentAmount}개</Amount>
+                    <Amount>{Podo.cumulative_podo}개</Amount>
                 </Accumulate>
                 <Use>
                     <GrapeIcon/>
                     <GrapeText>사용한 포도</GrapeText>
-                    <Amount>{totalUsed}개</Amount>
+                    <Amount>{Podo.used_podo}개</Amount>
                 </Use>
                 <Present>
                     <FillGrapeIcon/>
                     <GrapeText>현재 포도</GrapeText>
-                    <Amount>{CurrentAmount}개</Amount>
+                    <Amount>{Podo.remained_podo}개</Amount>
                 </Present>
             </GrapeContainer>
             <History>
-            {exchangeHistory.slice().reverse().map((coupon, index) => {
-                    return (
-                        <BreakDown key={index}>
-                            <UseDate>{coupon.date}</UseDate>
-                            <UsedTitle>{coupon.title}</UsedTitle>
-                            <TotalGrape>
-                                <UsedGrape>-{coupon.cost} 포도</UsedGrape>
-                                <PresentGrape>{coupon.present}포도</PresentGrape>
-                            </TotalGrape>
-                        </BreakDown>
-                    );
-                })}
+            {combinedList.map((item, index) => (
+                    <BreakDown key={index}>
+                        <UseDate>{item.date}</UseDate>
+                        <UsedTitle>{item.title}</UsedTitle>
+                        <TotalGrape>
+                            <UsedGrape>{item.amount} 포도</UsedGrape>
+                            <PresentGrape>{item.remaining}포도</PresentGrape>
+                        </TotalGrape>
+                    </BreakDown>
+                ))}
             </History>
         </Container>
     )
