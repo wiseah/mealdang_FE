@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { IoMdArrowForward } from "react-icons/io";
-import { useState,useRef } from "react";
+import { useState,useRef,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import postGrapeUse from "../../APIs/post/postGrapeUse";
@@ -115,12 +115,7 @@ export default function GrapeExchange() {
     
 
     const handleNavigate = () => {
-        navigate('/grapeuse', { 
-            state: { 
-                history: exchangeHistory, 
-                currentAmount : amount, 
-                totalUsed: totalUsed 
-            } }); 
+        navigate('/grapeuse'); 
         };
 
 
@@ -179,17 +174,9 @@ export default function GrapeExchange() {
         fetchGrapeExchangeData();
       }, []);
 
-// 일단 교환 기능 alert로 구현
     const Exchange = (cost) => {
         if (Exchanged.remained_podo >= cost) { 
-            setExchangeHistory(prevHistory =>{ 
-                const updatedHistory = [
-                ...prevHistory,
-                {title, cost, present: newAmount, date: new Date().toLocaleDateString()}
-            ];
-            return updatedHistory;
-            
-        });
+           
             alert("쿠폰이 교환되었습니다.");
         } else {
             alert("포도가 부족합니다.");
