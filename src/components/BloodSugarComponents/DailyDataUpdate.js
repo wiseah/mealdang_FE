@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import postDailyDataUpdate from '../../APIs/post/postDailyDataUpdate';
+import getBloodSugarsState from "../../APIs/get/getBloodSugarsState";
 
 
 const Container = styled.div`
@@ -78,8 +78,6 @@ const Button = styled.button`
 
 const DailyDataUpdate = () => {
 
-  // 혈당 수치
-
   const [date, setDate] = useState('');
   const [bloodsugars, setBloodsugars] = useState({
     fasting_blood_sugar: ['', '', ''],
@@ -87,28 +85,35 @@ const DailyDataUpdate = () => {
   });
 
 
+// 날짜 형식 변환 함수
+const formatDateToServer = (date) => {
+  const [month, day] = date.split('/').map(Number);
+  const now = new Date();
+  const year = now.getFullYear();
+  return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+};
+
+
   // 혈당 페이지 접속 시 데이터 불러오기
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 현재 날짜 월/일 형식으로 가져오기
-        const currentDate = getCurrentDate();
-        setDate(currentDate);
 
-        // 데이터 가져오기
-        const response = await axios.get('http://*/api/bloodsugar/state/');
-        const data = response.data;
+        setDate(getCurrentDate());
 
+        const response = await getBloodSugarsState();
         setBloodsugars({
-          fasting_blood_sugar: [...data.fasting_blood_sugar],
-          post_meal_blood_sugar: [...data.post_meal_blood_sugar],
+          fasting_blood_sugar: response.today_data.fasting_blood_sugar,
+          post_meal_blood_sugar: response.today_data.post_meal_blood_sugar,
         });
+
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
     fetchData();
   }, []);
+
 
 
   const getCurrentDate = () => {
@@ -119,21 +124,20 @@ const DailyDataUpdate = () => {
   }
 
 
+
   // 혈당 데이터 저장하기
   const saveData = async () => {
+
     try {
-      // 데이터 보내기
-      await axios.post('http://*/api/bloodsugars/save/', {
-        date,
-        fasting_blood_sugar: bloodsugars.fasting_blood_sugar,
-        post_meal_blood_sugar: bloodsugars.post_meal_blood_sugar,
-      });
+
+      const formattedDate = formatDateToServer(date); // 클라이언트 날짜를 서버 형식으로 변환
+      await postDailyDataUpdate(formattedDate, bloodsugars.fasting_blood_sugar, bloodsugars.post_meal_blood_sugar);
       console.log('Blood sugar data saved successfully.');
     } catch (error) {
       console.error('Error saving data:', error);
     }
   };
-
+  
 
   // 입력값 변경하기
   const handleBloodSugarChange = (type, index, value) => {
