@@ -33,12 +33,12 @@ const TitleContainer = styled.div`
     justify-content: space-between;
 `
 const Dietitle = styled.div`
-    width: 260px;   
+    /* width: 260px;    */
     height: 32px;
     color: #6A0DAD;
     font-family: 'Inter';
-    font-size: 23px;
-    font-weight: 600;
+    font-size: 28px;
+    font-weight: 700;
     padding-left: 14px;
 `
 
@@ -64,7 +64,7 @@ const LikeText = styled.div`
     height: 10px;
     text-align: center;
     font-family: "Inter";
-    font-size: 10px;
+    font-size: 12px;
     font-weight: 600;
 `
 
@@ -73,7 +73,7 @@ const UserContainer = styled.div`
     height: auto;
     border-radius: 10px;
     background: #6A0DAD;
-    padding: 5px;
+    padding: 8px;
     margin: 5px 0px 8px 24px;
     align-self: flex-start;
     color: #FFF;
@@ -88,6 +88,8 @@ const UserContainer = styled.div`
 const FoodInfoContainer = styled.div`
     width: 100%;
     display: flex;
+    flex-direction: column;
+    gap: 1vh;
 `
 
 const FoodContainer = styled.div`
@@ -130,55 +132,79 @@ const DetailIcon = styled(BsArrowRight)`
     width: 15px;
     height: 15px;
 `
+const LastContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+`
+const NoDataMessage = styled.div`
+    width: 100%;
+    height: auto;
+    color: #6A0DAD;
+    font-family: 'Inter';
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 20px;
+`;
 
-export default function Diet(){
-    const [LikeCount, setLikeCount] = useState(0);
-    const [Liked, setLiked] = useState(false);
+export default function Diet({ diets }){
+    // const [LikeCount, setLikeCount] = useState(0);
+    // const [Liked, setLiked] = useState(false);
+
+    // const handleLikeClick = () => {
+    //     if (Liked) {
+    //         setLikeCount(LikeCount - 1); 
+    //     } else {
+    //         setLikeCount(LikeCount + 1); 
+    //     }
+    //     setLiked(!Liked); 
+    //     };
+
+    // const diets = [
+    //     { diet_id: 1, diet_name: "칼로리 모험가의 식탁", nickname: "승민", main: "채소 볶음밥 1/2공기", side1: "두부 마파두부 80g", side2: "청경채 볶음 1컵", side3: "피망 볶음 1/2컵", heart:"23"},
+    //     { diet_id: 2, diet_name: "행복한 포크와 나이프", nickname: "요리사 귤", main: "채소 볶음밥 1/2공기", side1: "두부 마파두부 80g", side2: "청경채 볶음 1컵", side3: "피망 볶음 1/2컵", heart:"56"}
+    // ];
+
     const navigate = useNavigate();
 
-    const handleLikeClick = () => {
-        if (Liked) {
-            setLikeCount(LikeCount - 1); 
-        } else {
-            setLikeCount(LikeCount + 1); 
-        }
-        setLiked(!Liked); 
-        };
-
-
-    const handleDetailClick = () => {
-        navigate();
-    }
-
-    const diets = [
-        { id: 1, title: "칼로리 모험가의 식탁", user: "승민", foods: ["채소 볶음밥 1/2공기", "두부 마파두부 80g", "청경채 볶음 1컵", "피망 볶음 1/2컵"]},
-        { id: 2, title: "행복한 포크와 나이프", user: "요리사 귤", foods: ["채소 볶음밥 1/2공기", "두부 마파두부 80g", "청경채 볶음 1컵", "피망 볶음 1/2컵"]}
-    ];
+    const handleDetailClick = (dietId) => {
+        navigate(`/diethondetail/${dietId}`);
+    };
 
     return(
         <Container>
-        {diets.map((diet, index) => (
-            <DietContainer key={diet.id}>
-                <TitleContainer>
-                    <Dietitle>{diet.title}</Dietitle>
-                    <LikeContainer onClick={() => handleLikeClick(index)}>
-                        <LikeIcon />
-                        <LikeText>{diet.likeCount}</LikeText>
-                    </LikeContainer>
-                </TitleContainer>
-                <UserContainer>{diet.user}</UserContainer>
-                <FoodInfoContainer>
-                    <FoodContainer>
-                        {diet.foods.map((food, foodIndex) => (
-                            <FoodName key={foodIndex}>{food}</FoodName>
-                        ))}
-                    </FoodContainer>
-                    <Detail onClick={() => handleDetailClick(index)}>
-                        더 읽어보기<DetailIcon />
-                    </Detail>
-                </FoodInfoContainer>
-            </DietContainer>
-        ))}
+        {diets.length > 0 ? (
+            diets.map((diet) => (
+                <DietContainer key={diet.diet_id}>
+                    <TitleContainer>
+                        <Dietitle>{diet.diet_name}</Dietitle>
+                        <LikeContainer>
+                            <LikeIcon />
+                            <LikeText>{diet.heart}</LikeText>
+                        </LikeContainer>
+                    </TitleContainer>
+                    <UserContainer>{diet.nickname}</UserContainer>
+                    <FoodInfoContainer>
+                        <FoodContainer>{diet.main}</FoodContainer>
+                        <FoodContainer>{diet.side1}</FoodContainer>
+                        <FoodContainer>{diet.side2}</FoodContainer>
+                        <LastContainer>
+                            <FoodContainer>{diet.side3}</FoodContainer>
+                            <Detail onClick={() => handleDetailClick(diet.diet_id)}>
+                                더 읽어보기<DetailIcon />
+                            </Detail>
+                        </LastContainer>
+                    </FoodInfoContainer>
+                </DietContainer>
+            ))
+        ) : (
+            <NoDataMessage>
+                아직 식단톤에 참여한 참가자가 한명도 없어요!
+                <br/>
+                얼른 참여해서 1등을 노려보세요🤩
+            </NoDataMessage>
+        )}
     </Container>
     )
 
