@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { LuGrape } from "react-icons/lu";
 import { useLocation } from "react-router-dom";
+import getGrapeUse from "../../APIs/get/getGrapeUse";
 
 const Container = styled.div`
     display: flex;

@@ -3,6 +3,8 @@ import { IoMdArrowForward } from "react-icons/io";
 import { useState,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import postGrapeUse from "../../APIs/post/postGrapeUse";
+import getGrapeExchange from "../../APIs/get/getGrapeExchange";
 
 
 const Container = styled.div`
@@ -108,13 +110,9 @@ const ExchangeBtn = styled.div`
     cursor: pointer;
 `
 
-export default function GrapeExchange({ name, initialAmount }) {
+export default function GrapeExchange() {
     const navigate = useNavigate();
     
-    // 포도 갯수
-    const [amount, setAmount] = useState(10000);
-    const [exchangeHistory, setExchangeHistory] = useState([]);
-    const [totalUsed, setTotalUsed] = useState(0);
 
     const handleNavigate = () => {
         navigate('/grapeuse', { 
@@ -125,27 +123,70 @@ export default function GrapeExchange({ name, initialAmount }) {
             } }); 
         };
 
-    const coupons = [        
-        { title: "밀당 프리미엄 구독권 30% 할인권", cost: 3000 },
-        { title: "밀당 프리미엄 구독권 10% 할인권", cost: 1000 },
-        { title: "당슐랭 제휴식당 3000원 할인쿠폰", cost: 3000 },
-        { title: "당슐랭 제휴식당 2000원 할인쿠폰", cost: 2000 },        
-        { title: "맞춤식단에 재료 5개 추가", cost: 500 },        
-        { title: "맞춤 식단에 재료 3개 추가", cost: 300 },    
-        ];
+
+    const [Exchanged, setExchanged] = useState({
+        "nickname": "닉네임",
+        "remained_podo": 2000,
+        "items": [
+        {
+		    "podo_store_id": 1,
+            "item_name": "밀당 프리미엄 구독권 30% 할인권",
+            "price": 3000
+        },
+        {
+		    "podo_store_id": 2,
+            "item_name": "밀당 프리미엄 구독권 10% 할인권",
+            "price": 1000
+        },
+        {
+		    "podo_store_id": 3,
+            "item_name": "당슐랭 제휴식당 3000원 할인쿠폰",
+            "price": 3000
+        },
+        {
+		    "podo_store_id": 4,
+            "item_name": "당슐랭 제휴식당 2000원 할인쿠폰",
+            "price": 2000
+        },
+        {
+		    "podo_store_id": 5,
+            "item_name": "맞춤 식단에 재료 5개 추가",
+            "price": 500
+        },
+        {
+		    "podo_store_id": 6,
+            "item_name": "맞춤 식단에 재료 3개 추가",
+            "price": 300
+        }
+    ]
+    })    
+
+    useEffect(() => {
+        const fetchGrapeExchangeData = async () => {
+          try {
+    
+            const response = await getGrapeExchange();
+            setExchanged(response);
+    
+            console.log(Exchanged);
+    
+          } catch (error) {
+            console.error('message:', error.message);
+            alert('매칭되는 포도 사용처 정보를 찾지 못했습니다.');
+          }
+        };
+    
+        fetchGrapeExchangeData();
+      }, []);
 
 // 일단 교환 기능 alert로 구현
-    const Exchange = (cost,title) => {
-        if (amount >= cost) { 
-            const newAmount = amount - cost;
-            setAmount(newAmount);
-            setTotalUsed(prevTotal => prevTotal + cost);
+    const Exchange = (cost) => {
+        if (Exchanged.remained_podo >= cost) { 
             setExchangeHistory(prevHistory =>{ 
                 const updatedHistory = [
                 ...prevHistory,
                 {title, cost, present: newAmount, date: new Date().toLocaleDateString()}
             ];
-            console.log('Updated History:', updatedHistory)
             return updatedHistory;
             
         });
@@ -159,23 +200,22 @@ export default function GrapeExchange({ name, initialAmount }) {
         <Container>
             <UserContainer>
                 <UserText>
-                    {name}님은{' '}<ColorWord>총 {amount}개의 포도</ColorWord>를
-                    <br/>
-                    사용할 수 있습니다.
+                    {Exchanged.nickname}님은{' '}<ColorWord>총 {Exchanged.remained_podo}개의 포도</ColorWord>를
+                    사용할 수 있어요.
                 </UserText>
                 <GrapeUse onClick={handleNavigate}>
                     <GrapeUseText>포도 교환 내역 확인하기</GrapeUseText><GrapeUseIcon />
                 </GrapeUse>
             </UserContainer>
             <ExchangeContainer>
-                {coupons.map((coupon, index) => (
-                    <CouponContainer key={index}>
+                {Exchanged.items.map((item) => (
+                    <CouponContainer key={item.podo_store_id}>
                         <ExchangeTitle>
-                            {coupon.title}
+                            {item.item_name}
                         </ExchangeTitle>
                         <RightSection>
-                            <Grape>{coupon.cost}포도</Grape>
-                            <ExchangeBtn onClick={() => Exchange(coupon.cost, coupon.title)}>교환</ExchangeBtn>
+                            <Grape>{item.price}포도</Grape>
+                            <ExchangeBtn onClick={() => Exchange(item.price)}>교환</ExchangeBtn>
                         </RightSection>
                     </CouponContainer>
                 ))}
