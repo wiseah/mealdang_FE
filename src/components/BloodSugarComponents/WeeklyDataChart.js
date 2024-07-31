@@ -61,7 +61,7 @@ const WeeklyDataChart = () => {
         setData(formattedData);
 
       } catch (error) {
-        console.error('에러 발생: ', error);
+        console.error('WeeklyDataChart 내 getBloodSugarsState에서 에러 발생: ', error);
       }
     };
 

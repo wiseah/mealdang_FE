@@ -108,7 +108,7 @@ const formatDateToServer = (date) => {
         });
 
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('DailyDataUpdate 내 getBloodSugarsState에서 에러 발생:', error);
       }
     };
     fetchData();
@@ -134,7 +134,7 @@ const formatDateToServer = (date) => {
       await postDailyDataUpdate(formattedDate, bloodsugars.fasting_blood_sugar, bloodsugars.post_meal_blood_sugar);
       console.log('Blood sugar data saved successfully.');
     } catch (error) {
-      console.error('Error saving data:', error);
+      console.error('DailyDataUpdate 내 postDailyDataUpdate에서 에러 발생:', error);
     }
   };
   

@@ -135,7 +135,7 @@ const PercentageChart = () => {
         setData(transformedData);
         setNormalCount(apiData.normal);
       } catch (error) {
-        console.error('에러 발생: ', error);
+        console.error('PercentageChart 내 getBloodSugarsState에서 에러 발생: ', error);
       }
     };
 

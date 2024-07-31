@@ -7,7 +7,7 @@ export default async function getBloodSugarsState(){
         )
         return response.data;
     }  catch (error) {
-        console.error('에러 발생: ', error);
+        console.error('getBloodSugarsState에서 에러 발생: ', error);
         throw error; // 호출자에게 오류를 전달
     }
 }
