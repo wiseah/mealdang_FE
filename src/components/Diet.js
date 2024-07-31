@@ -20,13 +20,17 @@ const DietContainer = styled.div`
     border-radius: 17.772px;
     border: 1px solid #6A0DAD;
     background: #FFF;
-    padding-bottom: 10px;
     margin-bottom: 14px;
+    padding-bottom: 6px;
 `
+
 
 const TitleContainer = styled.div`
     width: 100%;
     display: flex;
+    margin-top: 11px;
+    align-items: center;
+    justify-content: space-between;
 `
 const Dietitle = styled.div`
     width: 260px;   
@@ -35,7 +39,7 @@ const Dietitle = styled.div`
     font-family: 'Inter';
     font-size: 23px;
     font-weight: 600;
-    margin: 11px 25px 0px 24px;
+    padding-left: 14px;
 `
 
 const LikeContainer = styled.div`
@@ -43,14 +47,17 @@ const LikeContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    align-self: flex-end;
     color: #6A0DAD;
-    margin-top: 14px;
-    margin-right: 24px;
     cursor: pointer;
+    margin-right: 14px;
 `
 const LikeIcon = styled(AiFillHeart)`
     width: 30px;
     height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `
 const LikeText = styled.div`
     width: 20px;
@@ -94,7 +101,7 @@ const FoodContainer = styled.div`
     font-family: "Wavve PADO TTF";
     font-size: 15px;
     font-weight: 400;
-    margin-left: 27px;
+    margin-left: 24px;
 `
 const FoodName = styled.div`
     display: flex;
@@ -116,7 +123,7 @@ const Detail = styled.div`
     font-family: "Wavve PADO TTF";
     font-size: 15px;
     font-weight: 400;
-    margin-right: 24px;
+    margin-right: 14px;
     cursor: pointer;
 `
 const DetailIcon = styled(BsArrowRight)`
