@@ -5,6 +5,7 @@ import CustomRadio from '../../components/CustomDietRadio';
 import { BsGeoFill, BsSunFill, BsSun, BsQuestionCircleFill } from 'react-icons/bs';
 import { BiSolidMoon } from 'react-icons/bi';
 import postFoodRecommend from '../../APIs/post/postFoodRecommend';
+import { useNavigate } from 'react-router-dom';
 
 
 const ModalContainer = styled.div`
@@ -112,51 +113,48 @@ const CustomButton = styled.button`
 
 
 const CustomDietModal = ({ isOpen, onClose }) => {
-
-  const [diet_combination, setDiet_combination] = useState('type2');
-  const [breakfast, setBreakfast] = useState([]);
-  const [lunch, setLunch] = useState([]);
-  const [dinner, setDinner] = useState([]);
-
+  const navigate = useNavigate();
+  const [dietCombination, setDietCombination] = useState('type2');
+  const [meals, setMeals] = useState({
+    breakfast: {},
+    lunch: {},
+    dinner: {}
+  });
 
   const handleRadioChange = (e) => {
-    setDiet_combination(e.target.value);
+    setDietCombination(e.target.value);
   };
 
   const handleCheckboxChange = (time, type, checked) => {
-    const updateValues = (values) => ({
-      ...values,
-      [type]: checked
-    });
-
-    if (time === '아침') {
-      setBreakfast(updateValues(breakfast));
-    } else if (time === '점심') {
-      setLunch(updateValues(lunch));
-    } else if (time === '저녁') {
-      setDinner(updateValues(dinner));
-    }
+    setMeals(prevMeals => ({
+      ...prevMeals,
+      [time]: {
+        ...prevMeals[time],
+        [type]: checked
+      }
+    }));
   };
 
-  const handleClick = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
       const response = await postFoodRecommend(
-        diet_combination,
-        Object.keys(breakfast).filter(key => breakfast[key]).join(', '),
-        Object.keys(lunch).filter(key => lunch[key]).join(', '),
-        Object.keys(dinner).filter(key => dinner[key]).join(', '),
+        dietCombination,
+        Object.keys(meals.breakfast).filter(key => meals.breakfast[key]).join(', '),
+        Object.keys(meals.lunch).filter(key => meals.lunch[key]).join(', '),
+        Object.keys(meals.dinner).filter(key => meals.dinner[key]).join(', '),
         null,
         null,
         null
       );
       console.log(response);
       onClose();
+      navigate('/aftermain');
     } catch (error) {
       console.error('식단 커스텀 요청 실패:', error);
-      alert('식단 커스텀에 실패하였습니다.')
+      alert('식단 커스텀에 실패하였습니다.');
     }
   };
-
 
   if (!isOpen) return null;
 
@@ -164,30 +162,28 @@ const CustomDietModal = ({ isOpen, onClose }) => {
     <ModalContainer>
       <ModalContent>
         <Title><BsGeoFill size={24} color="#F74A25" /> 식단 조합 선택 </Title>
-        <Form>
+        <Form onSubmit={handleSubmit}>
           <FormItem>
-            <CustomRadio value="type1" checked={diet_combination === 'type1'} onChange={handleRadioChange} label="식사 3" />
-            <CustomRadio value="type2" checked={diet_combination === 'type2'} onChange={handleRadioChange} label="식사 3 + 간식 1" />
-            <CustomRadio value="type3" checked={diet_combination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
+            <CustomRadio value="type1" checked={dietCombination === 'type1'} onChange={handleRadioChange} label="식사 3" />
+            <CustomRadio value="type2" checked={dietCombination === 'type2'} onChange={handleRadioChange} label="식사 3 + 간식 1" />
+            <CustomRadio value="type3" checked={dietCombination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
           </FormItem>
           <FormItem>
-            <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="아침" selectedValues={breakfast} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="점심" selectedValues={lunch} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="저녁" selectedValues={dinner} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="breakfast" selectedValues={meals.breakfast} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="lunch" selectedValues={meals.lunch} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="dinner" selectedValues={meals.dinner} onChange={handleCheckboxChange} />
           </FormItem>
-        </Form>
-        <Title2><BsQuestionCircleFill size={24} color="#F74A25" /> 사용하고 싶은 재료 <DetailSpan>(최대 3개)</DetailSpan> </Title2>
-        <Form>
+          <Title2><BsQuestionCircleFill size={20} color="#F74A25" /> 사용하고 싶은 재료 <DetailSpan>(최대 3개)</DetailSpan> </Title2>
           <FormItem>
             <Input disabled />
             <Input disabled />
             <Input disabled />
           </FormItem>
           <FormItem>
-            <Warning>재료 입력은 프리미엄 구독 시 <br /> 사용할 수 있습니다 </Warning>
+            <Warning>재료 입력은 프리미엄 구독 시 사용할 수 있습니다 </Warning>
           </FormItem>
-        </Form>
-        <CustomButton onClick={handleClick}>이대로 식단 추천받기!</CustomButton>
+          <CustomButton type="submit">이대로 식단 추천받기!</CustomButton>
+          </Form>
       </ModalContent>
     </ModalContainer>
 

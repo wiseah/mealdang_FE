@@ -7,7 +7,7 @@ export default async function getMain() {
 
     return response.data;
   } catch (error) {
-    console.error("에러 발생: ", error);
+    console.error("getMain 에러 발생: ", error);
     throw error; // 오류를 호출자에게 전달
   }
 }

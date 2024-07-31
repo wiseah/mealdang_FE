@@ -16,7 +16,7 @@ export default async function postFoodRecommend(diet_combination, breakfast, lun
     );
     return response.data;
   } catch (error) {
-    console.error('에러 발생: ', error);
+    console.error('postFoodRecommend 에러 발생: ', error);
     throw error;
   }
 }
