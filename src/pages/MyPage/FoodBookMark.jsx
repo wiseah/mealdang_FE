@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import React, {useState, useEffect} from "react";
 import { FoodRecommendBack } from "../../components/FoodRecommendBack";
+import getFoodBookMark from "../../APIs/get/getFoodBookMark";
 
 const Container = styled.div`
     display: flex;
@@ -27,19 +29,32 @@ const Date = styled.div`
 
 
 export default function FoodBookMark(){
+    const [bookmarkedDiets, setBookmarkedDiets] = useState([]);
 
-    const foodRecommendDates = ['2024.7.13','2024.7.12','2024.7.10'];
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await getFoodBookMark();
+                setBookmarkedDiets(response); // 'liked_diets' 배열을 setBookmarkedDiets에 저장
+            } catch (error) {
+                console.error("즐겨찾기한 식단을 불러오는데 실패했습니다:", error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return(
         <Container>
             <Introduction>
                 여러분들이 맛있게 먹었던<br/>식단을 두고두고 볼 수 있어요
             </Introduction>
-            {foodRecommendDates.map((date,index) => (
-                <>
-                    <Date key = {index}>{date}</Date>
-                    <FoodRecommendBack key={index} />
-                </> ))}
+            {bookmarkedDiets.map((dietSet, index) => (
+                <React.Fragment key={index}>
+                    <Date>{dietSet.date}</Date>
+                    <FoodRecommendBack dietSets={dietSet.diets} /> {/* dietSet.diets를 전달 */}
+                </React.Fragment>
+            ))}
         </Container>
     )
 }
