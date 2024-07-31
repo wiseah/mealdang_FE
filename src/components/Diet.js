@@ -35,7 +35,7 @@ const Dietitle = styled.div`
     font-family: 'Inter';
     font-size: 23px;
     font-weight: 600;
-    padding: 11px 25px 0px 24px;
+    margin: 11px 25px 0px 24px;
 `
 
 const LikeContainer = styled.div`
@@ -45,7 +45,7 @@ const LikeContainer = styled.div`
     align-items: center;
     color: #6A0DAD;
     margin-top: 14px;
-    margin-right: 8px;
+    margin-right: 24px;
     cursor: pointer;
 `
 const LikeIcon = styled(AiFillHeart)`
@@ -116,7 +116,7 @@ const Detail = styled.div`
     font-family: "Wavve PADO TTF";
     font-size: 15px;
     font-weight: 400;
-    margin-right: 16px;
+    margin-right: 24px;
     cursor: pointer;
 `
 const DetailIcon = styled(BsArrowRight)`
