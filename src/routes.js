@@ -18,7 +18,7 @@ import GrapeExchange  from "./pages/MyPage/GrapeExchange";
 import GraepUse from "./pages/MyPage/GrapeUse";
 import FoodBookMark from "./pages/MyPage/FoodBookMark";
 import FoodDetail from "./pages/Main/FoodDetail";
-import FoodRegistration from "./pages/MyPage/FoodRegistraition";
+import FoodRegistration from "./pages/Diethon/FoodRegistraition";
 import FavoriteFoodDetail from "./pages/MyPage/FavoriteFoodDetail";
 
 const routes = [
