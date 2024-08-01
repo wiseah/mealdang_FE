@@ -3,19 +3,12 @@ import { BsCaretUpFill } from "react-icons/bs";
 import { useState } from "react";
 import styled from "styled-components";
 
-export function TotalFoodToggle(){
+export default function TotalFoodToggle({calorie,main}){
     const [TotalToggled, setTotalToggled] = useState(false);
     const handleTotalToggle=()=>{
         setTotalToggled(prevState=>!prevState);
     }
     
-    const Data = [
-        { name: '곡류군', quantity: 3 },
-        { name: '채소군', quantity: 2 },
-        { name: '어육류군', quantity: 3 },
-    ];
-
-
     // 총 식품군
     const TotalFood = styled.div`
     width: 300px;
@@ -71,7 +64,25 @@ export function TotalFoodToggle(){
     const FoodGroups = styled.li`
     margin-bottom: 5px;
     `
+   
+   const getNonZeroNutrients = (nutrients) => {
 
+        if (!nutrients) return [];
+            const nutrientNames = {
+            grain: "곡류군",
+            fish_meat_low_fat: "저지방 어육류군",
+            fish_meat_medium_fat: "중지방 어육류군",
+            vegetable: "채소군",
+            fat: "지방군",
+            dairy: "유제품군",
+            fruit: "과일군"
+            };
+
+            return Object.entries(nutrients)
+            .filter(([_, value]) => value !== 0)
+            .map(([key, value]) => `${nutrientNames[key]}: ${value}`)
+            };
+        
     return(
         <>
             <TotalFood>
@@ -83,12 +94,21 @@ export function TotalFoodToggle(){
             </TotalFood>
             {TotalToggled && (<TotalFoodContainer>
                 <TotalFoodCalories>
-                    총 칼로리: 1900kcal
+                    총 칼로리: {calorie}kcal
                 </TotalFoodCalories>
                 <TotalFoodText>
-                    {Data.map((food, index) => (
-                            <FoodGroups key={index}>{food.name}: {food.quantity}개</FoodGroups>
-                    ))}
+                    {main && main.nutrients ? (
+            getNonZeroNutrients(main.nutrients).map((nutrient, index) => (
+              <FoodGroups key={index}>
+                {nutrient.name}: {nutrient.value}개
+              </FoodGroups>
+            ))
+          ) : (
+            <FoodGroups>영양소 정보가 없습니다.</FoodGroups>
+          )}
+                    <FoodGroups>
+                        
+                        </FoodGroups>
                 </TotalFoodText>
             </TotalFoodContainer>)}
     </>

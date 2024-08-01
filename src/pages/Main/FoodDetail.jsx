@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { useRef,useState,useEffect } from "react";
 import { BsImages } from "react-icons/bs";
-import { TotalFoodToggle } from "../../components/TotalFoodToggle";
-import { FoodToggle } from "../../components/FoodToggle";
+import  TotalFoodToggle  from "../../components/TotalFoodToggle";
+import FoodToggle from "../../components/FoodToggle";
 
 // 전체 공간
 const Container = styled.div`

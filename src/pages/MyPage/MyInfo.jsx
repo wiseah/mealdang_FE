@@ -6,7 +6,6 @@ import postNicknameCheck from '../../APIs/post/postNicknameCheck';
 import getMyInfo from '../../APIs/get/getMyInfo';
 import patchMyInfo from '../../APIs/patch/patchMyInfo';
 
-
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -165,7 +164,6 @@ const MyInfo = () => {
     fetchData();
   }, []);
 
-
   const handleNicknameChange = (e) => {
     setNickname(e.target.value);
   }
@@ -306,6 +304,7 @@ const MyInfo = () => {
               <RadioInput
                 type="radio"
                 name="is_diabetes"
+
                 value="true"
                 checked={is_diabetes}
                 onChange={handleIs_diabetesChange}
@@ -314,6 +313,7 @@ const MyInfo = () => {
             <RadioLabel>
               <RadioInput
                 type="radio"
+
                 name="is_diabetes"
                 value="false"
                 checked={!is_diabetes}
