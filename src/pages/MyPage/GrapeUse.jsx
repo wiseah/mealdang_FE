@@ -145,36 +145,24 @@ export default function GraepUse(){
 
     const [Podo,setPodo] = useState(
         {
-        "cumulative_podo": 3000,
-	    "used_podo": 1000,
-	    "remained_podo": 80,	
+        "cumulative_podo": culmulative_podo,
+	    "used_podo": used_podo,
+	    "remained_podo": remained_podo,	
 	    "purchased_list":[
 		{
-			"date": "2024-07-12",
-			"items": "프리미엄 구독권 10% 할인권",
-			"item_price": 1000,
-			"remaining_points": 580	
+			"date": date,
+			"items": items,
+			"item_price": item_price,
+			"remaining_points": remaining_points	
 		},
-		{
-			"date": "2024-07-13",
-			"items": "맞춤 식단에 재료 5개 추가",
-			"item_price": 500,
-			"remaining_points": 80	
-		}
 	    ],
 	    "received_list":[
         {       
-			"date": "2024-07-12",
-			"items": "식단톤 1등",
-			"received_points": 1000,
-			"remaining_points": 1580	
+			"date": date,
+			"items": items,
+			"received_points": received_points,
+			"remaining_points": remaining_points	
 		},
-		{
-			"date": "2024-07-13",
-			"items": "출석",
-			"received_points": 50,
-			"remaining_points": 130
-		}
 	    ]
         }
     )

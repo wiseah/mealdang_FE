@@ -119,39 +119,14 @@ export default function GrapeExchange() {
 
 
     const [Exchanged, setExchanged] = useState({
-        "nickname": "닉네임",
-        "remained_podo": 2000,
+        "nickname": nickname,
+        "remained_podo": remained_podo,
         "items": [
         {
-		    "podo_store_id": 1,
-            "item_name": "밀당 프리미엄 구독권 30% 할인권",
-            "price": 3000
+		    "podo_store_id": podo_sotre_id,
+            "item_name": item_name,
+            "price": price
         },
-        {
-		    "podo_store_id": 2,
-            "item_name": "밀당 프리미엄 구독권 10% 할인권",
-            "price": 1000
-        },
-        {
-		    "podo_store_id": 3,
-            "item_name": "당슐랭 제휴식당 3000원 할인쿠폰",
-            "price": 3000
-        },
-        {
-		    "podo_store_id": 4,
-            "item_name": "당슐랭 제휴식당 2000원 할인쿠폰",
-            "price": 2000
-        },
-        {
-		    "podo_store_id": 5,
-            "item_name": "맞춤 식단에 재료 5개 추가",
-            "price": 500
-        },
-        {
-		    "podo_store_id": 6,
-            "item_name": "맞춤 식단에 재료 3개 추가",
-            "price": 300
-        }
     ]
     })    
 
