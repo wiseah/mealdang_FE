@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { BiLink } from 'react-icons/bi';
 import FoodExchangeListModal from '../Landing/FoodExchangeListModal';
 import getFoodExchangeList from '../../APIs/get/getFoodExchangeList';
@@ -69,7 +68,6 @@ const Start = styled.button`
 `
 
 const FoodExchangeList = () => {
-  const navigate = useNavigate();
 
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -88,13 +86,13 @@ const FoodExchangeList = () => {
 
 
   useEffect(() => {
-    const fetchFoodExchangeListData = async () => {
+    const fetchData = async () => {
       try {
 
         const response = await getFoodExchangeList();
         setContent(response);
 
-        console.log(response);
+        console.log(content);
 
       } catch (error) {
         console.error('message:', error.message);
@@ -102,7 +100,7 @@ const FoodExchangeList = () => {
       }
     };
 
-    fetchFoodExchangeListData();
+    fetchData();
   }, []);
 
 

@@ -1,8 +1,9 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import styled from 'styled-components'
 import { DashBoard } from '../../components/Dashboard'
 import { BiSolidPlusCircle } from "react-icons/bi";
 import CustomDietModal from './CustomDietModal';
+import getMain from '../../APIs/get/getMain';
 
 const Container = styled.div`
   display: flex;
@@ -48,6 +49,7 @@ const Icon = styled(BiSolidPlusCircle)`
 `
 
 export default function Main() {
+
   const [FoodModal, setFoodModal] = useState(false);
 
   const IconClick = () => {
@@ -58,9 +60,30 @@ export default function Main() {
     setFoodModal(false); 
   };
 
+
+  const [nickname, setNickname] = useState('닉네임');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+
+        const response = await getMain();
+        setNickname(response.nickname);
+
+        console.log("닉네임: ", response.nickname);
+
+      } catch (error) {
+        console.error('message:', error.message);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
   return (
     <Container>
-      <Greeting>오늘도 반가워요, 승민님</Greeting>
+      <Greeting>오늘도 반가워요, {nickname}님</Greeting>
       <DashBoard/>
       <FoodTitle>오늘의 추천식단</FoodTitle> 
       <FoodContainer><Icon onClick={IconClick}/></FoodContainer>
@@ -68,4 +91,3 @@ export default function Main() {
     </Container>
   )
 }
-
