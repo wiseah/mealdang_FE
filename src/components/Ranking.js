@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { BsPersonFill } from "react-icons/bs";
 import { AiFillHeart } from "react-icons/ai";
+import { useState, useEffect } from "react";
 
 
 // 전체 공간
@@ -155,7 +156,8 @@ const SecondContainer = styled.div`
 `
 
 const SecondTitle = styled.div`
-    margin: 20px 0px;
+    height: 43px;
+    margin: 18px 0px;
 `
 const SecondImage = styled.img`
     position: absolute;
@@ -190,61 +192,112 @@ const RewardMessage = styled.div`
     margin-top: 20px;
 `
 
-export default function Ranking(){
+// 새로 추가된 로딩 및 데이터 없음 상태를 위한 스타일
+const LoadingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 200px;
+  justify-content: center;
+`;
 
-    return(
-        <Container>
-            <Introduce>이번주 식단톤 순위는 ...!</Introduce>
-            <ExplainText><ColorWord>하트 수</ColorWord>에 따라 <ColorWord>순위</ColorWord>가 결정돼요</ExplainText>
+const LoadingMessage = styled.div`
+  color: #6A0DAD;
+  font-family: "Wavve PADO TTF";
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 20px;
+`;
+
+const LoadingSubMessage = styled.div`
+  color: #ff6A4A;
+  font-family: "Wavve PADO TTF";
+  font-size: 18px;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: 10px;
+`;
+
+export default function Ranking({ first, second, third, isLoading }){
+    //로딩 및 데이터 없는 상태에 가운데 부분 if문
+    const [dots, setDots] = useState('');
+
+    useEffect(() => {
+        if (isLoading || !first || !second || !third) {
+            const interval = setInterval(() => {
+              setDots(prev => (prev.length >= 3 ? '' : prev + '.'));
+            }, 500);
+  
+        return () => clearInterval(interval);
+      }
+    }, [isLoading, first, second, third]);
+  
+    const renderContent = () => {
+      if (isLoading || !first || !second || !third) {
+        return (
+          <LoadingContainer>
+            <LoadingMessage>{`순위 결정중${dots}`}</LoadingMessage>
+          </LoadingContainer>
+        );
+      }  
+
+        return (
             <RankingContainer>
                 <SecondContainer>
                     <Title>
-                        <SecondTitle>행복한 포크와 나이프</SecondTitle>
+                        <SecondTitle>{second.diet_name}</SecondTitle>
                     </Title>
                     <UserInfoContainer>
                         <UserContainer>
-                            <UserIcon/> 요리사 귤
+                            <UserIcon/> {second.second_nickname}
                         </UserContainer>
                         <UserContainer>
-                            <LikeIcon/> 35개
+                            <LikeIcon/> {second.heart}개
                         </UserContainer>
                     </UserInfoContainer>
                     <SecondImage src='/images/Second.png' alt="secondPlace"/>
                 </SecondContainer>
                 <FirstContainer>
                     <FirstTitle>
-                        칼로리 모험가의 식탁
+                        {first.diet_name}
                     </FirstTitle>
                     <FirstUserInfoContainer>
                         <FirstUserContainer>
-                            <FirstUserIcon/> 승민
+                            <FirstUserIcon/> {first.first_nickname}
                         </FirstUserContainer>
                         <FirstUserContainer>
-                            <FirstLikeIcon/> 52개
+                            <FirstLikeIcon/> {first.heart}개
                         </FirstUserContainer>
                     </FirstUserInfoContainer>
                     <FirstImage src='/images/First.png' alt="FirstPlace"/>
                 </FirstContainer>
                 <ThirdContainer>
                     <Title>
-                        <ThirdTitle>마법의 식단</ThirdTitle>
+                        <ThirdTitle>{third.diet_name}</ThirdTitle>
                     </Title>
                     <UserInfoContainer>
                         <UserContainer>
-                            <UserIcon/> 홍규티비
+                            <UserIcon/> {third.third_nickname}
                         </UserContainer>
                         <UserContainer>
-                            <LikeIcon/> 23개
+                            <LikeIcon/> {third.heart}개
                         </UserContainer>
                     </UserInfoContainer>
                     <ThirdImage src='/images/Third.png' alt="ThirdPlace"/>
                 </ThirdContainer>
             </RankingContainer>
+        );
+    }
+
+    return(
+        <Container>
+            <Introduce>이번주 식단톤 순위는 ...!</Introduce>
+            <ExplainText><ColorWord>하트 수</ColorWord>에 따라 <ColorWord>순위</ColorWord>가 결정돼요</ExplainText>
+            {renderContent()}
             <RewardMessage>
                 <ExplainText>식단톤 우승자에게는 <ColorWord>포도</ColorWord>가 지급됩니다</ExplainText>
             </RewardMessage>
-            
         </Container>
     )
-
 }
