@@ -119,13 +119,13 @@ export default function GrapeExchange() {
 
 
     const [Exchanged, setExchanged] = useState({
-        "nickname": nickname,
-        "remained_podo": remained_podo,
-        "items": [
+        nickname: '',
+        remained_podo: 0,
+        items: [
         {
-		    "podo_store_id": podo_sotre_id,
-            "item_name": item_name,
-            "price": price
+		    podo_store_id: 0,
+            item_name: '',
+            price: 0
         },
     ]
     })    
@@ -137,7 +137,7 @@ export default function GrapeExchange() {
     
             const response = await getGrapeExchange();
             setExchanged(response);
-            console.log(Exchanged);
+            console.log(response);
           } catch (error) {
             console.error('message:', error.message);
             alert('매칭되는 포도 사용처 정보를 찾지 못했습니다.');

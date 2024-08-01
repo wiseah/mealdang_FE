@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import { TotalFoodToggle } from "../../components/TotalFoodToggle";
-import { FoodToggle } from "../../components/FoodToggle";
+import  TotalFoodToggle  from "../../components/TotalFoodToggle";
+import  FoodToggle  from "../../components/FoodToggle";
 import { AiTwotoneHeart } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import { BsImages } from "react-icons/bs";

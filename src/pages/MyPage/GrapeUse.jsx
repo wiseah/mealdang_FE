@@ -145,23 +145,23 @@ export default function GraepUse(){
 
     const [Podo,setPodo] = useState(
         {
-        "cumulative_podo": culmulative_podo,
-	    "used_podo": used_podo,
-	    "remained_podo": remained_podo,	
+        "cumulative_podo": 0,
+	    "used_podo": 0,
+	    "remained_podo": 0,	
 	    "purchased_list":[
 		{
-			"date": date,
-			"items": items,
-			"item_price": item_price,
-			"remaining_points": remaining_points	
+			"date": '',
+			"items": '',
+			"item_price": 0,
+			"remaining_points": 0	
 		},
 	    ],
 	    "received_list":[
         {       
-			"date": date,
-			"items": items,
-			"received_points": received_points,
-			"remaining_points": remaining_points	
+			"date": '',
+			"items": '',
+			"received_points": 0,
+			"remaining_points": 0	
 		},
 	    ]
         }
