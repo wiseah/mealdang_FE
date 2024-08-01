@@ -1,6 +1,4 @@
 import styled from "styled-components";
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import DailyDataUpdate from '../components/BloodSugarComponents/DailyDataUpdate';
 import WeeklyDataChart from '../components/BloodSugarComponents/WeeklyDataChart';
 import PercentageChart from '../components/BloodSugarComponents/PercentageChart';

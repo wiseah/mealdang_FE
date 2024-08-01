@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { ResponsiveBar } from '@nivo/bar';
 import { AiFillAlert } from 'react-icons/ai';
+import getBloodSugarsState from '../../APIs/get/getBloodSugarsState';
 
 const Container = styled.div`
   display: flex;
@@ -17,6 +18,7 @@ const GraphContainer = styled.div`
   border: 1.18px solid #6A0DAD;
   border-radius: 11.85px;
   box-shadow: 0px 4.74px 4.74px #B7B7B7;
+  position: relative; /* 위치 조정 */
 `;
 
 const Title = styled.div`
@@ -86,65 +88,89 @@ const Message3 = styled.div`
   color: #2ADEA1;
 `;
 
-
-// 임의 데이터
-const normal_range_percentage = [
-  {
-    "low": 1,
-    "caution": 1,
-    "normal": 3,
-    "high": 1,
-    "very_high": 1
-  }
-];
-// 백 연동 시 90~여기까지 삭제
-
-
+const NoDataOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(245, 245, 245, 0.8);
+  border-radius: 11.85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  color: #6A0DAD;
+  font-weight: 500;
+  z-index: 10;
+`
 
 const PercentageChart = () => {
 
-  // const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
+  const [normalCount, setNormalCount] = useState('?');
+  const [openModal, setOpenModal] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get('http://*/api/bloodsugar/state/');
-  //       const apiData = response.data.normal_range_percentage;
-  //       // 데이터 변환
-  //       const transformedData = [
-  //         {
-  //           low: apiData.low,
-  //           caution: apiData.caution,
-  //           normal: apiData.normal,
-  //           high: apiData.high,
-  //           very_high: apiData.very_high,
-  //         }
-  //       ];
-  //       setData(transformedData);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
 
-  //   fetchData();
-  // }, []);
+      try {
 
-  // if (!data) return null;
+        const response = await getBloodSugarsState();
+        console.log(response);
+        const apiData = response.normal_range_percentage;
 
+        // 데이터 변환
+        const transformedData = [
+          {
+            id: 'blood_sugar',
+            low_blood_sugar: apiData.low_blood_sugar,
+            caution_low_blood_sugar: apiData.caution_low_blood_sugar,
+            normal: apiData.normal,
+            caution_high_blood_sugar: apiData.caution_high_blood_sugar,
+            high_blood_sugar: apiData.high_blood_sugar,
+          }
+        ];
+
+        setData(transformedData);
+        setNormalCount(apiData.normal);
+      } catch (error) {
+        console.error('PercentageChart 내 getBloodSugarsState에서 에러 발생: ', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // 데이터가 없을 경우 
+
+  const isDataEmpty = data.length === 0;
+
+  if (isDataEmpty) {
+    setData([{
+      id: 'blood_sugar',
+      low_blood_sugar: 1,
+      caution_low_blood_sugar: 1,
+      normal: 3,
+      caution_high_blood_sugar: 1,
+      high_blood_sugar: 1,
+    }]);
+    setOpenModal(true)
+  }
 
 
   return (
     <Container>
       <GraphContainer>
         <Title>최근 일주일 정상 수치 비율</Title>
-        <Normal><PointSpan>{normal_range_percentage[0].normal}</PointSpan> 회 </Normal>
-        {/* <Normal><PointSpan>{data[0].normal}</PointSpan> 회 </Normal>  */}
-        {/* 백 연동 시 140 삭제하고 141 사용 */}
+        <div>
+        <Normal><PointSpan>{normalCount}</PointSpan> 회 </Normal>
         <Item style={{ width: '311px', height: '24px' }}>
           <ResponsiveBar
-            data={normal_range_percentage}
-            keys={['low', 'caution', 'normal', 'high', 'very_high']}
-            indexBy="normal"
+            data={data}
+            keys={['low_blood_sugar', 'caution_low_blood_sugar', 'normal', 'caution_high_blood_sugar', 'high_blood_sugar']}
+            // indexBy="normal"
+            indexBy="id"
             margin={{ top: 50, bottom: 50 }}
             layout="horizontal"
             valueScale={{ type: 'linear' }}
@@ -187,6 +213,8 @@ const PercentageChart = () => {
             <Message3>정상이에요</Message3>
           </GuideItem>
         </Guide>
+        {openModal && <NoDataOverlay>데이터가 충분하지 않습니다</NoDataOverlay>}
+</div>
       </GraphContainer>
     </Container>
   )

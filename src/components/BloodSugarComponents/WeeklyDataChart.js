@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
 import { ResponsiveLine } from '@nivo/line';
+import getBloodSugarsState from "../../APIs/get/getBloodSugarsState";
 
 const Container = styled.div`
   display: flex;
@@ -17,6 +17,7 @@ const GraphContainer = styled.div`
   border: 1.18px solid #6A0DAD;
   border-radius: 11.85px;
   box-shadow: 0px 4.74px 4.74px #B7B7B7;
+  position: relative;
 `
 
 const Title = styled.div`
@@ -27,94 +28,40 @@ const Title = styled.div`
   width: 323px;
 `
 
+const NoDataOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(245, 245, 245, 0.8);
+  border-radius: 11.85px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  color: #6A0DAD;
+  font-weight: 500;
+  z-index: 10;
+`
 
 const WeeklyDataChart = () => {
   const [data, setData] = useState([]);
-
-  // // 데이터 가져오기
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get('http://*/api/bloodsugar/state/');
-  //       const weeklyData = response.data;
-
-  //       const formattedData = formatData(weeklyData); //백엔드에서 주는 데이터 형식 변환해야 함
-  //       setData(formattedData);
-  //     } catch (error) {
-  //       console.error('Error fetching weekly data:', error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-
-
-  // // 데이터 형식 변환
-
-  // const formatData = (data) => {
-  //   const formattedData = [
-  //     {
-  //       id: "공복 혈당",
-  //       data: data.weekly_data.map(item => ({
-  //         x: item.date.slice(5).replace('-', '.'),
-  //         y: item.fasting_blood_sugar === null ? undefined : item.fasting_blood_sugar
-  //       }))
-  //     },
-  //     {
-  //       id: "식후 2시간 이후 혈당",
-  //       data: data.weekly_data.map(item => ({
-  //         x: item.date.slice(5).replace('-', '.'),
-  //         y: item.post_meal_blood_sugar === null ? undefined : item.post_meal_blood_sugar
-  //       }))
-  //     }
-  //   ];
-  //   // 혈당 수치 null 값이면 undefined 반환하고 그래프 내 데이터 포인트 무시하고 빈 공간으로 처리
-
-  //   return formattedData;
-  // };
-
-
-
-  // 임시 데이터
-  const [weeklyData, setWeeklyData] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+
       try {
 
-        const weeklyData = [
-          {
-            date: "2024-07-10",
-            fasting_blood_sugar: 110,
-            post_meal_blood_sugar: 140
-          },
-          {
-            date: "2024-07-11",
-            fasting_blood_sugar: 115,
-            post_meal_blood_sugar: 145
-          },
-          {
-            date: "2024-07-12",
-            fasting_blood_sugar: 108,
-            post_meal_blood_sugar: 138
-          },
-          {
-            date: "2024-07-13",
-            fasting_blood_sugar: 112,
-            post_meal_blood_sugar: 142
-          },
-          {
-            date: "2024-07-14",
-            fasting_blood_sugar: 120,
-            post_meal_blood_sugar: 150
-          }
-        ];
-
-        setWeeklyData(weeklyData);
+        const response = await getBloodSugarsState();
+        const weeklyData = response.weekly_data || [];
         const formattedData = formatData(weeklyData);
+
         setData(formattedData);
+
       } catch (error) {
-        console.error('Error fetching weekly data:', error);
+        console.error('WeeklyDataChart 내 getBloodSugarsState에서 에러 발생: ', error);
       }
     };
 
@@ -123,37 +70,32 @@ const WeeklyDataChart = () => {
 
   // 데이터 형식 변환
   const formatData = (data) => {
-    const formattedData = [
+    return [
       {
         id: "공복 혈당",
         data: data.map(item => ({
           x: item.date.slice(5).replace('-', '.'),
-          y: item.fasting_blood_sugar
+          y: item.fasting_blood_sugar !== null ? item.fasting_blood_sugar : undefined
         }))
       },
       {
         id: "식후 2시간 이후 혈당",
         data: data.map(item => ({
           x: item.date.slice(5).replace('-', '.'),
-          y: item.post_meal_blood_sugar
+          y: item.post_meal_blood_sugar !== null ? item.post_meal_blood_sugar : undefined
         }))
       }
     ];
-
-    return formattedData;
   };
-  // API 연동 시 여기까지 지워도 됨
 
 
   // y축 tick 값 계산 함수
   const calculateYTicks = () => {
-    if (weeklyData.length === 0) return [60, 120, 180]; // 기본값
+    if (data.length === 0) return [60, 120, 180];
 
-    // 공복 혈당과 식후 2시간 이후 혈당의 최소값과 최대값
-    const minFasting = Math.min(...weeklyData.map(item => item.fasting_blood_sugar)) - 10;
-    const maxPostMeal = Math.max(...weeklyData.map(item => item.post_meal_blood_sugar)) + 10;
+    const minFasting = Math.min(...data[0].data.map(item => item.y)) - 10;
+    const maxPostMeal = Math.max(...data[1].data.map(item => item.y)) + 10;
 
-    // y축 tick 정하기
     const yTicks = [
       Math.floor(minFasting),
       Math.floor(minFasting + (maxPostMeal - minFasting) / 3),
@@ -168,6 +110,36 @@ const WeeklyDataChart = () => {
 
 
 
+  const isDataEmpty = data.length === 0;
+
+  if (isDataEmpty) {
+    setData([{
+      id: "공복 혈당",
+      data: [
+        { x: "07.30", y: 102 },
+        { x: "07.31", y: 100 },
+        { x: "08.01", y: 98 },
+        { x: "08.02", y: 100 },
+        { x: "08.03", y: 97 },
+        { x: "08.04", y: 95 },
+        { x: "08.05", y: 95 }
+      ]
+    },
+    {
+      id: "식후 2시간 이후 혈당",
+      data: [
+        { x: "07.30", y: 120 },
+        { x: "07.31", y: 115 },
+        { x: "08.01", y: 115 },
+        { x: "08.02", y: 110 },
+        { x: "08.03", y: 108 },
+        { x: "08.04", y: 105 },
+        { x: "08.05", y: 108 }
+      ]
+    }]);
+    setOpenModal(true)
+  }
+
   return (
     <Container>
       <GraphContainer>
@@ -176,7 +148,7 @@ const WeeklyDataChart = () => {
           <ResponsiveLine
             data={data}
             margin={{ top: 5, right: 50, bottom: 130, left: 60 }}
-            xScale={{ type: 'point' }} //x축 데이터 형태: 날짜
+            xScale={{ type: 'point' }}
             yScale={{
               type: 'linear',
               min: yTicks[0],
@@ -184,8 +156,8 @@ const WeeklyDataChart = () => {
               stacked: false,
               reverse: false,
             }}
-            curve="linear" //꺽은 선 그래프 형태
-            axisTop={null} // 축 레이블 숨기기
+            curve="linear"
+            axisTop={null}
             axisRight={null}
             axisBottom={{
               orient: 'bottom',
@@ -200,7 +172,7 @@ const WeeklyDataChart = () => {
               tickRotation: 0,
               tickValues: [yTicks[0], yTicks[1], yTicks[2], yTicks[3]],
             }}
-            colors={["#2ADEA1", "#6A0DAD"]} // 그래프 색
+            colors={["#2ADEA1", "#6A0DAD"]}
             enablePoints={true}
             pointSize={8}
             pointColor="#ffffff"
@@ -235,13 +207,13 @@ const WeeklyDataChart = () => {
                 symbolBorderColor: 'rgba(0, 0, 0, .5)',
                 items: [
                   {
-                    id: 'fasting',
+                    id: '공복 혈당',
                     type: 'line',
                     color: '#2ADEA1',
                     value: '공복 혈당'
                   },
                   {
-                    id: 'post_meal',
+                    id: '식후 2시간 이후 혈당',
                     type: 'line',
                     color: '#6A0DAD',
                     value: '식후 2시간 이후 혈당'
@@ -250,6 +222,7 @@ const WeeklyDataChart = () => {
               }
             ]}
           />
+          {openModal && <NoDataOverlay>데이터가 충분하지 않습니다</NoDataOverlay>}
         </div>
       </GraphContainer>
     </Container>
