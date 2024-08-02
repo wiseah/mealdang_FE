@@ -311,7 +311,7 @@ export default function FoodRegistration(){
                 style={{ display: 'none' }}
                 />
             </PictureContainer>
-            <ConfirmButton onClick={handleSubmit}>수정하기</ConfirmButton>
+            <ConfirmButton onClick={handleSubmit}>식단 등록하기</ConfirmButton>
         </Container>
     )
 
