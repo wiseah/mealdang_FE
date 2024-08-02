@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import 'typeface-inter';
 import { AiFillAlert } from 'react-icons/ai';
+import react, { useState, useEffect } from 'react';
+import getMain from '../APIs/get/getMain';
 
 const DashBoardBack = styled.div`
 width: 350px;
@@ -108,6 +110,34 @@ margin-top: 5px;
 
 
 
+export function DashBoard({ dailyCalorie, dailyBloodSugar, targetBloodSugar }) {
+
+  const [daily_calorie, setDaily_calorie] = useState('');
+  const [daily_blood_sugar, setDaily_blood_sugar] = useState('?');
+  const [target_blood_sugar, setTarget_blood_sugar] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+        try {
+
+            const response = await getMain();
+            setDaily_calorie(response.daily_calorie);
+            setDaily_blood_sugar(response.daily_blood_sugar ?? '?');
+            setTarget_blood_sugar(response.target_blood_sugar);
+
+
+
+            console.log(response);
+
+        } catch (error) {
+            console.error('message:', error.message);
+        }
+    };
+
+    fetchData();
+}, []);
+
+
 const getAlertDetails = (dailyBloodSugar, targetBloodSugar) => {
   if (dailyBloodSugar === '?' || !targetBloodSugar) {
     return { color: '#000', message: '알 수 없어요' };
@@ -127,16 +157,17 @@ const getAlertDetails = (dailyBloodSugar, targetBloodSugar) => {
   return { color: '#000', message: 'meal당으로 관리해보세요' };
 };
 
-export function DashBoard({ dailyCalorie, dailyBloodSugar, targetBloodSugar }) {
-  const { color, message } = getAlertDetails(dailyBloodSugar, targetBloodSugar);
+const { color, message } = getAlertDetails(daily_blood_sugar, target_blood_sugar);
+
+
 
   return (
     <DashBoardBack>
     <LeftSection>
         <CalorieTitle> 하루 권장 섭취 열량 </CalorieTitle>
-        <Calorie> {dailyCalorie} Kcal </Calorie>
+        <Calorie> {daily_calorie} Kcal </Calorie>
         <DayInfoTitle>하루 혈당 수치 / 목표 수치</DayInfoTitle>
-        <DayInfo> {dailyBloodSugar} / {targetBloodSugar} </DayInfo>
+        <DayInfo> {daily_blood_sugar} / {target_blood_sugar} </DayInfo>
     </LeftSection>
     <RightSection>
         <AlertBackGround>
