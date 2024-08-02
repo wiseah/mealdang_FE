@@ -169,9 +169,9 @@ const CustomDietModal = ({ isOpen, onClose }) => {
             <CustomRadio value="type3" checked={dietCombination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
           </FormItem>
           <FormItem>
-            <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="breakfast" selectedValues={meals.breakfast} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="lunch" selectedValues={meals.lunch} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="dinner" selectedValues={meals.dinner} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="아침" selectedValues={meals.breakfast} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="점심" selectedValues={meals.lunch} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="저녁" selectedValues={meals.dinner} onChange={handleCheckboxChange} />
           </FormItem>
           <Title2><BsQuestionCircleFill size={20} color="#F74A25" /> 사용하고 싶은 재료 <DetailSpan>(최대 3개)</DetailSpan> </Title2>
           <FormItem>
