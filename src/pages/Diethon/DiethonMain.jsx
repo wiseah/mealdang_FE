@@ -102,7 +102,7 @@ export default function Diethon(){
             third={inputData.third}
             isLoading={isLoading} 
           />
-          <Introduce><ColorWord>37개</ColorWord>의 식단이 등록되었어요</Introduce>
+          <Introduce><ColorWord>{inputData.diets.length}개</ColorWord>의 식단이 등록되었어요</Introduce>
           <Register onClick={() => navigate('/foodregistration')}><RegisterText>나만의 식단 등록하러 가기</RegisterText><RegisterIcon/>
           </Register>
           <Diet diets={inputData.diets}/>
