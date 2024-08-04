@@ -109,7 +109,7 @@ const routes = [
         previous: false,
     },
     {
-        path: '/diethondetail',
+        path: '/diethondetail/:dietID',
         element: <DiethonDetail />,
         name: '10-1. 식단톤 식단 상세 페이지',
         previous: false,

@@ -147,8 +147,8 @@ const NoDataMessage = styled.div`
     text-align: center;
     margin-top: 20px;
 `;
-
-export default function Diet({ diets }){
+export default function Diet(){
+// export default function Diet({ diets }){
     // const [LikeCount, setLikeCount] = useState(0);
     // const [Liked, setLiked] = useState(false);
 
@@ -161,10 +161,10 @@ export default function Diet({ diets }){
     //     setLiked(!Liked); 
     //     };
 
-    // const diets = [
-    //     { diet_id: 1, diet_name: "칼로리 모험가의 식탁", nickname: "승민", main: "채소 볶음밥 1/2공기", side1: "두부 마파두부 80g", side2: "청경채 볶음 1컵", side3: "피망 볶음 1/2컵", heart:"23"},
-    //     { diet_id: 2, diet_name: "행복한 포크와 나이프", nickname: "요리사 귤", main: "채소 볶음밥 1/2공기", side1: "두부 마파두부 80g", side2: "청경채 볶음 1컵", side3: "피망 볶음 1/2컵", heart:"56"}
-    // ];
+    const diets = [
+        { diet_id: 1, diet_name: "칼로리 모험가의 식탁", nickname: "승민", main: "채소 볶음밥 1/2공기", side1: "두부 마파두부 80g", side2: "청경채 볶음 1컵", side3: "피망 볶음 1/2컵", heart:"23"},
+        { diet_id: 2, diet_name: "행복한 포크와 나이프", nickname: "요리사 귤", main: "채소 볶음밥 1/2공기", side1: "두부 마파두부 80g", side2: "청경채 볶음 1컵", side3: "피망 볶음 1/2컵", heart:"56"}
+    ];
 
     const navigate = useNavigate();
 

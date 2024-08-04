@@ -2,8 +2,9 @@ import { BsCaretDownFill } from "react-icons/bs";
 import { BsCaretUpFill } from "react-icons/bs";
 import { useState } from "react";
 import styled from "styled-components";
-
-export function TotalFoodToggle(){
+//default 추가 후에 import 부분 다 수정필요
+//api 수정후에 필요한 부분 수정 필요
+export function TotalFoodToggle(data){
     const [TotalToggled, setTotalToggled] = useState(false);
     const handleTotalToggle=()=>{
         setTotalToggled(prevState=>!prevState);
