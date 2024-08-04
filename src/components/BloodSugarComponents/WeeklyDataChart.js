@@ -42,7 +42,7 @@ const NoDataOverlay = styled.div`
   font-size: 25px;
   color: #6A0DAD;
   font-weight: 500;
-  z-index: 10;
+  z-index: 1;
 `
 
 const WeeklyDataChart = () => {

@@ -18,7 +18,7 @@ const ModalContainer = styled.div`
   height: 100vh;
   background-color: rgba(133,133,133,0.25);
   backdrop-filter: blur(6px);
-  margin-top: 72px;
+  /* margin-top: 72px; */
   font-family: 'WavvePADO-Regular';
   place-items: center;
 `;
@@ -60,7 +60,7 @@ const DetailSpan = styled.span`
   font-size: 16px;
 `
 
-const Form = styled.form`
+const Form = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -167,7 +167,7 @@ const CustomDietModal = ({ isOpen, onClose }) => {
     <ModalContainer>
       <ModalContent>
         <Title><BsGeoFill size={24} color="#F74A25" /> 식단 조합 선택 </Title>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <FormItem>
             <CustomRadio value="type1" checked={diet_combination === 'type1'} onChange={handleRadioChange} label="식사 3" />
             <CustomRadio value="type2" checked={diet_combination === 'type2'} onChange={handleRadioChange} label="식사 3 + 간식 1" />
@@ -187,7 +187,7 @@ const CustomDietModal = ({ isOpen, onClose }) => {
           <FormItem>
             <Warning>재료 입력은 프리미엄 구독 시 <br /> 사용할 수 있습니다 </Warning>
           </FormItem>
-          <CustomButton type="submit">이대로 식단 추천받기!</CustomButton>
+          <CustomButton onClick={handleSubmit}>이대로 식단 추천받기!</CustomButton>
         </Form>
       </ModalContent>
     </ModalContainer>
