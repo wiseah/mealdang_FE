@@ -156,6 +156,8 @@ const MyInfo = () => {
         setHeight(data.height);
         setWeight(data.weight);
         setIs_diabetes(data.is_diabetes);
+
+        console.log(data)
       } catch (error) {
         console.error('정보 가져오기 실패:', error);
       }
@@ -304,7 +306,6 @@ const MyInfo = () => {
               <RadioInput
                 type="radio"
                 name="is_diabetes"
-
                 value="true"
                 checked={is_diabetes}
                 onChange={handleIs_diabetesChange}
@@ -313,7 +314,6 @@ const MyInfo = () => {
             <RadioLabel>
               <RadioInput
                 type="radio"
-
                 name="is_diabetes"
                 value="false"
                 checked={!is_diabetes}

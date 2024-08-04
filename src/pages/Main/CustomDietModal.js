@@ -48,7 +48,7 @@ const Title = styled.div`
   padding-bottom: 3px;
 `
 
-const Title2 = styled.div`
+const Title2 = styled.form`
   font-size: 24px;
   color: #F74A25;
   border-bottom: 3px solid #F74A25;
@@ -60,7 +60,7 @@ const DetailSpan = styled.span`
   font-size: 16px;
 `
 
-const Form = styled.div`
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -113,12 +113,12 @@ const CustomButton = styled.button`
 
 
 const CustomDietModal = ({ isOpen, onClose }) => {
+
   const navigate = useNavigate();
   const [diet_combination, setDiet_combination] = useState('type2');
-  const [breakfast, setBreakfast] = useState([]);
-  const [lunch, setLunch] = useState([]);
-  const [dinner, setDinner] = useState([]);
-
+  const [breakfast, setBreakfast] = useState({});
+  const [lunch, setLunch] = useState({});
+  const [dinner, setDinner] = useState({});
 
   const handleRadioChange = (e) => {
     setDiet_combination(e.target.value);
@@ -129,8 +129,6 @@ const CustomDietModal = ({ isOpen, onClose }) => {
       ...values,
       [type]: checked
     });
-
-
     if (time === '아침') {
       setBreakfast(updateValues(breakfast));
     } else if (time === '점심') {
@@ -142,21 +140,44 @@ const CustomDietModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const dietCombinationMap = {
+      type1: '식사3',
+      type2: '식사3 + 간식1',
+      type3: '식사3 + 간식2'
+    };
+
+    const diet_combination_formatted = dietCombinationMap[diet_combination] || '';
+    const convertSelectedValues = (values) => {
+      const selected = [];
+      if (values.korean) selected.push('한식');
+      if (values.chinese) selected.push('중식');
+      if (values.japanese) selected.push('일식');
+      if (values.western) selected.push('양식');
+      return selected.join(', ');
+    };
+
+    const breakfastFormatted = convertSelectedValues(breakfast);
+    const lunchFormatted = convertSelectedValues(lunch);
+    const dinnerFormatted = convertSelectedValues(dinner);
+    const requestData = {
+      diet_combination: diet_combination_formatted,
+      breakfast: breakfastFormatted,
+      lunch: lunchFormatted,
+      dinner: dinnerFormatted,
+      ingredient1: null,
+      ingredient2: null,
+      ingredient3: null
+    };
+    console.log('Submitting data:', requestData);
+
     try {
-      const response = await postFoodRecommend(
-        diet_combination,
-        Object.keys(breakfast).filter(key => breakfast[key]).join(', '),
-        Object.keys(lunch).filter(key => lunch[key]).join(', '),
-        Object.keys(dinner).filter(key => dinner[key]).join(', '),
-        null,
-        null,
-        null
-      );
-      console.log(response);
+      const response = await postFoodRecommend(requestData);
+      console.log('Response:', response);
       onClose();
       navigate('/aftermain');
     } catch (error) {
-      console.error('식단 커스텀 요청 실패:', error);
+      console.error('Error submitting form:', error);
       alert('식단 커스텀에 실패하였습니다.');
     }
   };
@@ -174,7 +195,7 @@ const CustomDietModal = ({ isOpen, onClose }) => {
             <CustomRadio value="type3" checked={diet_combination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
           </FormItem>
           <FormItem>
-          <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="아침" selectedValues={breakfast} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="아침" selectedValues={breakfast} onChange={handleCheckboxChange} />
             <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="점심" selectedValues={lunch} onChange={handleCheckboxChange} />
             <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="저녁" selectedValues={dinner} onChange={handleCheckboxChange} />
           </FormItem>
@@ -191,7 +212,6 @@ const CustomDietModal = ({ isOpen, onClose }) => {
         </Form>
       </ModalContent>
     </ModalContainer>
-
   );
 };
 

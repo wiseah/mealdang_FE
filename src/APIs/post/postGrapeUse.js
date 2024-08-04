@@ -5,7 +5,7 @@ export default async function postGrapeUse(podo_store_id){
   try {
 
       const response = await axiosInstance.post(
-          `/api/podos/exchange/{podo_store_id}/`,
+          `/api/podos/exchange/${podo_store_id}/`,
           {
             podo_store_id: podo_store_id
           }

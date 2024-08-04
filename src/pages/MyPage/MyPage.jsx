@@ -26,9 +26,12 @@ const InfoContainer = styled.div`
 
 const Info = styled.div`
   font-family: 'WavvePADO-Regular';
-  font-size: 23.68px;
-  text-align: center;
-  margin: 14px 5px;
+  font-size: 23px;
+  margin: auto 8px auto 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6vh;
 `
 
 const IconWrapper = styled(BiWinkSmile)`
@@ -37,7 +40,7 @@ const IconWrapper = styled(BiWinkSmile)`
   color: #6A0DAD;
   align-items: center;
   justify-items: center;
-  margin: 14px 5px 0 14px;
+  margin: 14px 5px 0 8px;
 `
 
 const PointSpan = styled.span`
@@ -67,7 +70,7 @@ const MyPage = () => {
   const [is_subscribe, setIs_Subscribe] = useState(false);
   const [remained_podo, setRemained_podo] = useState(0);
 
-  useEffect(()=> {
+  useEffect(() => {
     async function fetchData() {
       try {
         const data = await getMyPage();
@@ -83,26 +86,25 @@ const MyPage = () => {
 
 
   const handleNavigateToNowhere = () => {
-    alert ('해당 기능은 아직 사용할 수 없어요!')
+    alert('해당 기능은 아직 사용할 수 없어요!')
   }
 
   return (
 
     <Container>
       <InfoContainer>
-        <IconWrapper/>
+        <IconWrapper />
         <Info>
-          오늘도 반가워요 <br />
-          <PointSpan>{nickname}님</PointSpan> <br />
-          현재 등급: <PointSpan>{is_subscribe ? '구독자' : '비구독'}</PointSpan> <br />
-          사용 가능 포도: <PointSpan>{remained_podo}</PointSpan>
+          <div>반가워요 <PointSpan>{nickname}님</PointSpan></div>
+          <div>현재 등급: <PointSpan>{is_subscribe ? '구독자' : '비구독'}</PointSpan> </div>
+          <div>사용 가능 포도: <PointSpan>{remained_podo}</PointSpan></div>
         </Info>
       </InfoContainer>
       <LinkContainer>
         <LinkItem><ConfirmButton onClick={() => navigate('/myinfo')} text="내 정보" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem>
         <LinkItem><ConfirmButton onClick={() => navigate('/myfoodexchangelist')} text="내 식품교환표" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem>
-        <LinkItem><ConfirmButton onClick={() => navigate('/foodbookmark')} text="추천 식단 즐겨찾기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem> 
-        <LinkItem><ConfirmButton onClick={() => navigate('/grapeexchange')} text="포도 쓰러 가기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem> 
+        <LinkItem><ConfirmButton onClick={() => navigate('/foodbookmark')} text="추천 식단 즐겨찾기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem>
+        <LinkItem><ConfirmButton onClick={() => navigate('/grapeexchange')} text="포도 쓰러 가기" textAlign="left" paddingLeft="25px" color="#000000" backgroundColor="#E6E6FA" /></LinkItem>
         <LinkItem><ConfirmButton onClick={handleNavigateToNowhere} text="프리미엄 구독하기" textAlign="left" paddingLeft="25px" color="#ffffff" backgroundColor="#6A0DAD" /></LinkItem>
         <LinkItem><ConfirmButton onClick={handleNavigateToNowhere} text="캐릭터 커스텀하러 가기" textAlign="left" paddingLeft="25px" color="#ffffff" backgroundColor="#6A0DAD" /></LinkItem>
       </LinkContainer>

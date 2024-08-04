@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Ranking from "../../components/Ranking";
-import Diet from "../../components/Diet";
+import Ranking from "../../components/Diethon/Ranking";
+import Diet from "../../components/Diethon/Diet";
 import { BsArrowRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import getDiethonMain from "../../APIs/get/getDiethonMain";
@@ -82,6 +82,7 @@ export default function Diethon(){
           diets: response.diets || []
         });
       }
+      console.log(response)
     } catch (error) {
       console.error("데이터를 가져오는 중 오류 발생:", error);
       setInputData({ first: null, second: null, third: null, diets: [] });

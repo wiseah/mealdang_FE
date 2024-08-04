@@ -169,6 +169,8 @@ export default function GrapeExchange() {
             alert("포도가 부족합니다.");
         }
     };
+
+    
     return (
         <Container>
             <UserContainer>

@@ -4,8 +4,9 @@ import { BsCaretUpFill } from "react-icons/bs";
 import { AiOutlinePlusSquare } from "react-icons/ai";
 import { AiOutlineMinusSquare } from "react-icons/ai";
 import { BsImages } from "react-icons/bs";
-import { useState,useRef, useEffect } from "react";
-import DietToggle from "../../components/DietToggle";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import DietToggle from "../../components/Diethon/DietToggle";
 import postFoodRegistration from "../../APIs/post/postFoodRegistration";
 
 // 전체 공간 
@@ -50,7 +51,7 @@ const DietContainer = styled.input`
 `
 
 // 음식 헤더 
-const FoodHeader= styled.div`
+const FoodHeader = styled.div`
     width: 312px;
     height: 57px;
     border-radius: 25px;
@@ -78,7 +79,7 @@ const FoodIcon = styled.div`
 `
 
 // 음식 추가 
-const AddFoodHeader= styled.div`
+const AddFoodHeader = styled.div`
     width: 312px;
     height: 57px;
     color: #FF6A4A;
@@ -157,44 +158,44 @@ const ConfirmButton = styled.button`
     color: #FFF;
 `
 
-export default function FoodRegistration(){
+export default function FoodRegistration() {
+    const navigate = useNavigate();
+
     const [dietName, setDietName] = useState("");
+
     const [mainDish, setMainDish] = useState({ food_name: "", nutrients: {}, recipe: "" });
     const [side1, setSide1] = useState({ food_name: "", nutrients: {}, recipe: "" });
     const [side2, setSide2] = useState({ food_name: "", nutrients: {}, recipe: "" });
     const [side3, setSide3] = useState({ food_name: "", nutrients: {}, recipe: "" });
     const [side4, setSide4] = useState({ food_name: "", nutrients: {}, recipe: "" });
 
-    // 토글 상태
     const [mainToggled, setMainToggled] = useState(false);
     const [side1Toggled, setSide1Toggled] = useState(false);
     const [side2Toggled, setSide2Toggled] = useState(false);
     const [side3Toggled, setSide3Toggled] = useState(false);
     const [side4Toggled, setSide4Toggled] = useState(false);
 
-    // 추가 상태
     const [side3Added, setSide3Added] = useState(false);
     const [side4Added, setSide4Added] = useState(false);
 
-    //이미지 처리 
     const [uploadImage, setUploadImage] = useState();
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);
-    
+
     useEffect(() => {
         const image = localStorage.getItem("image");
-        if(image){
+        if (image) {
             setUploadImage(image);
         }
     }, []);
-    
+
     useEffect(() => {
-    if (file) {
-        const url = URL.createObjectURL(file);
-        setUploadImage(url);
-        localStorage.setItem('image', url);
-    }
-    }, [file])
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setUploadImage(url);
+            localStorage.setItem('image', url);
+        }
+    }, [file]);
 
     const handleFileChange = event => {
         setFile(event.target.files[0]);
@@ -205,45 +206,54 @@ export default function FoodRegistration(){
     };
 
     const handleSubmit = async () => {
-        const formData = new FormData();
-        formData.append('main', JSON.stringify(mainDish));
-        formData.append('side1', JSON.stringify(side1));
-        formData.append('side2', JSON.stringify(side2));
-        if (side3Added) formData.append('side3', JSON.stringify(side3));
-        if (side4Added) formData.append('side4', JSON.stringify(side4));
-        if (file) formData.append('image', file);
-    
+        const dietData = {
+            main: mainDish,
+            side1: side1,
+            side2: side2,
+        };
+
+        if (side3Added) {
+            dietData.side3 = side3;
+        }
+
+        if (side4Added) {
+            dietData.side4 = side4;
+        }
+
         try {
-          const response = await postFoodRegistration(formData);
-          console.log('식단 등록 성공:', response);
-          // 성공 처리 (예: 알림 표시, 페이지 이동 등)
+            const response = await postFoodRegistration(dietData, file);
+            console.log('식단 등록 성공:', response);
+            navigate('/diethon')
         } catch (error) {
-          console.error('식단 등록 실패:', error);
-          // 오류 처리
+            console.error('식단 등록 실패:', error);
+            // 오류 처리
         }
     };
-    
-    return(
+
+
+
+    return (
         <Container>
             <DietTitle>식단명</DietTitle>
-            <DietContainer 
-                placeholder= '식단톤에 제출할 식단명을 입력해주세요.'
+            <DietContainer
+                placeholder='식단톤에 제출할 식단명을 입력해주세요.'
                 value={dietName}
-                onChange={(e) => setDietName(e.target.value)}    
+                onChange={(e) => setDietName(e.target.value)}
             />
 
             <FoodHeader>
                 <FoodTitle>메인</FoodTitle>
                 <FoodIcon onClick={() => setMainToggled(!mainToggled)}>
-                {mainToggled ? <BsCaretUpFill /> : <BsCaretDownFill />}
+                    {mainToggled ? <BsCaretUpFill /> : <BsCaretDownFill />}
                 </FoodIcon>
             </FoodHeader>
             {mainToggled && <DietToggle dish={mainDish} setDish={setMainDish} />}
 
+
             <FoodHeader>
                 <FoodTitle>반찬1</FoodTitle>
                 <FoodIcon onClick={() => setSide1Toggled(!side1Toggled)}>
-                {side1Toggled ? <BsCaretUpFill /> : <BsCaretDownFill />}
+                    {side1Toggled ? <BsCaretUpFill /> : <BsCaretDownFill />}
                 </FoodIcon>
             </FoodHeader>
             {side1Toggled && <DietToggle dish={side1} setDish={setSide1} />}
@@ -251,7 +261,7 @@ export default function FoodRegistration(){
             <FoodHeader>
                 <FoodTitle>반찬2</FoodTitle>
                 <FoodIcon onClick={() => setSide2Toggled(!side2Toggled)}>
-                {side2Toggled ? <BsCaretUpFill /> : <BsCaretDownFill />}
+                    {side2Toggled ? <BsCaretUpFill /> : <BsCaretDownFill />}
                 </FoodIcon>
             </FoodHeader>
             {side2Toggled && <DietToggle dish={side2} setDish={setSide2} />}
@@ -305,15 +315,15 @@ export default function FoodRegistration(){
                 <PictureIcon />
                 <PictureText>식단 인증 사진 업로드 하기</PictureText>
                 <input
-                type="file"
-                ref={fileInputRef}
-                onChange={handleFileChange}
-                style={{ display: 'none' }}
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    style={{ display: 'none' }}
                 />
             </PictureContainer>
             <ConfirmButton onClick={handleSubmit}>식단 등록하기</ConfirmButton>
         </Container>
     )
 
-    
+
 }

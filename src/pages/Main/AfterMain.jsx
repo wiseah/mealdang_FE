@@ -4,7 +4,6 @@ import { DashBoard } from '../../components/Dashboard';
 import { BsFillStarFill, BsStar } from "react-icons/bs";
 import { FoodRecommendBack } from '../../components/FoodRecommendBack';
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import getMain from '../../APIs/get/getMain';
 import patchMainHeart from '../../APIs/patch/patchMainHeart';
 
@@ -57,67 +56,51 @@ const RecommendButton = styled.div`
   padding: 3px 50px 15px 0px;
 `;
 
-const TurnContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const TurnButton = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
-  color: ${props => (props.disabled ? '#B0B0B0' : '#F74A25')};
-`;
-
-const TurnText = styled.div`
-  color: #F74A25;
-  text-align: center;
-  font-family: "Wavve PADO TTF";
-  font-size: 17px;
-  font-weight: 400;
-  padding: ${props => props.direction === 'previous' ? '0 16px 0 0' : '0 0 0 16px'};
-`;
-
 function AfterMain() {
+  const [nickname, setNickname] = useState('');
   const [userData, setUserData] = useState({
-    nickname: '',
     recommendCount: 0,
-    dailyCalorie: '',
-    dailyBloodSugar: '?',
-    targetBloodSugar: '',
     dietSets: []
   });
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
-    fetchUserData();
-  }, []);
-
-  const fetchUserData = async () => {
-    try {
-      const response = await getMain();
-      setUserData({
-        nickname: response.nickname,
-        recommendCount: response.recommend_count,
-        dailyCalorie: response.daily_calorie,
-        dailyBloodSugar: response.daily_blood_sugar,
-        targetBloodSugar: response.target_blood_sugar,
-        dietSets: response.diet_sets
-      });
-    } catch (error) {
-      console.error('AfterMain 내 getMain에서 에러 발생:', error.message);
+    async function fetchData() {
+      try {
+        const data = await getMain();
+        setNickname(data.nickname);
+        setUserData({
+          recommendCount: data.recommend_count,
+          dietSets: data.diet_sets
+        });
+      } catch (error) {
+        console.error('에러 발생: ', error);
+      }
     }
-  };
+    fetchData();
+  }, []);
 
   const handleLikeClick = async () => {
     const currentDietSet = userData.dietSets[currentIndex];
     if (currentDietSet) {
       try {
+        // Toggle the like state
         await patchMainHeart(currentDietSet.diet_set_id, !currentDietSet.is_liked);
-        const updatedDietSets = userData.dietSets.map((dietSet, index) => 
-          index === currentIndex ? { ...dietSet, is_liked: !dietSet.is_liked } : dietSet
+
+        // Fetch the updated data and log it
+        const updatedData = await fetchUserData();
+        console.log('Updated Data:', updatedData);
+        
+        // Update the local state with the fetched data
+        const updatedDietSets = updatedData.diet_sets.map(dietSet =>
+          dietSet.diet_set_id === currentDietSet.diet_set_id
+            ? { ...dietSet, is_liked: !currentDietSet.is_liked }
+            : dietSet
         );
-        setUserData(prevState => ({ ...prevState, dietSets: updatedDietSets }));
+        setUserData(prevState => ({
+          ...prevState,
+          dietSets: updatedDietSets
+        }));
       } catch (error) {
         console.error('AfterMain 내 patchMainHeart에서 에러 발생:', error);
       }
@@ -130,29 +113,31 @@ function AfterMain() {
       return;
     }
     try {
-      await fetchUserData();
+      const updatedData = await fetchUserData();
       setCurrentIndex(0);
+      console.log('Updated Data after recommendation:', updatedData);
     } catch (error) {
       console.error('AfterMain 내 getMain에서 에러 발생:', error);
     }
   };
 
-  const handleTurn = (direction) => {
-    if (direction === 'previous' && currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    } else if (direction === 'next' && currentIndex < userData.dietSets.length - 1) {
-      setCurrentIndex(currentIndex + 1);
+  const fetchUserData = async () => {
+    try {
+      const response = await getMain();
+      setUserData({
+        recommendCount: response.recommend_count,
+        dietSets: response.diet_sets
+      });
+      return response; // Return response for logging
+    } catch (error) {
+      console.error('AfterMain 내 getMain에서 에러 발생:', error.message);
     }
   };
 
   return (
     <Container>
-      <Greeting>오늘도 반가워요, {userData.nickname}님</Greeting>
-      <DashBoard 
-        dailyCalorie={userData.dailyCalorie}
-        dailyBloodSugar={userData.dailyBloodSugar}
-        targetBloodSugar={userData.targetBloodSugar}
-      />
+      <Greeting>오늘도 반가워요, {nickname}님</Greeting>
+      <DashBoard />
       <FoodTitle>
         오늘의 추천식단
         <StarIcon 
@@ -165,17 +150,10 @@ function AfterMain() {
         disabled={userData.recommendCount >= 3}>
         다시 추천받기<IoIosArrowRoundForward />
       </RecommendButton>
-      <FoodRecommendBack dietSet={userData.dietSets[currentIndex]} />
-      <TurnContainer>
-        <TurnButton onClick={() => handleTurn('previous')} disabled={currentIndex <= 0}>
-          <BiChevronLeft />
-          <TurnText direction="previous">이전</TurnText>
-        </TurnButton>
-        <TurnButton onClick={() => handleTurn('next')} disabled={currentIndex >= userData.dietSets.length - 1}>
-          <TurnText direction="next">다음</TurnText>
-          <BiChevronRight />
-        </TurnButton>
-      </TurnContainer>
+      <FoodRecommendBack 
+        dietSet={userData.dietSets[currentIndex]} 
+        setCurrentIndex={setCurrentIndex}
+      />
     </Container>
   );
 }

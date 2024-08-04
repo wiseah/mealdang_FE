@@ -92,19 +92,47 @@ const WeeklyDataChart = () => {
   // y축 tick 값 계산 함수
   const calculateYTicks = () => {
     if (data.length === 0) return [60, 120, 180];
-
-    const minFasting = Math.min(...data[0].data.map(item => item.y)) - 10;
-    const maxPostMeal = Math.max(...data[1].data.map(item => item.y)) + 10;
-
-    const yTicks = [
-      Math.floor(minFasting),
-      Math.floor(minFasting + (maxPostMeal - minFasting) / 3),
-      Math.floor(minFasting + (maxPostMeal - minFasting) * 2 / 3),
-      Math.ceil(maxPostMeal)
-    ];
-
-    return yTicks;
+  
+    if (data.length === 1) {
+      const singleDataSet = data[0].data;
+  
+      // 데이터셋에서 최소값과 최대값을 구합니다.
+      let minData = Infinity;
+      let maxData = -Infinity;
+  
+      singleDataSet.forEach(item => {
+        if (item.y !== undefined && item.y < minData) {
+          minData = item.y;
+        }
+        if (item.y !== undefined && item.y > maxData) {
+          maxData = item.y;
+        }
+      });
+  
+      // 최소값과 최대값을 기준으로 y 축 tick 값을 계산합니다.
+      const minTick = Math.floor(minData) - 20;
+      const maxTick = Math.ceil(maxData) + 20;
+  
+      return [
+        minTick,
+        minTick + Math.round((maxTick - minTick) / 3),
+        minTick + Math.round((maxTick - minTick) * 2 / 3),
+        maxTick
+      ];
+    } else {
+      // data.length가 2 이상인 경우, 두 데이터셋에서 각각 최소값과 최대값을 구합니다.
+      const minFasting = Math.min(...data[0].data.map(item => item.y)) - 20;
+      const maxPostMeal = Math.max(...data[1].data.map(item => item.y)) + 20;
+  
+      return [
+        Math.floor(minFasting),
+        Math.floor(minFasting + (maxPostMeal - minFasting) / 3),
+        Math.floor(minFasting + (maxPostMeal - minFasting) * 2 / 3),
+        Math.ceil(maxPostMeal)
+      ];
+    }
   };
+  
 
   const yTicks = calculateYTicks();
 
@@ -222,7 +250,7 @@ const WeeklyDataChart = () => {
               }
             ]}
           />
-          {openModal && <NoDataOverlay>데이터가 충분하지 않습니다</NoDataOverlay>}
+          {data.length === 0 && <NoDataOverlay>데이터가 충분하지 않습니다</NoDataOverlay>}
         </div>
       </GraphContainer>
     </Container>

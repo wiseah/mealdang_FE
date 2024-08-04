@@ -11,3 +11,4 @@ export default async function getBloodSugarsState(){
         throw error; // 호출자에게 오류를 전달
     }
 }
+
