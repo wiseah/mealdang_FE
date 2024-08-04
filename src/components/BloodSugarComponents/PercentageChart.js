@@ -102,7 +102,7 @@ const NoDataOverlay = styled.div`
   font-size: 25px;
   color: #6A0DAD;
   font-weight: 500;
-  z-index: 10;
+  z-index: 1;
 `
 
 const PercentageChart = () => {
@@ -213,7 +213,7 @@ const PercentageChart = () => {
             <Message3>정상이에요</Message3>
           </GuideItem>
         </Guide>
-        {openModal && <NoDataOverlay>데이터가 충분하지 않습니다</NoDataOverlay>}
+        {data.length === 0 && <NoDataOverlay>데이터가 충분하지 않습니다</NoDataOverlay>}
 </div>
       </GraphContainer>
     </Container>

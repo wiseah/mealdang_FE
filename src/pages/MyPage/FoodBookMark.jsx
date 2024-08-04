@@ -38,6 +38,7 @@ export default function FoodBookMark(){
                 setBookmarkedDiets(response); // 'liked_diets' 배열을 setBookmarkedDiets에 저장
             } catch (error) {
                 console.error("즐겨찾기한 식단을 불러오는데 실패했습니다:", error);
+                setBookmarkedDiets([]); 
             }
         };
 
@@ -47,14 +48,18 @@ export default function FoodBookMark(){
     return(
         <Container>
             <Introduction>
-                여러분들이 맛있게 먹었던<br/>식단을 두고두고 볼 수 있어요
+                여러분들이 맛있게 먹었던<br />식단을 두고두고 볼 수 있어요
             </Introduction>
-            {bookmarkedDiets.map((dietSet, index) => (
-                <React.Fragment key={index}>
-                    <Date>{dietSet.date}</Date>
-                    <FoodRecommendBack dietSets={dietSet.diets} /> {/* dietSet.diets를 전달 */}
-                </React.Fragment>
-            ))}
+            {bookmarkedDiets.length > 0 ? (
+                bookmarkedDiets.map((dietSet, index) => (
+                    <React.Fragment key={index}>
+                        <Date>{dietSet.date}</Date>
+                        <FoodRecommendBack dietSets={dietSet.diets} />
+                    </React.Fragment>
+                ))
+            ) : (
+                <p>즐겨찾기한 식단이 없습니다.</p> // 데이터가 없을 때 표시할 메시지
+            )}
         </Container>
     )
 }

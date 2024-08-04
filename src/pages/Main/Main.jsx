@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react'
-import styled from 'styled-components'
+import React, {useState, useEffect} from 'react';
+import styled from 'styled-components';
 import { DashBoard } from '../../components/Dashboard'
 import { BiSolidPlusCircle } from "react-icons/bi";
 import CustomDietModal from './CustomDietModal';
@@ -18,7 +18,8 @@ const Greeting = styled.text`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  margin-bottom: 16px;
+  align-self: flex-start;
+  margin: 0px 0px 16px 33px;
 `
 const FoodTitle = styled.div`
   color: #000;
@@ -50,7 +51,22 @@ const Icon = styled(BiSolidPlusCircle)`
 
 export default function Main() {
 
+  const [nickname, setNickname] = useState('');
   const [FoodModal, setFoodModal] = useState(false);
+
+
+  useEffect(()=> {
+    async function fetchData() {
+      try {
+        const data = await getMain();
+        setNickname(data.nickname);
+ 
+      } catch (error) {
+        console.error('에러 발생: ', error)
+      }
+    }
+    fetchData();
+  }, [])
 
   const IconClick = () => {
     setFoodModal(true); 
@@ -60,25 +76,6 @@ export default function Main() {
     setFoodModal(false); 
   };
 
-
-  const [nickname, setNickname] = useState('닉네임');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-
-        const response = await getMain();
-        setNickname(response.nickname);
-
-        console.log("닉네임: ", response.nickname);
-
-      } catch (error) {
-        console.error('message:', error.message);
-      }
-    };
-
-    fetchData();
-  }, []);
 
 
   return (

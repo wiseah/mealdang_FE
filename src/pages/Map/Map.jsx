@@ -134,7 +134,7 @@ function Map() {
     const mapContainer = document.getElementById('map');
     const mapOption = {
       center: new kakao.maps.LatLng(37.566826, 126.9786567), // 서울 시청
-      level: 7
+      level: 9
     };
 
     const newMap = new kakao.maps.Map(mapContainer, mapOption);

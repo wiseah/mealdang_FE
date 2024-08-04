@@ -144,8 +144,8 @@ const RecipeIcon = styled(MdMenuBook)`
 `
 
 const RecipeContainer = styled.textarea`
-    width: 270px;
-    height: 144px;
+    width: 260px;
+    height: 134px;
     border-radius: 10px;
     border: 1px solid #FF6A4A;
     background: #FFF;
@@ -153,6 +153,9 @@ const RecipeContainer = styled.textarea`
     font-family: "Wavve PADO TTF";
     font-size: 16px;
     font-weight: 400;
+    line-height: 1.5;
+    padding: 10px;
+
     &::placeholder {
         color: rgba(255, 106, 74, 0.50); 
         opacity: 1; 

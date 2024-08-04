@@ -1,6 +1,6 @@
 import styled from "styled-components";
-import Ranking from "../../components/Ranking";
-import Diet from "../../components/Diet";
+import Ranking from "../../components/Diethon/Ranking";
+import Diet from "../../components/Diethon/Diet";
 import { BsArrowRight } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import getDiethonMain from "../../APIs/get/getDiethonMain";
@@ -82,6 +82,7 @@ export default function Diethon(){
           diets: response.diets || []
         });
       }
+      console.log(response)
     } catch (error) {
       console.error("데이터를 가져오는 중 오류 발생:", error);
       setInputData({ first: null, second: null, third: null, diets: [] });
@@ -102,7 +103,7 @@ export default function Diethon(){
             third={inputData.third}
             isLoading={isLoading} 
           />
-          <Introduce><ColorWord>37개</ColorWord>의 식단이 등록되었어요</Introduce>
+          <Introduce><ColorWord>{inputData.diets.length}개</ColorWord>의 식단이 등록되었어요</Introduce>
           <Register onClick={() => navigate('/foodregistration')}><RegisterText>나만의 식단 등록하러 가기</RegisterText><RegisterIcon/>
           </Register>
           <Diet diets={inputData.diets}/>

@@ -33,13 +33,16 @@ const TitleContainer = styled.div`
     justify-content: space-between;
 `
 const Dietitle = styled.div`
-    /* width: 260px;    */
+    width: 260px;   
     height: 32px;
     color: #6A0DAD;
     font-family: 'Inter';
     font-size: 28px;
     font-weight: 700;
-    padding-left: 14px;
+    padding-left: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `
 
 const LikeContainer = styled.div`
@@ -74,7 +77,7 @@ const UserContainer = styled.div`
     border-radius: 10px;
     background: #6A0DAD;
     padding: 8px;
-    margin: 5px 0px 8px 24px;
+    margin: 5px 0px 18px 24px;
     align-self: flex-start;
     color: #FFF;
     text-align: center;
@@ -101,7 +104,7 @@ const FoodContainer = styled.div`
     gap: 1px;
     color: #6A0DAD;
     font-family: "Wavve PADO TTF";
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 400;
     margin-left: 24px;
 `

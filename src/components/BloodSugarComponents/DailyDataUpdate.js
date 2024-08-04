@@ -97,6 +97,7 @@ const formatDateToServer = (date) => {
   // 혈당 페이지 접속 시 데이터 불러오기
   useEffect(() => {
     const fetchData = async () => {
+
       try {
 
         setDate(getCurrentDate());
@@ -106,6 +107,8 @@ const formatDateToServer = (date) => {
           fasting_blood_sugar: response.today_data.fasting_blood_sugar,
           post_meal_blood_sugar: response.today_data.post_meal_blood_sugar,
         });
+
+        console.log('Submitting data:', response);
 
       } catch (error) {
         console.error('DailyDataUpdate 내 getBloodSugarsState에서 에러 발생:', error);
@@ -139,14 +142,30 @@ const formatDateToServer = (date) => {
   };
   
 
-  // 입력값 변경하기
-  const handleBloodSugarChange = (type, index, value) => {
-    setBloodsugars(prevState => ({
-      ...prevState,
-      [type]: prevState[type].map((item, idx) => idx === index ? value : item),
-    }));
-  };
+  // // 입력값 변경하기
+  // const handleBloodSugarChange = (type, index, value) => {
+  //   setBloodsugars(prevState => ({
+  //     ...prevState,
+  //     [type]: prevState[type].map((item, idx) => idx === index ? value : item),
+  //   }));
+  // };
 
+  const handleBloodSugarChange = (type, index, value) => {
+    setBloodsugars(prevState => {
+      // 1. 배열 복사
+      const updatedArray = [...prevState[type]];
+      
+      // 2. 특정 인덱스 업데이트
+      updatedArray[index] = value;
+      
+      // 3. 새로운 상태 반환
+      return {
+        ...prevState,
+        [type]: updatedArray,
+      };
+    });
+  };
+  
 
 
   return (

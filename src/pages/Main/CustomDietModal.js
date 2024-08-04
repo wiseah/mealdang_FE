@@ -18,7 +18,7 @@ const ModalContainer = styled.div`
   height: 100vh;
   background-color: rgba(133,133,133,0.25);
   backdrop-filter: blur(6px);
-  margin-top: 72px;
+  /* margin-top: 72px; */
   font-family: 'WavvePADO-Regular';
   place-items: center;
 `;
@@ -48,7 +48,7 @@ const Title = styled.div`
   padding-bottom: 3px;
 `
 
-const Title2 = styled.div`
+const Title2 = styled.form`
   font-size: 24px;
   color: #F74A25;
   border-bottom: 3px solid #F74A25;
@@ -113,45 +113,71 @@ const CustomButton = styled.button`
 
 
 const CustomDietModal = ({ isOpen, onClose }) => {
+
   const navigate = useNavigate();
-  const [dietCombination, setDietCombination] = useState('type2');
-  const [meals, setMeals] = useState({
-    breakfast: {},
-    lunch: {},
-    dinner: {}
-  });
+  const [diet_combination, setDiet_combination] = useState('type2');
+  const [breakfast, setBreakfast] = useState({});
+  const [lunch, setLunch] = useState({});
+  const [dinner, setDinner] = useState({});
 
   const handleRadioChange = (e) => {
-    setDietCombination(e.target.value);
+    setDiet_combination(e.target.value);
   };
 
   const handleCheckboxChange = (time, type, checked) => {
-    setMeals(prevMeals => ({
-      ...prevMeals,
-      [time]: {
-        ...prevMeals[time],
-        [type]: checked
-      }
-    }));
+    const updateValues = (values) => ({
+      ...values,
+      [type]: checked
+    });
+    if (time === '아침') {
+      setBreakfast(updateValues(breakfast));
+    } else if (time === '점심') {
+      setLunch(updateValues(lunch));
+    } else if (time === '저녁') {
+      setDinner(updateValues(dinner));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const dietCombinationMap = {
+      type1: '식사3',
+      type2: '식사3 + 간식1',
+      type3: '식사3 + 간식2'
+    };
+
+    const diet_combination_formatted = dietCombinationMap[diet_combination] || '';
+    const convertSelectedValues = (values) => {
+      const selected = [];
+      if (values.korean) selected.push('한식');
+      if (values.chinese) selected.push('중식');
+      if (values.japanese) selected.push('일식');
+      if (values.western) selected.push('양식');
+      return selected.join(', ');
+    };
+
+    const breakfastFormatted = convertSelectedValues(breakfast);
+    const lunchFormatted = convertSelectedValues(lunch);
+    const dinnerFormatted = convertSelectedValues(dinner);
+    const requestData = {
+      diet_combination: diet_combination_formatted,
+      breakfast: breakfastFormatted,
+      lunch: lunchFormatted,
+      dinner: dinnerFormatted,
+      ingredient1: null,
+      ingredient2: null,
+      ingredient3: null
+    };
+    console.log('Submitting data:', requestData);
+
     try {
-      const response = await postFoodRecommend(
-        dietCombination,
-        Object.keys(meals.breakfast).filter(key => meals.breakfast[key]).join(', '),
-        Object.keys(meals.lunch).filter(key => meals.lunch[key]).join(', '),
-        Object.keys(meals.dinner).filter(key => meals.dinner[key]).join(', '),
-        null,
-        null,
-        null
-      );
-      console.log(response);
+      const response = await postFoodRecommend(requestData);
+      console.log('Response:', response);
       onClose();
       navigate('/aftermain');
     } catch (error) {
-      console.error('식단 커스텀 요청 실패:', error);
+      console.error('Error submitting form:', error);
       alert('식단 커스텀에 실패하였습니다.');
     }
   };
@@ -162,16 +188,16 @@ const CustomDietModal = ({ isOpen, onClose }) => {
     <ModalContainer>
       <ModalContent>
         <Title><BsGeoFill size={24} color="#F74A25" /> 식단 조합 선택 </Title>
-        <Form onSubmit={handleSubmit}>
+        <Form>
           <FormItem>
-            <CustomRadio value="type1" checked={dietCombination === 'type1'} onChange={handleRadioChange} label="식사 3" />
-            <CustomRadio value="type2" checked={dietCombination === 'type2'} onChange={handleRadioChange} label="식사 3 + 간식 1" />
-            <CustomRadio value="type3" checked={dietCombination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
+            <CustomRadio value="type1" checked={diet_combination === 'type1'} onChange={handleRadioChange} label="식사 3" />
+            <CustomRadio value="type2" checked={diet_combination === 'type2'} onChange={handleRadioChange} label="식사 3 + 간식 1" />
+            <CustomRadio value="type3" checked={diet_combination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
           </FormItem>
           <FormItem>
-            <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="breakfast" selectedValues={meals.breakfast} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="lunch" selectedValues={meals.lunch} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="dinner" selectedValues={meals.dinner} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="아침" selectedValues={breakfast} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="점심" selectedValues={lunch} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="저녁" selectedValues={dinner} onChange={handleCheckboxChange} />
           </FormItem>
           <Title2><BsQuestionCircleFill size={20} color="#F74A25" /> 사용하고 싶은 재료 <DetailSpan>(최대 3개)</DetailSpan> </Title2>
           <FormItem>
@@ -180,13 +206,12 @@ const CustomDietModal = ({ isOpen, onClose }) => {
             <Input disabled />
           </FormItem>
           <FormItem>
-            <Warning>재료 입력은 프리미엄 구독 시 사용할 수 있습니다 </Warning>
+            <Warning>재료 입력은 프리미엄 구독 시 <br /> 사용할 수 있습니다 </Warning>
           </FormItem>
-          <CustomButton type="submit">이대로 식단 추천받기!</CustomButton>
-          </Form>
+          <CustomButton onClick={handleSubmit}>이대로 식단 추천받기!</CustomButton>
+        </Form>
       </ModalContent>
     </ModalContainer>
-
   );
 };
 

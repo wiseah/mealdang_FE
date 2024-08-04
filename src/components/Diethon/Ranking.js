@@ -68,9 +68,12 @@ const FirstTitle = styled.span`
     color: #000;    
     text-align: center;
     font-family: "Wavve PADO TTF";
-    font-size: 21px;
+    font-size: 28px;
     font-weight: 400;
     margin-top: 28px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `
 const FirstUserInfoContainer = styled.div`
     display: flex;
@@ -78,13 +81,16 @@ const FirstUserInfoContainer = styled.div`
     align-items: center;
     color: #6A0DAD;
     font-family: "Wavve PADO TTF";
-    font-size: 14px;
+    font-size: 24px;
     font-weight: 400;
     margin-top: 33px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `
 
 const FirstUserContainer = styled.div`
-    width: 79px;
+    width: 89px;
     display: flex;
     align-items: center;
 `
@@ -124,7 +130,7 @@ const UserInfoContainer = styled.div`
     align-items: center;
     color: #6A0DAD;
     font-family: "Wavve PADO TTF";
-    font-size: 12px;
+    font-size: 20px;
     font-weight: 400;
     
 `
@@ -133,12 +139,22 @@ const UserContainer = styled.div`
     height: 25px;
     display: flex;
     align-items: center;
+
 `
 const UserIcon = styled(BsPersonFill)`
     width: 20px;
     height: 20px;
     margin-right: 5px;
 `
+
+const NickContainer = styled.div`
+    width: 60px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+`
+
+
 const LikeIcon = styled(AiFillHeart)`
     width: 20px;
     height: 20px;
@@ -158,6 +174,9 @@ const SecondContainer = styled.div`
 const SecondTitle = styled.div`
     height: 43px;
     margin: 18px 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `
 const SecondImage = styled.img`
     position: absolute;
@@ -180,6 +199,9 @@ const ThirdTitle = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 `
 const ThirdImage = styled.img`
     position: absolute;
@@ -250,7 +272,7 @@ export default function Ranking({ first, second, third, isLoading }){
                     </Title>
                     <UserInfoContainer>
                         <UserContainer>
-                            <UserIcon/> {second.second_nickname}
+                            <UserIcon/> <NickContainer>{second.second_nickname}</NickContainer>
                         </UserContainer>
                         <UserContainer>
                             <LikeIcon/> {second.heart}개
@@ -264,7 +286,7 @@ export default function Ranking({ first, second, third, isLoading }){
                     </FirstTitle>
                     <FirstUserInfoContainer>
                         <FirstUserContainer>
-                            <FirstUserIcon/> {first.first_nickname}
+                            <FirstUserIcon/> <NickContainer>{first.first_nickname}</NickContainer>
                         </FirstUserContainer>
                         <FirstUserContainer>
                             <FirstLikeIcon/> {first.heart}개
@@ -278,7 +300,7 @@ export default function Ranking({ first, second, third, isLoading }){
                     </Title>
                     <UserInfoContainer>
                         <UserContainer>
-                            <UserIcon/> {third.third_nickname}
+                            <UserIcon/> <nickContainer>{third.third_nickname}</nickContainer>
                         </UserContainer>
                         <UserContainer>
                             <LikeIcon/> {third.heart}개

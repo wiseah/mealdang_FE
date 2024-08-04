@@ -1,60 +1,87 @@
 export const dummyData = {
 	"cafe": [
-		{
-			"latitude": 37.570881,
-			"longitude": 126.976933,
-			"place_name": "스타벅스 광화문점",
-			"place_link": "https://place.map.kakao.com/7961649",
-			"road_name_address": "서울 종로구 세종대로 167",
-			"lot_number_address": "서울 종로구 세종로 211",
-			"phone": "02-737-0070"
-		},
-		{
-			"latitude": 37.53514257044817,
-			"longitude": 127.00774845781423,
-			"place_name": "테라로사 한남점",
-			"place_link": "https://place.map.kakao.com/27079320",
-			"road_name_address": "서울 용산구 이태원로 225",
-			"lot_number_address": "서울 용산구 한남동 683-142",
-			"phone": "02-796-7000"
-		},
-		{
-			"latitude": 37.58264348952434,
-			"longitude": 126.98409463271352,
-			"place_name": "블루보틀 삼청동점",
-			"place_link": "https://place.map.kakao.com/353512935",
-			"road_name_address": "서울 종로구 북촌로5가길 7",
-			"lot_number_address": "서울 종로구 삼청동 35-67",
-			"phone": "1533-6906"
-		}
-	],
-	"restaurant": [
-		{
-			"latitude": 37.56374669937975,
-			"longitude": 126.98524650409275,
-			"place_name": "명동교자 본점",
-			"place_link": "https://place.map.kakao.com/10332413",
-			"road_name_address": "서울 중구 명동10길 29",
-			"lot_number_address": "명동2가 25-36",
-			"phone": "02-776-5348"
-		},
-		{
-			"latitude": 37.56635749961843,
-			"longitude": 126.99098550409174,
-			"place_name": "을지로 미쓰리",
-			"place_link": "https://place.map.kakao.com/17557418",
-			"road_name_address": "서울 중구 을지로11길 26",
-			"lot_number_address": "서울 중구 을지로3가 104-5",
-			"phone": "02-777-3321"
-		},
-		{
-			"latitude": 37.57257234028572,
-			"longitude": 126.97730649961853,
-			"place_name": "서울식당",
-			"place_link": "https://place.map.kakao.com/9256066",
-			"road_name_address": "서울 종로구 사직로 130",
-			"lot_number_address": "서울 종로구 사직동 9-1",
-			"phone": "02-736-8080"
-		}
-	]
+      {
+         "latitude": 37.51593785120183,
+         "longitude": 127.03940031740045,
+         "place_name": "강남제분소",
+         "place_link": "https://place.map.kakao.com/614794457",
+         "road_name_address": "서울 강남구 선릉로129길 26 1층 101호",
+         "lot_number_address": "논현동 240-16",
+         "phone": "02-515-7978"
+      },
+      {
+         "latitude": 37.5559187,
+         "longitude": 126.9077533,
+         "place_name": "키토방앗간",
+         "place_link": "https://place.map.kakao.com/1976552184",
+         "road_name_address": "서울 마포구 월드컵로19길 36 현빌딩 1층",
+         "lot_number_address": "망원동 57-50",
+         "phone": "010-2789-9189"
+      },
+      {
+         "latitude": 37.5426108,
+         "longitude": 127.0540144,
+         "place_name": "뺑드에코",
+         "place_link": "https://place.map.kakao.com/304432238",
+         "road_name_address": "서울 성동구 연무장길 44 2층",
+         "lot_number_address": "성수동2가 310-7",
+         "phone": "010-3510-4730"
+      },
+      {
+         "latitude": 37.5065529,
+         "longitude": 127.0248598,
+         "place_name": "인터랙트",
+         "place_link": "https://place.map.kakao.com/332630576",
+         "road_name_address": "서울 강남구 강남대로118길 16 2층",
+         "lot_number_address": "논현동 183-3",
+         "phone": "02-547-7290"
+      },
+      {
+         "latitude": 37.5378775,
+         "longitude": 127.0581638,
+         "place_name": "단과자",
+         "place_link": "https://place.map.kakao.com/1875806215",
+         "road_name_address": "서울 성동구 뚝섬로 430 2층",
+         "lot_number_address": "성수동2가 269-133",
+         "phone": "010-4049-4666"
+      },
+      {
+         "latitude": 37.4829772,
+         "longitude": 126.9121073,
+         "place_name": "냥빵",
+         "place_link": "https://place.map.kakao.com/1103796468",
+         "road_name_address": "서울 관악구 조원로16가길 26 1층",
+         "lot_number_address": "신림동 539-1",
+         "phone": "02-6014-1704"
+      }
+   ],
+   "restaurant": [
+      {
+         "latitude": 37.5625698,
+         "longitude": 126.9254255,
+         "place_name": "제로밥상 연남점",
+         "place_link": "https://place.map.kakao.com/1787509752",
+         "road_name_address": "서울 마포구 동교로46길 9",
+         "lot_number_address": "연남동 387-18",
+         "phone": "02-332-2477"
+      },
+      {
+         "latitude": 37.5954927,
+         "longitude": 127.087446,
+         "place_name": "헬키푸키 상봉점",
+         "place_link": "https://place.map.kakao.com/834646035",
+         "road_name_address": "서울 중랑구 면목로92라길 2 1층",
+         "lot_number_address": "상봉동 102-3",
+         "phone": "02-434-5535"
+      },
+      {
+         "latitude": 37.484637,
+         "longitude": 127.0454589,
+         "place_name": "음 이터리 앤 베이커리",
+         "place_link": "https://place.map.kakao.com/1701193614",
+         "road_name_address": "서울 강남구 논현로28길 47 1층",
+         "lot_number_address": "도곡동 420-14",
+         "phone": "02-572-2023"
+      }
+   ]
 };
