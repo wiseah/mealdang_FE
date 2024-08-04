@@ -3,6 +3,8 @@ import { useRef,useState,useEffect } from "react";
 import { BsImages } from "react-icons/bs";
 import  TotalFoodToggle  from "../../components/TotalFoodToggle";
 import FoodToggle from "../../components/FoodToggle";
+import getFoodDetail from "../../APIs/get/getFoodDetail";
+
 
 // 전체 공간
 const Container = styled.div`
@@ -99,14 +101,106 @@ export default function FoodDetail(){
         fileInputRef.current.click();
       };
 
+    
+    const [Data, setData] = useState({
+        "nickname": " ",
+        "date": " ",
+        "meal_time": " ", 
+        "meal_type": " ", 
+        "is_my_recipe": true,
+        "calorie": 0,
+        "heart": 0,
+        "main": {
+        "food_name": "메인",
+        "nutrients": {
+            "grain": 0,
+            "fish_meat_low_fat": 0,
+            "fish_meat_medium_fat": 0,
+            "vegetable": 0,
+            "fat": 0,
+            "dairy": 0,
+            "fruit": 0
+        },
+        "calories":0,
+        "recipe": ""
+    },
+        "side1" :{
+        "food_name": "반찬1",
+        "nutrients": {
+            "grain": 0,
+            "fish_meat_low_fat": 0,
+            "fish_meat_medium_fat": 0,
+            "vegetable": 0,
+            "fat": 0,
+            "dairy": 0,
+            "fruit": 0
+        },
+        "recipe": ""
+    },
+        "side2" :{
+        "food_name": "반찬2",
+        "nutrients": {
+            "grain": 0,
+            "fish_meat_low_fat": 0,
+            "fish_meat_medium_fat": 0,
+            "vegetable": 0,
+            "fat": 0,
+            "dairy": 0,
+            "fruit": 0
+        },
+        "recipe": ""
+    },
+        "side3" :{
+        "food_name": "반찬3",
+        "nutrients": {
+            "grain": 0,
+            "fish_meat_low_fat": 0,
+            "fish_meat_medium_fat": 0,
+            "vegetable": 0,
+            "fat": 0,
+            "dairy": 0,
+            "fruit": 0
+        },
+        "recipe": ""
+    },
+    "image": "",
+
+        });
+
+    useEffect(() => {
+    const fetchFoodDetailData = async () => {
+        try {
+        const response = await getFoodDetail();
+        setData(response);
+        console.log(Data);
+        } catch (error) {
+        console.error('message:', error.message);
+        alert('매칭되는 식단 상세보기 정보를 찾지 못했습니다.');
+        }
+    };
+
+    fetchFoodDetailData();
+    }, []);
+
     return(
         <Container>
             <Introduce>추천 식단 만들어먹고 인증까지 해보세요!</Introduce>
-            <TotalFoodToggle/>
-            <FoodToggle/>
+            <TotalFoodToggle
+                calorie = {Data.calorie}
+                main = {Data.main}
+            />
+            <FoodToggle
+                main = {Data.main}
+                side1 = {Data.side1}
+                side2 = {Data.side2}
+                side3 = {Data.side3}
+            />
             <PictureContainer onClick={triggerFileInput}>
-                {uploadImage &&(<UploadedImage src = {uploadImage} alt="Uploaded"/>
-            )}
+                {uploadImage ? (
+                    <UploadedImage src={uploadImage} alt="Uploaded" />
+                ) : (
+                    <UploadedImage src={Data.image} alt="Default" />
+                )}
                 <PictureIcon/>
                 <PictureText>식단 인증 사진 업로드 하기 </PictureText>
             </PictureContainer>
