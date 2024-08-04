@@ -114,35 +114,40 @@ const CustomButton = styled.button`
 
 const CustomDietModal = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
-  const [dietCombination, setDietCombination] = useState('type2');
-  const [meals, setMeals] = useState({
-    breakfast: {},
-    lunch: {},
-    dinner: {}
-  });
+  const [diet_combination, setDiet_combination] = useState('type2');
+  const [breakfast, setBreakfast] = useState([]);
+  const [lunch, setLunch] = useState([]);
+  const [dinner, setDinner] = useState([]);
+
 
   const handleRadioChange = (e) => {
-    setDietCombination(e.target.value);
+    setDiet_combination(e.target.value);
   };
 
   const handleCheckboxChange = (time, type, checked) => {
-    setMeals(prevMeals => ({
-      ...prevMeals,
-      [time]: {
-        ...prevMeals[time],
-        [type]: checked
-      }
-    }));
+    const updateValues = (values) => ({
+      ...values,
+      [type]: checked
+    });
+
+
+    if (time === '아침') {
+      setBreakfast(updateValues(breakfast));
+    } else if (time === '점심') {
+      setLunch(updateValues(lunch));
+    } else if (time === '저녁') {
+      setDinner(updateValues(dinner));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await postFoodRecommend(
-        dietCombination,
-        Object.keys(meals.breakfast).filter(key => meals.breakfast[key]).join(', '),
-        Object.keys(meals.lunch).filter(key => meals.lunch[key]).join(', '),
-        Object.keys(meals.dinner).filter(key => meals.dinner[key]).join(', '),
+        diet_combination,
+        Object.keys(breakfast).filter(key => breakfast[key]).join(', '),
+        Object.keys(lunch).filter(key => lunch[key]).join(', '),
+        Object.keys(dinner).filter(key => dinner[key]).join(', '),
         null,
         null,
         null
@@ -164,14 +169,14 @@ const CustomDietModal = ({ isOpen, onClose }) => {
         <Title><BsGeoFill size={24} color="#F74A25" /> 식단 조합 선택 </Title>
         <Form onSubmit={handleSubmit}>
           <FormItem>
-            <CustomRadio value="type1" checked={dietCombination === 'type1'} onChange={handleRadioChange} label="식사 3" />
-            <CustomRadio value="type2" checked={dietCombination === 'type2'} onChange={handleRadioChange} label="식사 3 + 간식 1" />
-            <CustomRadio value="type3" checked={dietCombination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
+            <CustomRadio value="type1" checked={diet_combination === 'type1'} onChange={handleRadioChange} label="식사 3" />
+            <CustomRadio value="type2" checked={diet_combination === 'type2'} onChange={handleRadioChange} label="식사 3 + 간식 1" />
+            <CustomRadio value="type3" checked={diet_combination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
           </FormItem>
           <FormItem>
-            <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="아침" selectedValues={meals.breakfast} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="점심" selectedValues={meals.lunch} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="저녁" selectedValues={meals.dinner} onChange={handleCheckboxChange} />
+          <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="아침" selectedValues={breakfast} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="점심" selectedValues={lunch} onChange={handleCheckboxChange} />
+            <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="저녁" selectedValues={dinner} onChange={handleCheckboxChange} />
           </FormItem>
           <Title2><BsQuestionCircleFill size={20} color="#F74A25" /> 사용하고 싶은 재료 <DetailSpan>(최대 3개)</DetailSpan> </Title2>
           <FormItem>
@@ -180,10 +185,10 @@ const CustomDietModal = ({ isOpen, onClose }) => {
             <Input disabled />
           </FormItem>
           <FormItem>
-            <Warning>재료 입력은 프리미엄 구독 시 사용할 수 있습니다 </Warning>
+            <Warning>재료 입력은 프리미엄 구독 시 <br /> 사용할 수 있습니다 </Warning>
           </FormItem>
           <CustomButton type="submit">이대로 식단 추천받기!</CustomButton>
-          </Form>
+        </Form>
       </ModalContent>
     </ModalContainer>
 
