@@ -113,8 +113,8 @@ const CalorieContainer = styled.div`
 export function FoodRecommend({title, Icon, Content, Calories, Certification}){
     const navigate = useNavigate();
 
-    const DetailClick = () => {
-        navigate('/FoodDetail');
+    const DetailClick = (dietId) => {
+        navigate(`/aftermain/fooddetail/${dietId}`);
     }
 
     return(

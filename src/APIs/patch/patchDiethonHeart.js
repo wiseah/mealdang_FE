@@ -1,9 +1,9 @@
 import axiosInstance from "../axiosInstance";
 
-export default async function patchDiethonHeart (is_heart){
+export default async function patchDiethonHeart (diet_id, is_heart){
     try {
         const response = await axiosInstance.patch(
-            `/api/diets/heart/{diet_id}/`,
+            `/api/diets/heart/${diet_id}/`,
             {
               is_heart: is_heart
             }
