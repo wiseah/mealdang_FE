@@ -130,7 +130,7 @@ const LoadingContainer = styled.div`
   background-color: rgba(225,225,225,0.8);
   backdrop-filter: blur(6px);
   place-items: center;
-  z-index: 2;
+  z-index: 1;
 `;
 
 const LoaderDiv = styled.div`

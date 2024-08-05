@@ -4,7 +4,7 @@ import { BsImages } from "react-icons/bs";
 import  TotalFoodToggle  from "../../components/TotalFoodToggle";
 import FoodToggle from "../../components/FoodToggle";
 import getFoodDetail from "../../APIs/get/getFoodDetail";
-
+import { useParams } from 'react-router-dom';
 
 // 전체 공간
 const Container = styled.div`
@@ -70,6 +70,7 @@ export default function FoodDetail(){
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);
     const [isCertified, setIsCertified] = useState(false);
+    const { diet_id } = useParams();
 
     useEffect(() => {
         const image = localStorage.getItem("image");
@@ -170,7 +171,7 @@ export default function FoodDetail(){
     useEffect(() => {
     const fetchFoodDetailData = async () => {
         try {
-        const response = await getFoodDetail();
+        const response = await getFoodDetail(diet_id);
         setData(response);
         console.log(Data);
         } catch (error) {
@@ -186,8 +187,8 @@ export default function FoodDetail(){
         <Container>
             <Introduce>추천 식단 만들어먹고 인증까지 해보세요!</Introduce>
             <TotalFoodToggle
-                calorie = {Data.calorie}
-                main = {Data.main}
+                calorie = {Data.total_calorie}
+                data = {Data}
             />
             <FoodToggle
                 main = {Data.main}

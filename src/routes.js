@@ -85,7 +85,7 @@ const routes = [
         previous: false,
     },
     {
-        path: '/aftermain/foodDetail',
+        path: '/aftermain/foodDetail/:diet_id',
         element: <FoodDetail/>,
         name: '07-1. 식단 상세 페이지(메인)',
         previous: '/aftermain',
