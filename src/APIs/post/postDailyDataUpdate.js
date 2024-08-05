@@ -1,20 +1,20 @@
 import axiosInstance from "../axiosInstance";  
 
-export default async function postDailyDataUpdate(date, fasting_blood_sugar, post_meal_blood_sugar, morning, noon, evening) {
+export default async function postDailyDataUpdate(date, fastingBloodSugar, postMealBloodSugar) {
   try {
-    const response = await axiosInstance.patch(
+    const response = await axiosInstance.post(
       `/api/bloodsugars/save/`,
       {
         date: date,
         fasting_blood_sugar: {
-          morning: morning,
-          noon: noon,
-          evening: evening
+          morning: fastingBloodSugar.morning,
+          noon: fastingBloodSugar.noon,
+          evening: fastingBloodSugar.evening
         },
         post_meal_blood_sugar: {
-          morning: morning,
-          noon: noon,
-          evening: evening
+          morning: postMealBloodSugar.morning,
+          noon: postMealBloodSugar.noon,
+          evening: postMealBloodSugar.evening
         }
       }
     );
