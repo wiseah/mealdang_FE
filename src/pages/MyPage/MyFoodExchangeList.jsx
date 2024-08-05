@@ -75,14 +75,17 @@ const FoodExchangeList = () => {
 
   const [content, setContent] = useState({
     "nickname": "닉네임",
-    "energy_calorie": "?",
-    "grain": "?",
-    "fish_meat_low_fat": "?",
-    "fish_meat_medium_fat": "?",
-    "vegetable": "?",
-    "fat": "?",
-    "dairy": "?",
-    "fruit": "?",
+    "food_exchange": {
+      "energy_calorie": "?",
+      "grain": "?",
+      "fish_meat_low_fat": "?",
+      "fish_meat_medium_fat": "?",
+      "vegetable": "?",
+      "fat": "?",
+      "dairy": "?",
+      "fruit": "?",
+    }
+
   })
 
 
@@ -94,7 +97,7 @@ const FoodExchangeList = () => {
         const response = await getFoodExchangeList();
         setContent(response);
 
-        console.log(response);
+        console.log(content);
 
       } catch (error) {
         console.error('message:', error.message);
@@ -109,22 +112,23 @@ const FoodExchangeList = () => {
   return (
     <Container>
       <Words>
-        <Words1>{content.nickname}님의 하루 권장 섭취량은  <PointWords>{content.energy_calorie}Kcal</PointWords>입니다</Words1>
+        <Words1>{content.nickname}님의 하루 권장 섭취량은  <PointWords>{content.food_exchange.energy_calorie}Kcal</PointWords>입니다</Words1>
         <Words2>
-          식품교환표<BiLink size={19} color="black" onClick={() => setModalOpen(true)} />에 따른 식품군 당
+          식품교환표<BiLink size={19} color="black" onClick={() => setModalOpen(true)} cursor="pointer" />에 따른 식품군 당
           <br /> 섭취량은..
         </Words2>
       </Words>
 
       <ExchangeList>
-        <ListItems>곡류군 {'\u00A0'}{'\u00A0'} {content.grain}</ListItems>
-        <ListItems>어육류군(저지방군) {'\u00A0'}{'\u00A0'} {content.fish_meat_low_fat}</ListItems>
-        <ListItems>어육류군(중지방군) {'\u00A0'}{'\u00A0'} {content.fish_meat_medium_fat}</ListItems>
-        <ListItems>채소군 {'\u00A0'}{'\u00A0'} {content.vegetable}</ListItems>
-        <ListItems>지방군 {'\u00A0'}{'\u00A0'} {content.fat}</ListItems>
-        <ListItems>우유군 {'\u00A0'}{'\u00A0'} {content.dairy}</ListItems>
-        <ListItems>과일군 {'\u00A0'}{'\u00A0'} {content.fruit}</ListItems>
+        <ListItems>곡류군 {'\u00A0'}{'\u00A0'} {content.food_exchange.grain}</ListItems>
+        <ListItems>어육류군(저지방군) {'\u00A0'}{'\u00A0'} {content.food_exchange.fish_meat_low_fat}</ListItems>
+        <ListItems>어육류군(중지방군) {'\u00A0'}{'\u00A0'} {content.food_exchange.fish_meat_medium_fat}</ListItems>
+        <ListItems>채소군 {'\u00A0'}{'\u00A0'} {content.food_exchange.vegetable}</ListItems>
+        <ListItems>지방군 {'\u00A0'}{'\u00A0'} {content.food_exchange.fat}</ListItems>
+        <ListItems>우유군 {'\u00A0'}{'\u00A0'} {content.food_exchange.dairy}</ListItems>
+        <ListItems>과일군 {'\u00A0'}{'\u00A0'} {content.food_exchange.fruit}</ListItems>
       </ExchangeList>
+
 
       <Words>
         <Words2>

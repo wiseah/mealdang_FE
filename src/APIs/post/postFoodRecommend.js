@@ -1,22 +1,22 @@
 import axiosInstance from "../axiosInstance";  
 
-export default async function postFoodRecommend(diet_combination, breakfast, lunch, dinner, ingredient1, ingredient2, ingredient3) {
+
+export default async function postFoodRecommend(requestData) {
   try {
-    const response = await axiosInstance.post(
-      `/api/diets/recommend/`,
-      {
-        diet_combination: diet_combination,
-        breakfast: breakfast,
-        lunch: lunch,
-        dinner: dinner,
-        ingredient1: ingredient1,
-        ingredient2: ingredient2,
-        ingredient3: ingredient3
-      }
-    );
+    const response = await axiosInstance.post('/api/diets/recommend/', requestData);
     return response.data;
   } catch (error) {
-    console.error('에러 발생: ', error);
+    if (error.response) {
+      // 서버에서 응답이 있는 경우
+      console.error('API error:', error.response.data);
+    } else if (error.request) {
+      // 요청은 되었지만 응답이 없는 경우
+      console.error('No response received:', error.request);
+    } else {
+      // 설정 오류 등 다른 오류
+      console.error('Error setting up request:', error.message);
+    }
     throw error;
   }
 }
+

@@ -1,172 +1,152 @@
-import React, {useState} from 'react'
-import styled from 'styled-components'
-import { DashBoard } from '../../components/Dashboard'
-import { BsFillStarFill } from "react-icons/bs";
-import { BsStar } from "react-icons/bs";
+import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
+import { DashBoard } from '../../components/Dashboard';
+import { BsFillStarFill, BsStar } from "react-icons/bs";
 import { FoodRecommendBack } from '../../components/FoodRecommendBack';
 import { IoIosArrowRoundForward } from "react-icons/io";
-import { BiChevronLeft } from "react-icons/bi";
-import { BiChevronRight } from "react-icons/bi";
+import getMain from '../../APIs/get/getMain';
+import patchMainHeart from '../../APIs/patch/patchMainHeart';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
-`
+`;
 
 const Greeting = styled.div`
   color: #000;
   font-family: "Wavve PADO TTF";
   font-size: 30px;
   font-weight: 400;
-  display: flex;
   align-self: flex-start;
   padding-bottom: 16px;
   padding-left: 33px;
-`
+`;
+
 const FoodTitle = styled.div`
   color: #000;
   font-family: "Wavve PADO TTF";
   font-size: 30px;
   font-weight: 400;
   display: flex;
+  align-items: center;
   align-self: flex-start;
   padding: 34px 0px 10px 33px;
-`
-const FillStarIcon = styled(BsFillStarFill)`
-    padding-left: 7px;
-    padding-bottom: 3px;
-    color: #F74A25;
-    cursor: pointer;
-`
-const EmptyStarIcon = styled(BsStar)`
+`;
+
+const StarIcon = styled(({ filled, ...props }) => 
+  filled ? <BsFillStarFill {...props} /> : <BsStar {...props} />
+)`
   padding-left: 7px;
   padding-bottom: 3px;
   color: #F74A25;
   cursor: pointer;
-`
+`;
+
 const RecommendButton = styled.div`
   width: 100%;
-  color: #000;
+  color: ${props => (props.disabled ? '#B0B0B0' : '#000')};
   font-family: "Wavve PADO TTF";
   font-size: 18px;
   font-weight: 400;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  cursor: pointer;
+  cursor: ${props => (props.disabled ? 'not-allowed' : 'pointer')};
   padding: 3px 50px 15px 0px;
-`
-
-// 이전, 다음 버튼 관련 내용
-
-const TurnContainer = styled.div`
-  display: flex;
-  align-items: center;
-`
-
-const Previous = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  
-`
-const Next = styled.div`
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-`
-
-const PreviousBtn = styled.div`
-  color: #F74A25;
-  text-align: center;
-  font-family: "Wavve PADO TTF";
-  font-size: 17px;
-  font-weight: 400;
-  padding-right: 16px;
-`
-
-const PreviousIcon = styled(BiChevronLeft)`
-  color:#F74A25;
-  width: 25px;
-  height: 25px;
-`
-
-
-const NextBtn = styled.div`
-  color:  #F74A25;
-  text-align: center;
-  font-family: "Wavve PADO TTF";
-  font-size: 17px;
-  font-weight: 400;
-  padding-left: 16px;
-`
-
-const NextIcon = styled(BiChevronRight)`
-  color:#F74A25;
-  width: 25px;
-  height: 25px;
-`
-
+`;
 
 function AfterMain() {
+  const [nickname, setNickname] = useState('');
+  const [userData, setUserData] = useState({
+    recommendCount: 0,
+    dietSets: []
+  });
+  const [currentDietSetId, setCurrentDietSetId] = useState(null);
 
-  // 즐겨찾기 버튼 관련 함수
+  useEffect(() => {
+    fetchUserData();
+  }, []);
 
-  const [StarActive, setStarActive] = useState(false);
-
-  const StarClick = () =>{
-    setStarActive(!StarActive);
-  }
-
-  // 다시 추천받기 버튼 관련 함수 
-
-  const [RecommendBtnActive, setRecommendBtnActive]= useState(false);
-
-  const RecommendBtnClick = () =>{
-    setRecommendBtnActive(true);
-  }
-
-  // 이전, 다음 버튼 관련 함수 
-
-  const [currentIndex, setCurrentIndex] = useState(0); 
-
-  const PreviousClick = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1); 
+  const fetchUserData = async () => {
+    try {
+      const data = await getMain();
+      setNickname(data.nickname);
+      const sortedDietSets = data.diet_sets.sort((a, b) => b.diet_set_id - a.diet_set_id);
+      setUserData({
+        recommendCount: data.recommend_count,
+        dietSets: sortedDietSets
+      });
+      if (sortedDietSets.length > 0 && !currentDietSetId) {
+        setCurrentDietSetId(sortedDietSets[0].diet_set_id);
+      }
+      return data;
+    } catch (error) {
+      console.error('에러 발생: ', error);
     }
   };
-  
-  const NextClick = () => {
-    if(currentIndex<4){
-      setCurrentIndex(currentIndex +1);
+
+  const handleLikeClick = async () => {
+    const currentDietSet = userData.dietSets.find(set => set.diet_set_id === currentDietSetId);
+    if (currentDietSet) {
+      try {
+        await patchMainHeart(currentDietSet.diet_set_id, !currentDietSet.is_liked);
+        const updatedData = await fetchUserData();
+        console.log('Updated Data:', updatedData);
+      } catch (error) {
+        console.error('AfterMain 내 patchMainHeart에서 에러 발생:', error);
+      }
     }
-  }
+  };
+
+  const handleRecommendClick = async () => {
+    if (userData.recommendCount >= 3) {
+      alert('식단 추천은 세 번까지 받을 수 있습니다.');
+      return;
+    }
+    try {
+      const updatedData = await fetchUserData();
+      if (updatedData.diet_sets.length > 0) {
+        setCurrentDietSetId(updatedData.diet_sets[0].diet_set_id);
+      }
+      console.log('Updated Data after recommendation:', updatedData);
+    } catch (error) {
+      console.error('AfterMain 내 getMain에서 에러 발생:', error);
+    }
+  };
+
+  const handleLikeChange = (newDietSetId) => {
+    setCurrentDietSetId(newDietSetId);
+  };
+
+  const getCurrentDietSet = () => {
+    return userData.dietSets.find(set => set.diet_set_id === currentDietSetId) || null;
+  };
+
+  const currentDietSet = getCurrentDietSet();
 
   return (
     <Container>
-        <Greeting>
-          오늘도 반가워요, 승민님
-        </Greeting>
-        <DashBoard/>
-        <FoodTitle>
-          오늘의 추천식단{StarActive ?(<FillStarIcon active = {true} onClick = {StarClick}/>) : (<EmptyStarIcon onClick={StarClick}/>)}
-        </FoodTitle> 
-        <RecommendButton onClick={RecommendBtnClick}>
-          다시 추천받기<IoIosArrowRoundForward/>
-        </RecommendButton>
-        <FoodRecommendBack/>
-        <TurnContainer>
-          <Previous onClick={PreviousClick} >
-            <PreviousIcon/><PreviousBtn>이전</PreviousBtn>
-          </Previous>
-          <Next onClick={NextClick}>
-            <NextBtn>다음</NextBtn><NextIcon/>
-          </Next>
-      </TurnContainer>
+      <Greeting>오늘도 반가워요, {nickname}님</Greeting>
+      <DashBoard />
+      <FoodTitle>
+        오늘의 추천식단
+        <StarIcon 
+          filled={currentDietSet?.is_liked} 
+          onClick={handleLikeClick} 
+        />
+      </FoodTitle>
+      <RecommendButton
+        onClick={handleRecommendClick}
+        disabled={userData.recommendCount >= 3}>
+        다시 추천받기<IoIosArrowRoundForward />
+      </RecommendButton>
+      <FoodRecommendBack 
+        currentDietSetId={currentDietSetId}
+        onLikeChange={handleLikeChange}
+      />
     </Container>
-  )
+  );
 }
 
-export default AfterMain
+export default AfterMain;

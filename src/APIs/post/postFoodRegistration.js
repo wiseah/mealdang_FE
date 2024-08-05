@@ -1,64 +1,24 @@
 import axiosInstance from "../axiosInstance";
 
-export default async function postFoodRegistration(main, side1, side2, side3, image) {
+export default async function postFoodRegistration(dietData, image) {
   try {
+    const formData = new FormData();
+    formData.append('main', JSON.stringify(dietData.main));
+    formData.append('side1', JSON.stringify(dietData.side1));
+    formData.append('side2', JSON.stringify(dietData.side2));
+    if (dietData.side3) {
+      formData.append('side3', JSON.stringify(dietData.side3));
+    }
+    if (dietData.side4) {
+      formData.append('side4', JSON.stringify(dietData.side4));
+    }
+    if (image) {
+      formData.append('image', image);
+    }
+
     const response = await axiosInstance.post(
-      `/api/diets/mydiet/register/`,
-      {
-        main: {
-          food_name: main.food_name,
-          nutrients: {
-            grain: main.nutrients.grain,
-            fish_meat_low_fat: main.nutrients.fish_meat_low_fat,
-            fish_meat_medium_fat: main.nutrients.fish_meat_medium_fat,
-            vegetable: main.nutrients.vegetable,
-            fat: main.nutrients.fat,
-            dairy: main.nutrients.dairy,
-            fruit: main.nutrients.fruit
-          },
-          recipe: main.recipe
-        },
-        side1: {
-          food_name: side1.food_name,
-          nutrients: {
-            grain: side1.nutrients.grain,
-            fish_meat_low_fat: side1.nutrients.fish_meat_low_fat,
-            fish_meat_medium_fat: side1.nutrients.fish_meat_medium_fat,
-            vegetable: side1.nutrients.vegetable,
-            fat: side1.nutrients.fat,
-            dairy: side1.nutrients.dairy,
-            fruit: side1.nutrients.fruit
-          },
-          recipe: side1.recipe
-        },
-        side2: {
-          food_name: side2.food_name,
-          nutrients: {
-            grain: side2.nutrients.grain,
-            fish_meat_low_fat: side2.nutrients.fish_meat_low_fat,
-            fish_meat_medium_fat: side2.nutrients.fish_meat_medium_fat,
-            vegetable: side2.nutrients.vegetable,
-            fat: side2.nutrients.fat,
-            dairy: side2.nutrients.dairy,
-            fruit: side2.nutrients.fruit
-          },
-          recipe: side2.recipe
-        },
-        side3: {
-          food_name: side3.food_name,
-          nutrients: {
-            grain: side3.nutrients.grain,
-            fish_meat_low_fat: side3.nutrients.fish_meat_low_fat,
-            fish_meat_medium_fat: side3.nutrients.fish_meat_medium_fat,
-            vegetable: side3.nutrients.vegetable,
-            fat: side3.nutrients.fat,
-            dairy: side3.nutrients.dairy,
-            fruit: side3.nutrients.fruit
-          },
-          recipe: side3.recipe
-        },
-        image: image
-      },
+      '/api/diets/mydiet/register/',
+      formData
     );
     return response.data;
   } catch (error) {

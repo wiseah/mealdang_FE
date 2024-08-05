@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import postDailyDataUpdate from '../../APIs/post/postDailyDataUpdate';
+import getBloodSugarsState from "../../APIs/get/getBloodSugarsState";
 
 
 const Container = styled.div`
@@ -78,37 +78,61 @@ const Button = styled.button`
 
 const DailyDataUpdate = () => {
 
-  // 혈당 수치
-
   const [date, setDate] = useState('');
   const [bloodsugars, setBloodsugars] = useState({
-    fasting_blood_sugar: ['', '', ''],
-    post_meal_blood_sugar: ['', '', ''],
+    fasting_blood_sugar: {morning: '',noon: '',evening: '' },
+    post_meal_blood_sugar: {morning: '',noon: '',evening: '' },
   });
+
+
+// 날짜 형식 변환 함수
+const formatDateToServer = (date) => {
+  const [month, day] = date.split('/').map(Number);
+  const now = new Date();
+  const year = now.getFullYear();
+  return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+};
 
 
   // 혈당 페이지 접속 시 데이터 불러오기
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // 현재 날짜 월/일 형식으로 가져오기
-        const currentDate = getCurrentDate();
-        setDate(currentDate);
-
-        // 데이터 가져오기
-        const response = await axios.get('http://*/api/bloodsugar/state/');
-        const data = response.data;
-
-        setBloodsugars({
-          fasting_blood_sugar: [...data.fasting_blood_sugar],
-          post_meal_blood_sugar: [...data.post_meal_blood_sugar],
-        });
+          setDate(getCurrentDate());
+  
+          const response = await getBloodSugarsState(); // 혈당 상태 데이터 가져오기
+          console.log('Fetched blood sugar state:', response);
+  
+          // 응답 데이터 유효성 검사
+          if (response && response.today_data && Array.isArray(response.today_data) && response.today_data.length > 0) {
+          const todayData = response.today_data;
+              
+              setBloodsugars({
+                  fasting_blood_sugar: {
+                      morning: todayData.fasting_blood_sugar.morning || '',
+                      noon: todayData.fasting_blood_sugar.noon || '',
+                      evening: todayData.fasting_blood_sugar.evening || '',
+                  },
+                  post_meal_blood_sugar: {
+                      morning: todayData.post_meal_blood_sugar.morning || '',
+                      noon: todayData.post_meal_blood_sugar.noon || '',
+                      evening: todayData.post_meal_blood_sugar.evening || '',
+                  },
+              });
+          }
       } catch (error) {
-        console.error('Error fetching data:', error);
+          console.error('DailyDataUpdate 내 getBloodSugarsState에서 에러 발생:', error);
       }
-    };
+  };
+    // 로컬 스토리지에서 데이터 불러오기
+    const localData = localStorage.getItem('bloodsugars');
+    if (localData) {
+      setBloodsugars(JSON.parse(localData));
+    }
+    
     fetchData();
   }, []);
+
 
 
   const getCurrentDate = () => {
@@ -119,31 +143,47 @@ const DailyDataUpdate = () => {
   }
 
 
+
   // 혈당 데이터 저장하기
   const saveData = async () => {
     try {
-      // 데이터 보내기
-      await axios.post('http://*/api/bloodsugars/save/', {
-        date,
-        fasting_blood_sugar: bloodsugars.fasting_blood_sugar,
-        post_meal_blood_sugar: bloodsugars.post_meal_blood_sugar,
-      });
+      const formattedDate = formatDateToServer(date);
+      const fastingBloodSugar = {
+        morning: parseInt(bloodsugars.fasting_blood_sugar.morning, 10),
+        noon: parseInt(bloodsugars.fasting_blood_sugar.noon, 10),
+        evening: parseInt(bloodsugars.fasting_blood_sugar.evening, 10),
+      };
+      const postMealBloodSugar = {
+        morning: parseInt(bloodsugars.post_meal_blood_sugar.morning, 10),
+        noon: parseInt(bloodsugars.post_meal_blood_sugar.noon, 10),
+        evening: parseInt(bloodsugars.post_meal_blood_sugar.evening, 10),
+      };
+  
+      // postDailyDataUpdate 호출 시 각각의 인자를 전달
+      await postDailyDataUpdate(formattedDate, fastingBloodSugar, postMealBloodSugar);
       console.log('Blood sugar data saved successfully.');
     } catch (error) {
-      console.error('Error saving data:', error);
+      console.error('DailyDataUpdate 내 postDailyDataUpdate에서 에러 발생:', error);
     }
   };
+  
+  
 
 
-  // 입력값 변경하기
-  const handleBloodSugarChange = (type, index, value) => {
-    setBloodsugars(prevState => ({
-      ...prevState,
-      [type]: prevState[type].map((item, idx) => idx === index ? value : item),
-    }));
+  const handleBloodSugarChange = (type, time, value) => {
+    setBloodsugars(prevState => {
+      const newState = {
+        ...prevState,
+        [type]: {
+          ...prevState[type],
+          [time]: value,
+        },
+      };
+      // 변경된 값을 로컬 스토리지에 저장
+      localStorage.setItem('bloodsugars', JSON.stringify(newState));
+      return newState;
+    });
   };
-
-
 
   return (
     <Container>
@@ -154,39 +194,40 @@ const DailyDataUpdate = () => {
           <FormLabel>아침</FormLabel>
           <InputField
             type='number'
-            value={bloodsugars.fasting_blood_sugar[0]}
-            onChange={(e) => handleBloodSugarChange('fasting_blood_sugar', 0, e.target.value)}
+            value={bloodsugars.fasting_blood_sugar.morning}
+            onChange={(e) => handleBloodSugarChange('fasting_blood_sugar', 'morning', e.target.value)}
           />
           <FormLabel>점심</FormLabel>
           <InputField
             type='number'
-            value={bloodsugars.fasting_blood_sugar[1]}
-            onChange={(e) => handleBloodSugarChange('fasting_blood_sugar', 1, e.target.value)}
+            value={bloodsugars.fasting_blood_sugar.noon}
+            onChange={(e) => handleBloodSugarChange('fasting_blood_sugar', 'noon', e.target.value)}
           />
           <FormLabel>저녁</FormLabel>
           <InputField
             type='number'
-            value={bloodsugars.fasting_blood_sugar[2]}
-            onChange={(e) => handleBloodSugarChange('fasting_blood_sugar', 2, e.target.value)}
+            value={bloodsugars.fasting_blood_sugar.evening}
+            onChange={(e) => handleBloodSugarChange('fasting_blood_sugar', 'evening', e.target.value)}
           />
+
           <FormTitle>식후 2시간 이후 혈당</FormTitle>
           <FormLabel>아침</FormLabel>
           <InputField
             type='number'
-            value={bloodsugars.post_meal_blood_sugar[0]}
-            onChange={(e) => handleBloodSugarChange('post_meal_blood_sugar', 0, e.target.value)}
+            value={bloodsugars.post_meal_blood_sugar.morning}
+            onChange={(e) => handleBloodSugarChange('post_meal_blood_sugar', 'morning', e.target.value)}
           />
           <FormLabel>점심</FormLabel>
           <InputField
             type='number'
-            value={bloodsugars.post_meal_blood_sugar[1]}
-            onChange={(e) => handleBloodSugarChange('post_meal_blood_sugar', 1, e.target.value)}
+            value={bloodsugars.post_meal_blood_sugar.noon}
+            onChange={(e) => handleBloodSugarChange('post_meal_blood_sugar', 'noon', e.target.value)}
           />
           <FormLabel>저녁</FormLabel>
           <InputField
             type='number'
-            value={bloodsugars.post_meal_blood_sugar[2]}
-            onChange={(e) => handleBloodSugarChange('post_meal_blood_sugar', 2, e.target.value)}
+            value={bloodsugars.post_meal_blood_sugar.evening}
+            onChange={(e) => handleBloodSugarChange('post_meal_blood_sugar', 'evening', e.target.value)}
           />
         </FormSection>
         <ButtonContainer><Button onClick={saveData}>저장하기</Button></ButtonContainer>

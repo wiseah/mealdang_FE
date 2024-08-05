@@ -18,7 +18,7 @@ import GrapeExchange  from "./pages/MyPage/GrapeExchange";
 import GraepUse from "./pages/MyPage/GrapeUse";
 import FoodBookMark from "./pages/MyPage/FoodBookMark";
 import FoodDetail from "./pages/Main/FoodDetail";
-import FoodRegistration from "./pages/MyPage/FoodRegistraition";
+import FoodRegistration from "./pages/Diethon/FoodRegistraition";
 import FavoriteFoodDetail from "./pages/MyPage/FavoriteFoodDetail";
 
 const routes = [
@@ -85,7 +85,7 @@ const routes = [
         previous: false,
     },
     {
-        path: '/aftermain/foodDetail',
+        path: '/aftermain/foodDetail/:diet_id',
         element: <FoodDetail/>,
         name: '07-1. 식단 상세 페이지(메인)',
         previous: '/aftermain',
@@ -109,10 +109,10 @@ const routes = [
         previous: false,
     },
     {
-        path: '/diethondetail',
+        path: '/diethondetail/:diet_id',
         element: <DiethonDetail />,
         name: '10-1. 식단톤 식단 상세 페이지',
-        previous: false,
+        previous: '/diethon',
     },
     {
         path: '/mypage',
@@ -139,7 +139,7 @@ const routes = [
         previous: '/mypage',
     },
     {
-        path: '/foodbookmark/foodDetail',
+        path: '/foodbookmark/fooddetail/:diet_id',
         element: <FavoriteFoodDetail/>,
         name: '14-1. 식단 상세 페이지(마이페이지)',
         previous: '/foodbookmark',
@@ -157,14 +157,16 @@ const routes = [
         previous: '/grapeexchange',
     },
     {
-        path: '/favoritefooddetail',
+        path: '/favoritefooddetail/:diet_id',
         element: <FavoriteFoodDetail/>,
         name: '19. 즐겨찾기 식단 상세보기 페이지',
+        previous: '/foodbookmark',
     },
     {
         path: '/foodregistration',
         element: <FoodRegistration/>,
         name: '20. 나만의 식단 등록하기',
+        previous: '/diethon',
     },
     
 ]

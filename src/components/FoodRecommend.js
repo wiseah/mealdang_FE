@@ -48,12 +48,13 @@ const TitleTextContainer = styled.div`
 const DetailButton = styled.text`
     text-align: center;
     font-family: "Wavve PADO TTF";
-    font-size: 10px;
+    font-size: 15px;
     font-weight: 400;
     cursor: pointer;
     display: flex;
     justify-content: flex-end;
     padding-right:10px;
+    padding-top: 5px;
 `
 
 // 식단 인증 버튼 
@@ -68,7 +69,7 @@ const CertificationContainer  = styled.div`
     align-items: center;
     text-align: center;
     font-family: "Wavve PADO TTF";
-    font-size: 10px;
+    font-size: 15px;
     font-weight: 400;
     margin-top: 4px;
     margin-left: 88px;
@@ -93,7 +94,7 @@ const ContentContainer = styled.div`
     align-items: flex-start;
     gap: 5px;
     font-family: "Wavve PADO TTF";
-    font-size: 15px;
+    font-size: 20px;
     font-weight: 400;
     padding-left: 16px;
     padding-top: 10px;
@@ -104,7 +105,7 @@ const CalorieContainer = styled.div`
     font-size: 16px;
     font-weight: 400;
     font-family: "Wavve PADO TTF";
-    padding: 20px 40px 16px 16px;
+    padding: 20px 0 16px 16px;
     height: 23px;
 `
 
@@ -112,8 +113,8 @@ const CalorieContainer = styled.div`
 export function FoodRecommend({title, Icon, Content, Calories, Certification}){
     const navigate = useNavigate();
 
-    const DetailClick = () => {
-        navigate('/FoodDetail');
+    const DetailClick = (dietId) => {
+        navigate(`/aftermain/fooddetail/${dietId}`);
     }
 
     return(
