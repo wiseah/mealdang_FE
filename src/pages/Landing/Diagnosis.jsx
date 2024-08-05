@@ -10,14 +10,14 @@ const Container = styled.div`
   width: 100vw;
   max-width: 390px;
   min-height: 100vh;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
 `
 
 const Words = styled.div`
-  font-family: 'WavvePADO-Regular';
-  font-size: 22px;
+font-family: 'Do Hyeon', sans-serif;
+  font-size: 25px;
   font-weight: 400;
-  margin: 41px auto;
+  margin: 31px auto;
   margin-left: 0px;
   padding-left: 19px;
 `
@@ -30,7 +30,7 @@ const Form = styled.form`
 `
 
 const FormItem = styled.div`
-  margin-bottom: 41px;
+  margin-bottom: 31px;
 `
 
 const ItemLabel = styled.label`
@@ -48,7 +48,7 @@ const RadioContainer = styled.div`
 `
 
 const RadioLabel = styled.label`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 25px;
   font-weight: 400;
   color: #000000;
@@ -80,9 +80,9 @@ const NumberInput = styled.input`
   box-sizing: border-box;
   box-shadow: 0px 4px 4px #B7B7B7;
   margin: 8px auto;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 400;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   text-align: center;
 
   &::placeholder {

@@ -15,14 +15,14 @@ const Container = styled.div`
 `
 
 const Words = styled.div`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
 `
 
 const Words1 = styled.div`
   color: #6A0DAD;
-  font-size: 27px;
+  font-size: 32px;
   font-weight: 400;
-  margin: 42px 18px;
+  margin: 32px 18px;
 `
 
 const PointWords = styled.span`
@@ -30,7 +30,7 @@ const PointWords = styled.span`
 `
 
 const Words2 = styled.div`
-  font-size: 22px;
+  font-size: 25px;
   font-weight: 400;
   margin: 21px 18px;
 `
@@ -38,17 +38,17 @@ const Words2 = styled.div`
 const ExchangeList = styled.div`
   background-color: #E6E6FA;
   width: 354px;
-  height: 354px;
+  height: 370px;
   border-radius: 10px;
   border: none;
   box-shadow: 0px 4px 4px #B7B7B7;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 30px;
 `
 
 const ListItems = styled.li`
   list-style: none;
-  margin: 13px;
+  margin: 13px 13px 8px 15px;
 `
 
 const Start = styled.button`
@@ -60,9 +60,9 @@ const Start = styled.button`
   box-sizing: border-box;
   background-color: #6A0DAD;
   margin: 26.5px 35px 18px 35px;
-  font-size: 30px;
-  font-weight: 400;
-  font-family: 'WavvePADO-Regular';
+  font-size: 33px;
+  font-weight: 300;
+  font-family: 'Do Hyeon', sans-serif;
   color: #ffffff;
   text-align: center;
   cursor: pointer;

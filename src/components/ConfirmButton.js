@@ -7,9 +7,9 @@ const StyledButton = styled.button`
   border-radius: 10px;
   box-shadow: 0px 4px 4px #B7B7B7;
   box-sizing: border-box;
-  font-size: 30px;
-  font-weight: 400;
-  font-family: 'WavvePADO-Regular';
+  font-size: 33px;
+  font-weight: 300;
+  font-family: 'Do Hyeon', sans-serif;
   margin-bottom: 20px;
   cursor: pointer;
   text-align: ${props => props.textAlign};

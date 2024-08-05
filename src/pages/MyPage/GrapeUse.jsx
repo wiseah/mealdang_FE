@@ -12,7 +12,7 @@ const Introduce = styled.div`
     width: 300px;
     height: 23px;
     color: #000;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 21px;
     font-weight: 400;
     align-self: flex-start;
@@ -48,7 +48,7 @@ const GrapeIcon = styled(LuGrape)`
 const GrapeText = styled.div`
     width: 109px;
     color: #6A0DAD;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 21.875px;
     font-weight: 400;
 `;
@@ -70,7 +70,7 @@ const Amount = styled.div`
     width: 109px;
     color: #6A0DAD;
     text-align: right;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 22px;
     font-weight: 400;
     padding-left: 39px;
@@ -90,7 +90,7 @@ const BreakDown = styled.div`
 `;
 const UseDate = styled.div`
     color: #000;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 26.25px;
     font-weight: 400;
     padding-top: 10px;
@@ -98,7 +98,7 @@ const UseDate = styled.div`
 const UsedTitle = styled.div`
     width: 250px;
     color: #000;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 21.875px;
     font-weight: 400;
     padding-top: 10px;

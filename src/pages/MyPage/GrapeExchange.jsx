@@ -18,7 +18,7 @@ const UserContainer = styled.div`
     height: 122px;
     border-radius: 10px;
     border: 1px solid #6A0DAD;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 24.594px;
     font-weight: 400;
     margin-bottom: 33px;
@@ -71,7 +71,7 @@ const CouponContainer = styled.div`
 `
 const ExchangeTitle = styled.div`
     width: 225px;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 20.5px;
     font-weight: 400;
     padding: 11px 8px 18px 16px;
@@ -88,7 +88,7 @@ const Grape = styled.div`
     width: 78px;
     height: 17px;
     color: #6A0DAD;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 17px;
     font-weight: 400;
     margin: 11px 8px 10px 0px;
@@ -99,7 +99,7 @@ const ExchangeBtn = styled.div`
     border-radius: 10px;
     background: #E6E6FA;
     color: #000;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 16px;
     font-weight: 400;
     display: flex;

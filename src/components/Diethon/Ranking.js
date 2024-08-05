@@ -19,18 +19,19 @@ const Container = styled.div`
 const Introduce = styled.div`
     width: 292px;
     color: #6A0DAD;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 28px;
     font-weight: 400;
     padding-top: 27px;
+    text-align: center;
 `
 const ExplainText = styled.div`
     width: 100%;
     height: 23px;
     color: #6A0DAD;
     text-align: center;
-    font-family: "Wavve PADO TTF";
-    font-size: 16px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 18px;
     font-weight: 400;
     padding-top: 10px;
 `
@@ -48,7 +49,6 @@ const RankingContainer = styled.div`
 `
 
 
-
 // 1등 
 const FirstContainer = styled.div`
     width: 124px;
@@ -62,12 +62,13 @@ const FirstContainer = styled.div`
     position: relative;
     margin-right: 12px;
 `
+
 const FirstTitle = styled.span`
     width: 102px;
     height: 43px;
     color: #000;    
     text-align: center;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 28px;
     font-weight: 400;
     margin-top: 28px;
@@ -80,7 +81,7 @@ const FirstUserInfoContainer = styled.div`
     flex-direction: column;
     align-items: center;
     color: #6A0DAD;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 24px;
     font-weight: 400;
     margin-top: 33px;
@@ -120,7 +121,7 @@ const Title = styled.div`
     height: auto;
     color: #000;
     text-align: center;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 16px;
     font-weight: 400;
 `
@@ -129,7 +130,7 @@ const UserInfoContainer = styled.div`
     flex-direction: column;
     align-items: center;
     color: #6A0DAD;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 20px;
     font-weight: 400;
     
@@ -225,8 +226,8 @@ const LoadingContainer = styled.div`
 
 const LoadingMessage = styled.div`
   color: #6A0DAD;
-  font-family: "Wavve PADO TTF";
-  font-size: 24px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 28px;
   font-weight: 400;
   text-align: center;
   margin-bottom: 20px;
@@ -234,7 +235,7 @@ const LoadingMessage = styled.div`
 
 const LoadingSubMessage = styled.div`
   color: #ff6A4A;
-  font-family: "Wavve PADO TTF";
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 18px;
   font-weight: 400;
   text-align: center;

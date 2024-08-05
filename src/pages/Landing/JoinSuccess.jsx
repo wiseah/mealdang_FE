@@ -15,17 +15,17 @@ const LogoContainer = styled.img`
   width: 304.12px;
   height: 91.78px;
   margin: 50px 0 70px 0;
-  margin-bottom: 57px;
+  margin-bottom: 77px;
 `
 
 const IconWrapper = styled(BiWinkSmile)`
-  margin-bottom: 70px;
+  margin-bottom: 30px;
   font-size: 150px;
   color: #6A0DAD;
 `
 
 const Words = styled.div`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 30px;
   font-weight: 400;
   margin-bottom: 57px;

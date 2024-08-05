@@ -29,17 +29,18 @@ const CloseButton = styled.button`
   top: 10px;
   background-color: transparent;
   border: none;
-  font-size: 20px;
+  font-size: 23px;
 `;
 
 const Title = styled.h2`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   text-align: center;
+  font-size: 26px;
 `
 
 const Explanation = styled.div`
-  font-family: 'NotoSansKR-Regular';
-  font-size: 16px;
+font-family: 'Do Hyeon', sans-serif;
+  font-size: 17px;
   line-height: 1.5;
   margin-top: 30px;
 `;
@@ -62,6 +63,7 @@ const P = styled.div`
 
 const ExternalLink = styled.a`
   text-decoration: none;
+  color: inherit;
 
   &:hover {
     text-decoration: underline;

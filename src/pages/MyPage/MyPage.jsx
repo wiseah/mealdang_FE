@@ -25,13 +25,13 @@ const InfoContainer = styled.div`
 `
 
 const Info = styled.div`
-  font-family: 'WavvePADO-Regular';
-  font-size: 23px;
+font-family: 'Do Hyeon', sans-serif;
+  font-size: 25px;
   margin: auto 8px auto 5px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.6vh;
+  gap: 0.5vh;
 `
 
 const IconWrapper = styled(BiWinkSmile)`

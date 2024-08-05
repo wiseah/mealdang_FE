@@ -36,7 +36,7 @@ const IconContainer = styled.div`
 const TitleTextContainer = styled.div`
     width: 91px;
     height: 38px;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 20px;
     font-weight: 400;
     display: flex;
@@ -47,7 +47,7 @@ const TitleTextContainer = styled.div`
 // 상세보기 버튼 
 const DetailButton = styled.text`
     text-align: center;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 15px;
     font-weight: 400;
     cursor: pointer;
@@ -68,7 +68,7 @@ const CertificationContainer  = styled.div`
     justify-content: center;
     align-items: center;
     text-align: center;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 15px;
     font-weight: 400;
     margin-top: 4px;
@@ -80,7 +80,7 @@ const CertificationIcon = styled(BsCheck)`
 const CertificationText = styled.text`
     color:  #FF6A4A;
     text-align: center;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 10px;
     font-weight: 400;
 `
@@ -93,7 +93,7 @@ const ContentContainer = styled.div`
     flex-direction: column;
     align-items: flex-start;
     gap: 5px;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 20px;
     font-weight: 400;
     padding-left: 16px;
@@ -104,7 +104,7 @@ const ContentContainer = styled.div`
 const CalorieContainer = styled.div`
     font-size: 16px;
     font-weight: 400;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     padding: 20px 0 16px 16px;
     height: 23px;
 `

@@ -22,7 +22,7 @@ const FoodContainer = styled.div`
 const ContextTitle = styled.div`
     width: 100%;
     color: #FF6A4A;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 24px;
     font-weight: 400;
     padding: 14px 0px 8px 30px;
@@ -37,8 +37,8 @@ const MainTitle = styled.input`
     border-radius: 10px;
     border: 1px solid #FF6A4A;
     background: #FFF;
-    font-family: "Wavve PADO TTF";
-    font-size: 17px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 20px;
     font-weight: 400;
     color:  #FF6A4A;
     text-align: center;
@@ -64,7 +64,7 @@ const FoodGroup = styled.div`
     padding-left: 30px;
     padding-top: 10px;
     color: #000;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 16px;
     font-weight: 400;
 `
@@ -85,7 +85,7 @@ const GroupContainer = styled.div`
 const GroupTitle = styled.div`
     width: 153px;
     color:  #FF6A4A;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 18px;
     font-weight: 400;
 `
@@ -110,7 +110,7 @@ const GroupCount = styled.div`
     justify-content: center;
     color: #FF6A4A;
     text-align: center;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 18px;
     font-weight: 400;
     padding-left: 22px;
@@ -134,7 +134,7 @@ const RecipeTitle = styled.div`
     padding-left: 30px;
     padding-top: 10px;
     color: #000;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 16px;
     font-weight: 400;
 `
@@ -150,7 +150,7 @@ const RecipeContainer = styled.textarea`
     border: 1px solid #FF6A4A;
     background: #FFF;
     color:  #FF6A4A;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 1.5;

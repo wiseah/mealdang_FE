@@ -29,12 +29,12 @@ const InputField = styled.input`
   margin-bottom: 12px;
   font-size: 30px;
   font-weight: 400;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   text-align: center;
 `
 
 const Join = styled.span`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 20px;
   font-weight: 400;
   color: #737373;

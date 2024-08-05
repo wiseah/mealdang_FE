@@ -9,33 +9,35 @@ const Container = styled.div`
   flex-direction: column;
   width: 100vw;
   max-width: 390px;
+  height: 300px;
   place-items: center;
 `;
 
 const GraphContainer = styled.div`
   width: 363px;
-  height: 210px;
-  border: 1.18px solid #6A0DAD;
+  height: 225px;
+  border: 2px solid #6A0DAD;
   border-radius: 11.85px;
   box-shadow: 0px 4.74px 4.74px #B7B7B7;
   position: relative; /* 위치 조정 */
+  margin-bottom: 13px;
 `;
 
 const Title = styled.div`
-  font-family: 'WavvePADO-Regular';
-  font-size: 28px;
+font-family: 'Do Hyeon', sans-serif;
+  font-size: 30px;
   font-weight: 500;
-  margin: 18px 20px;
+  margin: 14px 20px;
   width: 323px;
 `;
 
 const Normal = styled.div`
-  margin: 5px 0 10px 0;
+  margin: 0 0 5px 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'WavvePADO-Regular';
-  font-size: 17px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 20px;
   color: #737373;
 `;
 
@@ -56,7 +58,7 @@ const Item = styled.div`
 const Guide = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 10px 35px;
+  margin: 10px 53px 20px 53px;
 `;
 
 const GuideItem = styled.div`
@@ -64,6 +66,7 @@ const GuideItem = styled.div`
   flex-direction: column;
   align-items: center;
   margin-left: 22px;
+  margin-bottom: 30px;
 `;
 
 const IconWrapper = styled.div`
@@ -71,19 +74,19 @@ const IconWrapper = styled.div`
 `;
 
 const Message1 = styled.div`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 17px;
   color: #FF4A4A;
 `;
 
 const Message2 = styled.div`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 17px;
   color: #FFAC4A;
 `;
 
 const Message3 = styled.div`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 17px;
   color: #2ADEA1;
 `;
@@ -193,7 +196,7 @@ const PercentageChart = () => {
               labels: {
                 text: {
                   fontSize: 14,
-                  fontFamily: 'WavvePADO-Regular',
+                  fontFamily: 'Do Hyeon'
                 },
               },
             }}

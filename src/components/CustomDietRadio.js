@@ -4,18 +4,10 @@ import { BiRadioCircle, BiRadioCircleMarked } from 'react-icons/bi';
 
 
 const RadioContainer = styled.div`
-  font-family: 'WavvePADO-Regular';
-  font-size: 20px;
+font-family: 'Do Hyeon', sans-serif;
+  font-size: 23px;
   color: #F74A25;
-  margin-bottom: 15px;
-`
-
-const Title = styled.div`
   margin-bottom: 10px;
-`
-
-const CheckboxItems = styled.div`
-  display: flex;
 `
 
 const RadioLabel = styled.label`
