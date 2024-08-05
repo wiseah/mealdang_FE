@@ -62,45 +62,37 @@ function AfterMain() {
     recommendCount: 0,
     dietSets: []
   });
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentDietSetId, setCurrentDietSetId] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const data = await getMain();
-        setNickname(data.nickname);
-        setUserData({
-          recommendCount: data.recommend_count,
-          dietSets: data.diet_sets
-        });
-      } catch (error) {
-        console.error('에러 발생: ', error);
-      }
-    }
-    fetchData();
+    fetchUserData();
   }, []);
 
+  const fetchUserData = async () => {
+    try {
+      const data = await getMain();
+      setNickname(data.nickname);
+      const sortedDietSets = data.diet_sets.sort((a, b) => b.diet_set_id - a.diet_set_id);
+      setUserData({
+        recommendCount: data.recommend_count,
+        dietSets: sortedDietSets
+      });
+      if (sortedDietSets.length > 0 && !currentDietSetId) {
+        setCurrentDietSetId(sortedDietSets[0].diet_set_id);
+      }
+      return data;
+    } catch (error) {
+      console.error('에러 발생: ', error);
+    }
+  };
+
   const handleLikeClick = async () => {
-    const currentDietSet = userData.dietSets[currentIndex];
+    const currentDietSet = userData.dietSets.find(set => set.diet_set_id === currentDietSetId);
     if (currentDietSet) {
       try {
-        // Toggle the like state
         await patchMainHeart(currentDietSet.diet_set_id, !currentDietSet.is_liked);
-
-        // Fetch the updated data and log it
         const updatedData = await fetchUserData();
         console.log('Updated Data:', updatedData);
-        
-        // Update the local state with the fetched data
-        const updatedDietSets = updatedData.diet_sets.map(dietSet =>
-          dietSet.diet_set_id === currentDietSet.diet_set_id
-            ? { ...dietSet, is_liked: !currentDietSet.is_liked }
-            : dietSet
-        );
-        setUserData(prevState => ({
-          ...prevState,
-          dietSets: updatedDietSets
-        }));
       } catch (error) {
         console.error('AfterMain 내 patchMainHeart에서 에러 발생:', error);
       }
@@ -114,25 +106,24 @@ function AfterMain() {
     }
     try {
       const updatedData = await fetchUserData();
-      setCurrentIndex(0);
+      if (updatedData.diet_sets.length > 0) {
+        setCurrentDietSetId(updatedData.diet_sets[0].diet_set_id);
+      }
       console.log('Updated Data after recommendation:', updatedData);
     } catch (error) {
       console.error('AfterMain 내 getMain에서 에러 발생:', error);
     }
   };
 
-  const fetchUserData = async () => {
-    try {
-      const response = await getMain();
-      setUserData({
-        recommendCount: response.recommend_count,
-        dietSets: response.diet_sets
-      });
-      return response; // Return response for logging
-    } catch (error) {
-      console.error('AfterMain 내 getMain에서 에러 발생:', error.message);
-    }
+  const handleLikeChange = (newDietSetId) => {
+    setCurrentDietSetId(newDietSetId);
   };
+
+  const getCurrentDietSet = () => {
+    return userData.dietSets.find(set => set.diet_set_id === currentDietSetId) || null;
+  };
+
+  const currentDietSet = getCurrentDietSet();
 
   return (
     <Container>
@@ -141,7 +132,7 @@ function AfterMain() {
       <FoodTitle>
         오늘의 추천식단
         <StarIcon 
-          filled={userData.dietSets[currentIndex]?.is_liked} 
+          filled={currentDietSet?.is_liked} 
           onClick={handleLikeClick} 
         />
       </FoodTitle>
@@ -151,8 +142,8 @@ function AfterMain() {
         다시 추천받기<IoIosArrowRoundForward />
       </RecommendButton>
       <FoodRecommendBack 
-        dietSet={userData.dietSets[currentIndex]} 
-        setCurrentIndex={setCurrentIndex}
+        currentDietSetId={currentDietSetId}
+        onLikeChange={handleLikeChange}
       />
     </Container>
   );

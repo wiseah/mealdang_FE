@@ -70,9 +70,8 @@ const mealTypeMap = {
   japanese: '일식',
 };
 
-export function FoodRecommendBack() {
+export function FoodRecommendBack({ currentDietSetId, onLikeChange }) {
   const [dietSets, setDietSets] = useState([]);
-  const [currentDietSetId, setCurrentDietSetId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -90,7 +89,9 @@ export function FoodRecommendBack() {
           });
           updatedDietSets.sort((a, b) => b.diet_set_id - a.diet_set_id);
           setDietSets(updatedDietSets);
-          setCurrentDietSetId(updatedDietSets[0]?.diet_set_id || null);
+          if (!currentDietSetId) {
+            onLikeChange(updatedDietSets[0].diet_set_id);
+          }
         }
       } catch (error) {
         console.error('식단 추천을 불러오는 데 실패했습니다:', error.message);
@@ -102,18 +103,13 @@ export function FoodRecommendBack() {
 
   const handleTurn = (direction) => {
     const currentIndex = dietSets.findIndex(set => set.diet_set_id === currentDietSetId);
-    if (direction === 'previous') {
-      if (currentIndex < dietSets.length - 1) {
-        const nextDietSetId = dietSets[currentIndex + 1].diet_set_id;
-        setCurrentDietSetId(nextDietSetId);
-        console.log('Previous diet_set_id:', nextDietSetId);
-      }
-    } else if (direction === 'next') {
-      if (currentIndex > 0) {
-        const prevDietSetId = dietSets[currentIndex - 1].diet_set_id;
-        setCurrentDietSetId(prevDietSetId);
-        console.log('Next diet_set_id:', prevDietSetId);
-      }
+    if (direction === 'previous' && currentIndex < dietSets.length - 1) {
+      console.log('Previous diet_set_id:', dietSets[currentIndex + 1].diet_set_id);
+      onLikeChange(dietSets[currentIndex + 1].diet_set_id);
+    } else if (direction === 'next' && currentIndex > 0) {
+      console.log('Next diet_set_id:', dietSets[currentIndex - 1].diet_set_id);
+      onLikeChange(dietSets[currentIndex - 1].diet_set_id);
+      
     }
   };
 
