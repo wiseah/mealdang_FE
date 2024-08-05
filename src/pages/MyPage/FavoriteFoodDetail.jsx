@@ -4,6 +4,8 @@ import { BsImages } from "react-icons/bs";
 import  TotalFoodToggle  from "../../components/TotalFoodToggle";
 import  FoodToggle  from "../../components/FoodToggle";
 import getFoodDetail from "../../APIs/get/getFoodDetail";
+import { useParams } from 'react-router-dom';
+
 
 // 전체 공간
 const Container = styled.div`
@@ -53,7 +55,7 @@ const UploadedImage = styled.img`
 `;
 
 const Title = styled.div`
-    width : 284px;
+    width : 300px;
     height: 34px;
     font-family: "Wavve PADO TTF";
     font-size: 30px;
@@ -71,6 +73,7 @@ export default function FavoriteFoodDetail(){
     const [uploadImage, setUploadImage] = useState();
     const fileInputRef = useRef(null);
     const [file, setFile] = useState(null);
+    const { diet_id } = useParams();
     
     useEffect(() => {
         const image = localStorage.getItem("image");
@@ -163,7 +166,7 @@ export default function FavoriteFoodDetail(){
     useEffect(() => {
     const fetchFoodDetailData = async () => {
         try {
-        const response = await getFoodDetail();
+        const response = await getFoodDetail(diet_id);
         setData(response);
         console.log(Data);
         } catch (error) {
@@ -182,8 +185,8 @@ export default function FavoriteFoodDetail(){
                 <FoodDate>{Data.date}</FoodDate>추천식단
             </Title>
             <TotalFoodToggle
-                calorie = {Data.calorie}
-                main = {Data.main}
+                calorie = {Data.total_calorie}
+                data = {Data}
             />
             <FoodToggle
                 main = {Data.main}
