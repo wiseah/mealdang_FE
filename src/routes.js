@@ -109,10 +109,10 @@ const routes = [
         previous: false,
     },
     {
-        path: '/diethondetail',
+        path: '/diethondetail/:diet_id',
         element: <DiethonDetail />,
         name: '10-1. 식단톤 식단 상세 페이지',
-        previous: false,
+        previous: '/diethon',
     },
     {
         path: '/mypage',
@@ -139,7 +139,7 @@ const routes = [
         previous: '/mypage',
     },
     {
-        path: '/foodbookmark/foodDetail',
+        path: '/foodbookmark/fooddetail/:diet_id',
         element: <FavoriteFoodDetail/>,
         name: '14-1. 식단 상세 페이지(마이페이지)',
         previous: '/foodbookmark',
@@ -157,14 +157,16 @@ const routes = [
         previous: '/grapeexchange',
     },
     {
-        path: '/favoritefooddetail',
+        path: '/favoritefooddetail/:diet_id',
         element: <FavoriteFoodDetail/>,
         name: '19. 즐겨찾기 식단 상세보기 페이지',
+        previous: '/foodbookmark',
     },
     {
         path: '/foodregistration',
         element: <FoodRegistration/>,
         name: '20. 나만의 식단 등록하기',
+        previous: '/diethon',
     },
     
 ]

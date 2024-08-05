@@ -1,8 +1,8 @@
 import axiosInstance from "../axiosInstance";
 
-export default async function getFoodDetail() {
+export default async function getFoodDetail(diet_id) {
   try {
-    const response = await axiosInstance.get(`/api/diets/detail/{diet_id}/`
+    const response = await axiosInstance.get(`/api/diets/detail/${diet_id}/`
     );
 
     return response.data;

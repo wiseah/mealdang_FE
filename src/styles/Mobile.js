@@ -2,7 +2,7 @@ import { Link, Outlet, matchRoutes, useLocation, useNavigate } from 'react-route
 import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import routes from '../routes.js';
-import classNames from 'classnames'; //다양한 형태의 인수를 받아서 조건부로 클래스 이름을 설정할 수 있
+import classNames from 'classnames'; //다양한 형태의 인수를 받아서 조건부로 클래스 이름을 설정할 수 있음
 import { BiChevronLeft } from "react-icons/bi";
 import { FaMapMarkerAlt, FaMedal } from "react-icons/fa";
 import { MdWaterDrop, MdFoodBank } from "react-icons/md";
@@ -161,7 +161,7 @@ const BACKWARD_DEFAULT = '/';
 
 // 특정 경로들과 연결된 페이지들도 버튼이 활성화되도록 경로 그룹을 정의
 const MAIN_GROUP = ['/main', '/aftermain', '/aftermain/foodDetail']; //각 그룹에 해당되는 주소 넣어야 그 페이지일때도 색 활성화
-const DIETHON_GROUP = ['/diethon'];
+const DIETHON_GROUP = ['/diethon', `/diethondetail/`];
 const MYPAGE_GROUP = ['/mypage', '/myinfo', '/myfoodexchangelist', '/foodbookmark', '/grapeexchange', '/grapeuse']; 
 
 const Mobile = () => {
@@ -175,7 +175,7 @@ const Mobile = () => {
     useEffect(() => {
         const result = matchRoutes(routes, location.pathname);
 
-        if (result.length < 1) {
+        if (!result || result.length < 1) {
             return;
         }
 
@@ -195,8 +195,16 @@ const Mobile = () => {
     const onBackButtonClick = (event) => {
         navigate(backwardUrl);
     };
+    
     // 현재 경로가 각 그룹에 속하는지 확인
-    const isActive = (path, group) => group.includes(location.pathname) || location.pathname === path;
+    const isActive = (path, group) => {
+        // 다이어톤 그룹에 속하는 경로인지 확인
+        if (group === DIETHON_GROUP) {
+            const dynamicPath = `/diethondetail/`;
+            return location.pathname.startsWith(dynamicPath) || location.pathname === path;
+        }
+        return group.includes(location.pathname) || location.pathname === path;
+    };
 
     const isMapPage = location.pathname === '/map'; // 'map' 경로일 경우 true
 
