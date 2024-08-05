@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+// 안 되는 거 
+
+import React, { useState, useEffect, useRef } from 'react';
+import styled, { keyframes } from 'styled-components';
 import CustomCheckbox from '../../components/CustomDietCheckbox';
 import CustomRadio from '../../components/CustomDietRadio';
 import { BsGeoFill, BsSunFill, BsSun, BsQuestionCircleFill } from 'react-icons/bs';
@@ -8,17 +10,17 @@ import postFoodRecommend from '../../APIs/post/postFoodRecommend';
 import { useNavigate } from 'react-router-dom';
 
 
+// Styled Components
 const ModalContainer = styled.div`
   position: fixed;
   top: 0;
   display: flex;
   flex-direction: column;
   width: 100vw;
-  max-width:390px;
+  max-width: 390px;
   height: 100vh;
   background-color: rgba(133,133,133,0.25);
   backdrop-filter: blur(6px);
-  /* margin-top: 72px; */
   font-family: 'WavvePADO-Regular';
   place-items: center;
 `;
@@ -32,12 +34,13 @@ const ModalContent = styled.div`
   border: none;
   box-shadow: 0px 4px 4px #B7B7B7;
   margin-top: 20px;
-  margin-left: 0px;
+  margin-bottom: 100px;
   padding-left: 19px;
   overflow-y: auto; 
-      &::-webkit-scrollbar{
-      width: 2px;
-    }
+  position: relative;  /* 자식 요소의 절대 위치를 위한 relative */
+  &::-webkit-scrollbar {
+    width: 2px;
+  }
 `;
 
 const Title = styled.div`
@@ -46,29 +49,29 @@ const Title = styled.div`
   border-bottom: 3px solid #F74A25;
   margin-bottom: 13px; 
   padding-bottom: 3px;
-`
+`;
 
-const Title2 = styled.form`
+const Title2 = styled.div`
   font-size: 24px;
   color: #F74A25;
   border-bottom: 3px solid #F74A25;
   margin-bottom: 13px; 
   padding-bottom: 3px;
-`
+`;
 
 const DetailSpan = styled.span`
   font-size: 16px;
-`
+`;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`
+`;
 
 const FormItem = styled.div`
   margin-bottom: 10px;
-`
+`;
 
 const Input = styled.input`
   width: 300px;
@@ -76,12 +79,11 @@ const Input = styled.input`
   border: 1px solid #F74A25;
   border-radius: 10px;
   margin: 3.5px 10px;
-`
+`;
 
 const Warning = styled.div`
-  position: absolute;
-  top: 542px;
-  margin: 0 25px;
+position: absolute;
+  margin: 360px 25px 0 25px;
   width: 280px;
   height: 116px;
   background-color: #FFE3C4;
@@ -92,9 +94,10 @@ const Warning = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  box-sizing: border-box;
   justify-content: center;
-`
-
+  pointer-events: none; /* 클릭 방지 */
+`;
 
 const CustomButton = styled.button`
   width: 200px;
@@ -109,16 +112,80 @@ const CustomButton = styled.button`
   color: #ffffff;
   margin: auto 60px;
   cursor: pointer; 
-`
+`;
 
+const spin = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const LoadingContainer = styled.div`
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  max-width: 390px;
+  height: 100vh;
+  background-color: rgba(225,225,225,0.8);
+  backdrop-filter: blur(6px);
+  place-items: center;
+  z-index: 2;
+`;
+
+const LoaderDiv = styled.div`
+  position: fixed;
+  top: 240px;
+`;
+
+const Loader = styled.div`
+  border: 6px solid #ffffff;
+  border-top: 6px solid #F74A25;
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  animation: ${spin} 0.7s linear infinite;
+  margin: 25px auto;
+`;
+
+const LoadingText = styled.div`
+  margin: 10px;
+  font-family: 'WavvePADO-Regular';
+  font-size: 30px;
+  color: #F74A25;
+`;
 
 const CustomDietModal = ({ isOpen, onClose }) => {
-
   const navigate = useNavigate();
   const [diet_combination, setDiet_combination] = useState('type2');
   const [breakfast, setBreakfast] = useState({});
   const [lunch, setLunch] = useState({});
   const [dinner, setDinner] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const modalContentRef = useRef(null);
+  const warningRef = useRef(null);
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (modalContentRef.current && warningRef.current) {
+        const scrollTop = modalContentRef.current.scrollTop;
+        const modalHeight = modalContentRef.current.clientHeight;
+        const warningHeight = warningRef.current.offsetHeight;
+
+        warningRef.current.style.top = `${scrollTop + modalHeight - warningHeight}px`;
+      }
+    };
+
+    const modalContentElement = modalContentRef.current;
+    modalContentElement.addEventListener('scroll', handleScroll);
+
+    return () => {
+      modalContentElement.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
 
   const handleRadioChange = (e) => {
     setDiet_combination(e.target.value);
@@ -140,6 +207,8 @@ const CustomDietModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setIsLoading(true);
 
     const dietCombinationMap = {
       type1: '식사3',
@@ -174,45 +243,64 @@ const CustomDietModal = ({ isOpen, onClose }) => {
     try {
       const response = await postFoodRecommend(requestData);
       console.log('Response:', response);
-      onClose();
-      navigate('/aftermain');
+      if (response) { // Check if response is valid
+        setIsLoading(false);
+        onClose();
+        navigate('/aftermain');
+      } else {
+        throw new Error('Invalid response');
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('식단 커스텀에 실패하였습니다.');
+      setHasError(true);
+      setIsLoading(true); // Keep loading indicator active for retry logic
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <ModalContainer>
-      <ModalContent>
-        <Title><BsGeoFill size={24} color="#F74A25" /> 식단 조합 선택 </Title>
-        <Form>
-          <FormItem>
-            <CustomRadio value="type1" checked={diet_combination === 'type1'} onChange={handleRadioChange} label="식사 3" />
-            <CustomRadio value="type2" checked={diet_combination === 'type2'} onChange={handleRadioChange} label="식사 3 + 간식 1" />
-            <CustomRadio value="type3" checked={diet_combination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
-          </FormItem>
-          <FormItem>
-            <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="아침" selectedValues={breakfast} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="점심" selectedValues={lunch} onChange={handleCheckboxChange} />
-            <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="저녁" selectedValues={dinner} onChange={handleCheckboxChange} />
-          </FormItem>
-          <Title2><BsQuestionCircleFill size={20} color="#F74A25" /> 사용하고 싶은 재료 <DetailSpan>(최대 3개)</DetailSpan> </Title2>
-          <FormItem>
-            <Input disabled />
-            <Input disabled />
-            <Input disabled />
-          </FormItem>
-          <FormItem>
-            <Warning>재료 입력은 프리미엄 구독 시 <br /> 사용할 수 있습니다 </Warning>
-          </FormItem>
-          <CustomButton onClick={handleSubmit}>이대로 식단 추천받기!</CustomButton>
-        </Form>
-      </ModalContent>
-    </ModalContainer>
+    <>
+      {isLoading && hasError && (
+        <LoadingContainer style={{ textAlign: 'center' }}>
+          <LoaderDiv>
+            <Loader />
+            <LoadingText>추천 받는 중</LoadingText>
+          </LoaderDiv>
+        </LoadingContainer>
+      )}
+      <ModalContainer>
+        <ModalContent ref={modalContentRef}>
+          <Title><BsGeoFill size={24} color="#F74A25" /> 식단 조합 선택 </Title>
+          <Form>
+            <FormItem>
+              <CustomRadio value="type1" checked={diet_combination === 'type1'} onChange={handleRadioChange} label="식사 3" />
+              <CustomRadio value="type2" checked={diet_combination === 'type2'} onChange={handleRadioChange} label="식사 3 + 간식 1" />
+              <CustomRadio value="type3" checked={diet_combination === 'type3'} onChange={handleRadioChange} label="식사 3 + 간식 2" />
+            </FormItem>
+            <FormItem>
+              <CustomCheckbox icon={<BsSunFill size={20} color="#F74A25" />} time="아침" selectedValues={breakfast} onChange={handleCheckboxChange} />
+              <CustomCheckbox icon={<BsSun size={20} color="#F74A25" />} time="점심" selectedValues={lunch} onChange={handleCheckboxChange} />
+              <CustomCheckbox icon={<BiSolidMoon size={20} color="#F74A25" />} time="저녁" selectedValues={dinner} onChange={handleCheckboxChange} />
+            </FormItem>
+            <Title2><BsQuestionCircleFill size={20} color="#F74A25" /> 사용하고 싶은 재료 <DetailSpan>(최대 3개)</DetailSpan> </Title2>
+            <FormItem>
+              <Input disabled />
+              <Input disabled />
+              <Input disabled />
+            </FormItem>
+            <Warning>
+              재료 입력은 프리미엄 구독 시 <br /> 사용할 수 있습니다
+            </Warning>
+            <FormItem>
+              <CustomButton onClick={handleSubmit}>이대로 식단 추천받기!</CustomButton>
+            </FormItem>
+          </Form>
+        </ModalContent>
+      </ModalContainer>
+    </>
   );
 };
 
 export default CustomDietModal;
+
