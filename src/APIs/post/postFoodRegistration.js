@@ -1,8 +1,9 @@
 import axiosInstance from "../axiosInstance";
 
-export default async function postFoodRegistration(dietData, image) {
+export default async function postFoodRegistration(dietName, dietData, image) {
   try {
     const formData = new FormData();
+    formData.append('diet_name', dietName);
     formData.append('main', JSON.stringify(dietData.main));
     formData.append('side1', JSON.stringify(dietData.side1));
     formData.append('side2', JSON.stringify(dietData.side2));
