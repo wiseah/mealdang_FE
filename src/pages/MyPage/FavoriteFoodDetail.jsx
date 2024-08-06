@@ -40,7 +40,7 @@ const PictureText = styled.div`
     color: #F74A25;
     text-align: center;
     font-family: 'Do Hyeon', sans-serif;
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 400;
     cursor: pointer;
 `
