@@ -4,6 +4,7 @@ import { BsImages } from "react-icons/bs";
 import TotalFoodToggle from "../../components/TotalFoodToggle";
 import FoodToggle from "../../components/FoodToggle";
 import getFoodDetail from "../../APIs/get/getFoodDetail";
+import patchDetailPhoto from "../../APIs/patch/patchDetailPhoto";
 import { useParams } from 'react-router-dom';
 
 // 전체 공간
@@ -31,7 +32,7 @@ const PictureContainer = styled.div`
     border-radius: 15px;
     border: 1px solid #F74A25;
     background: #FFF;
-    margin-top:39px;
+    margin-top: 39px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -157,8 +158,19 @@ export default function FoodDetail() {
     }, [diet_id]); // diet_id가 변경될 때마다 데이터를 다시 가져옵니다
 
     // 파일 처리 함수들
-    const handleFileChange = event => {
-        setFile(event.target.files[0]);
+    const handleFileChange = async (event) => {
+        const selectedFile = event.target.files[0];
+        setFile(selectedFile);
+
+        if (selectedFile) {
+            try {
+                await patchDetailPhoto(diet_id, 'image', selectedFile); // 이미지 업로드
+                alert('이미지가 성공적으로 업로드되었습니다.');
+            } catch (error) {
+                console.error("이미지 업로드 에러: ", error);
+                alert('이미지 업로드에 실패했습니다.');
+            }
+        }
     };
 
     const triggerFileInput = () => {
