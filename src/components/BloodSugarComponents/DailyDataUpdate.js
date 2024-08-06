@@ -97,25 +97,36 @@ const formatDateToServer = (date) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-          setDate(getCurrentDate());
+        const currentDate = getCurrentDate();
+        setDate(currentDate);
+        const localData = localStorage.getItem('bloodsugars');
+        const localDate = localStorage.getItem('bloodsugars_date');
+
+        // 현재 날짜가 로컬 스토리지에 저장된 날짜와 다르거나, 12시가 지나면 초기화
+        if (localDate !== currentDate) {
+          localStorage.removeItem('bloodsugars'); // 로컬 스토리지 초기화
+          localStorage.setItem('bloodsugars_date', currentDate); // 현재 날짜 저장
+        } else if (localData) {
+          setBloodsugars(JSON.parse(localData));
+        }
+
+        const response = await getBloodSugarsState(); // 혈당 상태 데이터 가져오기
+        console.log('Fetched blood sugar state:', response);
   
-          const response = await getBloodSugarsState(); // 혈당 상태 데이터 가져오기
-          console.log('Fetched blood sugar state:', response);
-  
-          // 응답 데이터 유효성 검사
-          if (response && response.today_data && Array.isArray(response.today_data) && response.today_data.length > 0) {
-          const todayData = response.today_data;
+        // 응답 데이터 유효성 검사
+        if (response && response.today_data && Array.isArray(response.today_data) && response.today_data.length > 0) {
+        const todayData = response.today_data;
               
-              setBloodsugars({
-                  fasting_blood_sugar: {
-                      morning: todayData.fasting_blood_sugar.morning || '',
-                      noon: todayData.fasting_blood_sugar.noon || '',
-                      evening: todayData.fasting_blood_sugar.evening || '',
-                  },
-                  post_meal_blood_sugar: {
-                      morning: todayData.post_meal_blood_sugar.morning || '',
-                      noon: todayData.post_meal_blood_sugar.noon || '',
-                      evening: todayData.post_meal_blood_sugar.evening || '',
+            setBloodsugars({
+                 fasting_blood_sugar: {
+                    morning: todayData.fasting_blood_sugar.morning || '',
+                    noon: todayData.fasting_blood_sugar.noon || '',
+                    evening: todayData.fasting_blood_sugar.evening || '',
+                  },                  
+                post_meal_blood_sugar: {
+                    morning: todayData.post_meal_blood_sugar.morning || '',
+                    noon: todayData.post_meal_blood_sugar.noon || '',
+                    evening: todayData.post_meal_blood_sugar.evening || '',
                   },
               });
           }
@@ -123,11 +134,6 @@ const formatDateToServer = (date) => {
           console.error('DailyDataUpdate 내 getBloodSugarsState에서 에러 발생:', error);
       }
   };
-    // 로컬 스토리지에서 데이터 불러오기
-    const localData = localStorage.getItem('bloodsugars');
-    if (localData) {
-      setBloodsugars(JSON.parse(localData));
-    }
     
     fetchData();
   }, []);

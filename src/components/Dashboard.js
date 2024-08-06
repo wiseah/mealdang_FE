@@ -21,6 +21,7 @@ const LeftSection = styled.div`
 `;
 
 const CalorieTitle = styled.span`
+
   width: 187.575px;
   height: 15px;
   color: #3F006C;
@@ -35,7 +36,7 @@ const Calorie = styled.span`
   width: 187.575px;
   height: 31px;
   color: #3F006C;
-  font-size: 28px;
+  font-size: 33px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -57,7 +58,7 @@ const DayInfo = styled.span`
   width: 187.575px;
   height: 34px;
   color: #3F006C;
-  font-size: 28px;
+  font-size: 33px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -82,6 +83,7 @@ const AlertBackGround = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-right: 18px;
 `;
 
 const AlertIcon = styled(AiFillAlert)`

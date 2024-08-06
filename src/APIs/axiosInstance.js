@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 
 const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_SERVER,
-    timeout: 5000, // 5000ms = 5초
+    timeout: 500000, // 5000ms = 5초
 });
     
 axiosInstance.interceptors.request.use(
