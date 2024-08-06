@@ -127,7 +127,7 @@ const LoadingContainer = styled.div`
   background-color: rgba(225,225,225,0.8);
   backdrop-filter: blur(6px);
   place-items: center;
-  z-index: 2;
+  z-index: 1;
 `;
 
 const LoaderDiv = styled.div`
@@ -151,6 +151,14 @@ const LoadingText = styled.div`
   font-size: 30px;
   color: #F74A25;
 `;
+
+const LoadingText2 = styled.div`
+  margin: 10px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 20px;
+  color: #F74A25;
+`;
+
 
 const CustomDietModal = ({ isOpen, onClose }) => {
 
@@ -273,7 +281,9 @@ const CustomDietModal = ({ isOpen, onClose }) => {
       <LoadingContainer style={{ textAlign: 'center' }}>
         <LoaderDiv>
           <Loader />
-          <LoadingText>추천 받는 중</LoadingText>
+          <LoadingText>추천 받는 중
+            <br/> <LoadingText2>30초~1분 정도 소요됩니다..</LoadingText2>
+          </LoadingText>
         </LoaderDiv>
       </LoadingContainer>
     )}
