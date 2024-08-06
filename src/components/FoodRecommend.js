@@ -31,7 +31,7 @@ const TitleTextContainer = styled.div`
     width: 91px;
     height: 38px;
     font-family: 'Do Hyeon', sans-serif;
-    font-size: 20px;
+    font-size: 23px;
     font-weight: 400;
     display: flex;
     flex-direction: column;
@@ -87,19 +87,21 @@ const ContentContainer = styled.div`
     align-items: flex-start;
     gap: 5px;
     font-family: 'Do Hyeon', sans-serif;
-    font-size: 13px;
+    font-size: 22px;
     font-weight: 400;
     padding: 5px;
+    margin-left: 10px;
 `;
 
 const CalorieContainer = styled.div`
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center;
+    align-items: center; */
+    margin-left: 15px;
     height: 32px;
     margin-top: 5px;
     font-family: 'Do Hyeon', sans-serif;
-    font-size: 12px;
+    font-size: 20px;
     font-weight: 400;
 `;
 
