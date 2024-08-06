@@ -20,7 +20,7 @@ const DietTitle = styled.div`
     width: 100%;
     height: 34px;
     color: #FF6A4A;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 30px;
     font-weight: 400;
     display: flex;
@@ -34,8 +34,8 @@ const DietContainer = styled.input`
     border-radius: 10px;
     border: 1px solid #FF6A4A;
     color: #FF6A4A;
-    font-family: "Wavve PADO TTF";
-    font-size: 17px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 20px;
     font-weight: 400;
     text-align: center;
     &::placeholder {
@@ -65,7 +65,7 @@ const FoodHeader = styled.div`
 
 // 음식 제목 
 const FoodTitle = styled.span`
-    font-family: "Wavve PADO TTF";
+font-family: 'Do Hyeon', sans-serif;
     font-size: 21px;
     font-weight: 400;
     padding-left: 15px; 
@@ -127,8 +127,8 @@ const PictureText = styled.div`
     height: 44px;
     color: #F74A25;
     text-align: center;
-    font-family: "Wavve PADO TTF";
-    font-size: 20px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 23px;
     font-weight: 400;
     cursor: pointer;
 `
@@ -149,9 +149,9 @@ const ConfirmButton = styled.button`
     border-radius: 10px;
     box-shadow: 0px 4px 4px #B7B7B7;
     box-sizing: border-box;
-    font-size: 30px;
+    font-size: 33px;
     font-weight: 400;
-    font-family: 'Wavve PADO TTF';
+    font-family: 'Do Hyeon', sans-serif;
     margin-top: 20px;
     cursor: pointer;
     background: #FF6A4A;

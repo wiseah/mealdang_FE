@@ -25,7 +25,6 @@ const CalorieTitle = styled.span`
   height: 15px;
   color: #3F006C;
   font-size: 15px;
-  font-family: 'Inter', sans-serif;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -36,7 +35,6 @@ const Calorie = styled.span`
   width: 187.575px;
   height: 31px;
   color: #3F006C;
-  font-family: 'Inter', sans-serif;
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -48,7 +46,6 @@ const DayInfoTitle = styled.span`
   width: 187.575px;
   height: 18px;
   color: #3F006C;
-  font-family: 'Inter', sans-serif;
   font-size: 15px;
   font-style: normal;
   font-weight: 400;
@@ -60,7 +57,6 @@ const DayInfo = styled.span`
   width: 187.575px;
   height: 34px;
   color: #3F006C;
-  font-family: 'Inter', sans-serif;
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -101,8 +97,8 @@ const AlertText = styled.div`
   justify-content: center;
   color: #000;
   text-align: center;
-  font-family: "Wavve PADO TTF";
-  font-size: 17px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

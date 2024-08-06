@@ -12,7 +12,7 @@ const Introduction = styled.div`
     width: 365px;
     height: 66px;
     color: #000;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 25px;
     font-weight: 400;
     text-align: center;
@@ -20,7 +20,7 @@ const Introduction = styled.div`
 const Date = styled.div`
     /* width: 160px; */
     color: #000;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 30px;
     font-weight: 400;
     align-self: flex-start;

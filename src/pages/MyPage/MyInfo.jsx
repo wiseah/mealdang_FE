@@ -6,6 +6,7 @@ import postNicknameCheck from '../../APIs/post/postNicknameCheck';
 import getMyInfo from '../../APIs/get/getMyInfo';
 import patchMyInfo from '../../APIs/patch/patchMyInfo';
 
+
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,11 +23,11 @@ const Form = styled.form`
 `
 
 const FormItem = styled.div`
-  margin-bottom: 41px;
+  margin-bottom: 25px;
 `
 
 const ItemLabel = styled.label`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 25px;
   color: #FF6A4A;
 `
@@ -68,7 +69,7 @@ const RadioContainer = styled.div`
 `
 
 const RadioLabel = styled.label`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 25px;
   font-weight: 400;
   color: #FF6A4A;
@@ -102,7 +103,6 @@ const Text = styled.div`
   margin-top: 7px;
 `
 
-
 const InputField = styled.input`
   width: 350px;
   height: 56px;
@@ -114,7 +114,7 @@ const InputField = styled.input`
   font-size: 20px;
   font-weight: 400;
   color: #FF6A4A;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   text-align: center;
 `
 
@@ -126,10 +126,10 @@ const NumberInput = styled.input`
   box-sizing: border-box;
   box-shadow: 0px 4px 4px #B7B7B7;
   margin: 8px auto;
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 400;
   color: #FF6A4A;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   text-align: center;
 `
 

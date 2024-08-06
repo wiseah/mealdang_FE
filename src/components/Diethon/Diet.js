@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { AiFillHeart } from "react-icons/ai";
 import { BsArrowRight } from "react-icons/bs";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
@@ -36,7 +35,6 @@ const Dietitle = styled.div`
     width: 260px;   
     height: 32px;
     color: #6A0DAD;
-    font-family: 'Inter';
     font-size: 28px;
     font-weight: 700;
     padding-left: 24px;
@@ -66,7 +64,6 @@ const LikeText = styled.div`
     width: 20px;
     height: 10px;
     text-align: center;
-    font-family: "Inter";
     font-size: 12px;
     font-weight: 600;
 `
@@ -81,7 +78,6 @@ const UserContainer = styled.div`
     align-self: flex-start;
     color: #FFF;
     text-align: center;
-    font-family: "Inter";
     font-size: 18px;
     font-weight: 600;
     display: flex;
@@ -103,7 +99,7 @@ const FoodContainer = styled.div`
     align-self: flex-start;
     gap: 1px;
     color: #6A0DAD;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 20px;
     font-weight: 400;
     margin-left: 24px;
@@ -125,7 +121,7 @@ const Detail = styled.div`
     justify-content: flex-end;
     color: #9370DB;
     text-align: right;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 15px;
     font-weight: 400;
     margin-right: 14px;
@@ -144,7 +140,6 @@ const NoDataMessage = styled.div`
     width: 100%;
     height: auto;
     color: #6A0DAD;
-    font-family: 'Inter';
     font-size: 18px;
     font-weight: 600;
     text-align: center;

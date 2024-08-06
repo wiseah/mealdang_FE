@@ -3,14 +3,14 @@ import React from 'react';
 import { BiCheckbox, BiSolidCheckboxChecked } from 'react-icons/bi';
 
 const CheckboxContainer = styled.div`
-  font-family: 'WavvePADO-Regular';
-  font-size: 20px;
+font-family: 'Do Hyeon', sans-serif;
+  font-size: 23px;
   color: #F74A25;
-  margin: 0 0 15px 10px;
+  margin: 0 0 10px 10px;
 `;
 
 const Title = styled.div`
-  margin-bottom: 10px;
+  margin-bottom: 7px;
   display: flex;
   vertical-align: middle;
 `;

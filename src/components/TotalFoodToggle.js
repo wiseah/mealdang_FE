@@ -15,8 +15,8 @@ const TotalFood = styled.div`
 `;
 
 const TotalFoodTitle = styled.span`
-  font-family: "Wavve PADO TTF";
-  font-size: 20px;
+font-family: 'Do Hyeon', sans-serif;
+  font-size: 23px;
   font-weight: 400;
   padding-left: 15px;
 `;
@@ -42,7 +42,7 @@ const TotalFoodContainer = styled.div`
 
 const TotalFoodCalories = styled.span`
   color: #3f006c;
-  font-family: "Wavve PADO TTF";
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 20px;
   font-weight: 400;
   padding: 13px 0px 8px 16px;
@@ -50,7 +50,7 @@ const TotalFoodCalories = styled.span`
 
 const TotalFoodText = styled.ul`
   color: #3f006c;
-  font-family: "Wavve PADO TTF";
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 20px;
   font-weight: 400;
   margin: 0px;

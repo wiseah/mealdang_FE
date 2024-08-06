@@ -15,8 +15,8 @@ const Container = styled.div`
 
 const Greeting = styled.div`
   color: #000;
-  font-family: "Wavve PADO TTF";
-  font-size: 30px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 33px;
   font-weight: 400;
   align-self: flex-start;
   padding-bottom: 16px;
@@ -25,8 +25,8 @@ const Greeting = styled.div`
 
 const FoodTitle = styled.div`
   color: #000;
-  font-family: "Wavve PADO TTF";
-  font-size: 30px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 33px;
   font-weight: 400;
   display: flex;
   align-items: center;
@@ -46,8 +46,8 @@ const StarIcon = styled(({ filled, ...props }) =>
 const RecommendButton = styled.div`
   width: 100%;
   color: ${props => (props.disabled ? '#B0B0B0' : '#000')};
-  font-family: "Wavve PADO TTF";
-  font-size: 18px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 20px;
   font-weight: 400;
   display: flex;
   justify-content: flex-end;

@@ -14,17 +14,17 @@ const Container = styled.div`
 
 const InfoContainer = styled.div`
   width: 363px;
-  height: 285px;
-  border: 1.18px solid #6A0DAD;
+  height: 270px;
+  border: 2px solid #6A0DAD;
   border-radius: 11.85px;
   box-shadow: 0px 4.74px 4.74px #B7B7B7;
 `
 
 const Title = styled.div`
-  font-family: 'WavvePADO-Regular';
-  font-size: 28px;
+font-family: 'Do Hyeon', sans-serif;
+  font-size: 30px;
   font-weight: 500;
-  margin: 18px 20px;
+  margin: 13px 20px;
   width: 323px;
 `
 
@@ -37,7 +37,7 @@ const FormSection = styled.div`
 const FormTitle = styled.div`
   font-size: 21px;
   font-weight: 600;
-  margin: 20px 0 5px 0;
+  margin: 20px 0 4px 0;
 `
 
 const FormLabel = styled.label`
@@ -64,15 +64,14 @@ const ButtonContainer = styled.div`
 const Button = styled.button`
   width: 78px;
   height: 26px;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 16px;
   font-weight: 600;
   background-color: #E6E6FA;
   color: #6A0DAD;
-  border: 0.87px solid #000000 ;
+  border: 1.9px solid #6A0DAD ;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
 `;
 
 

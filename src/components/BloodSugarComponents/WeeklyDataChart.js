@@ -13,20 +13,20 @@ const Container = styled.div`
 
 const GraphContainer = styled.div`
   width: 363px;
-  height: 250px;
-  border: 1.18px solid #6A0DAD;
+  height: 253px;
+  border: 2px solid #6A0DAD;
   border-radius: 11.85px;
   box-shadow: 0px 4.74px 4.74px #B7B7B7;
   position: relative;
 `
 
 const Title = styled.div`
-  font-family: 'WavvePADO-Regular';
-  font-size: 28px;
+font-family: 'Do Hyeon', sans-serif;
+  font-size: 30px;
   font-weight: 500;
-  margin: 18px 20px;
+  margin: 14px 20px;
   width: 323px;
-`
+`;
 
 const NoDataOverlay = styled.div`
   position: absolute;

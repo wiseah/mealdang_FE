@@ -15,7 +15,7 @@ const Container = styled.div`
 `
 
 const Words = styled.div`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
 `
 
 const Words1 = styled.div`
@@ -42,7 +42,7 @@ const ExchangeList = styled.div`
   border-radius: 10px;
   border: none;
   box-shadow: 0px 4px 4px #B7B7B7;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 30px;
 `
 
@@ -62,7 +62,7 @@ const Start = styled.button`
   margin: 26.5px 35px 18px 35px;
   font-size: 30px;
   font-weight: 400;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   color: #ffffff;
   text-align: center;
   cursor: pointer;

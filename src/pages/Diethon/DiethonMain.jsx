@@ -16,8 +16,8 @@ const Introduce = styled.div`
   width: 319px;
   height: 30px;
   color: #000;
-  font-family: "Wavve PADO TTF";
-  font-size: 24px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 25px;
   font-weight: 400;
   align-self: flex-start;
   margin-top: 25px;
@@ -37,14 +37,15 @@ const Register = styled.div`
   align-self: flex-end;
   margin-right: 25px;
   margin-bottom: 10px;
+  margin-top: 5px;
   cursor: pointer;
 `
 const RegisterText = styled.div`
   width: 173px;
   color: #9370DB;
   text-align: right;
-  font-family: "Wavve PADO TTF";
-  font-size: 15px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 18px;
   font-weight: 400;
 `
 const RegisterIcon = styled(BsArrowRight)`

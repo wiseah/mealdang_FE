@@ -19,7 +19,7 @@ const DietContainer = styled.div`
     justify-content: space-between;
     color: #6A0DAD;
     text-align: center;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 30px;
     font-weight: 400;
     width: 290px;
@@ -56,8 +56,8 @@ const PictureText = styled.div`
     height: 44px;
     color: #F74A25;
     text-align: center;
-    font-family: "Wavve PADO TTF";
-    font-size: 20px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 23px;
     font-weight: 400;
     cursor: pointer;
 `;

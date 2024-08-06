@@ -13,18 +13,18 @@ const Container = styled.div`
 
 const Greeting = styled.text`
   color: #000;
-  font-family: "Wavve PADO TTF";
-  font-size: 30px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 33px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   align-self: flex-start;
-  margin: 0px 0px 16px 33px;
+  margin: 10px 0px 14px 33px;
 `
 const FoodTitle = styled.div`
   color: #000;
-  font-family: "Wavve PADO TTF";
-  font-size: 30px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 33px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -41,6 +41,7 @@ const FoodContainer = styled.div`
   justify-content: center; 
   align-items: center; 
   `
+  
 const Icon = styled(BiSolidPlusCircle)`
   width: 100px;
   height: 100px;
