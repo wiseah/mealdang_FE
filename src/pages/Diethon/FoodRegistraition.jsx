@@ -221,7 +221,7 @@ export default function FoodRegistration() {
         }
 
         try {
-            const response = await postFoodRegistration(dietData, file);
+            const response = await postFoodRegistration(dietName, dietData, file);
             console.log('식단 등록 성공:', response);
             navigate('/diethon')
         } catch (error) {

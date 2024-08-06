@@ -20,21 +20,30 @@ import FoodBookMark from "./pages/MyPage/FoodBookMark";
 import FoodDetail from "./pages/Main/FoodDetail";
 import FoodRegistration from "./pages/Diethon/FoodRegistraition";
 import FavoriteFoodDetail from "./pages/MyPage/FavoriteFoodDetail";
+import Intro from "./pages/Intro";
 
 const routes = [
+    // {
+    //     path: '/',
+    //     element: <Sitemap />,
+    //     previous: false,
+    // },
     {
         path: '/',
-        element: <Sitemap />,
-        previous: false,
-    },
-    {
-        path: '/landing',
-        element: <Landing />,
+        element: <Intro />,
         logo: false,
-        name: '00. 랜딩 페이지',
+        name: '000. 인트로 페이지',
         previous: false,
         footer: false,
     },
+    // {
+    //     path: '/landing',
+    //     element: <Landing />,
+    //     logo: false,
+    //     name: '00. 랜딩 페이지',
+    //     previous: false,
+    //     footer: false,
+    // },
     {
         path: '/login',
         element: <Login />,
