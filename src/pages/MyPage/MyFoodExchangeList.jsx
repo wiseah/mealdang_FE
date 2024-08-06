@@ -11,7 +11,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  place-items: center;
+  /* place-items: center; */
 `
 
 const Words = styled.div`
@@ -35,6 +35,12 @@ const Words2 = styled.div`
   margin: 21px 18px;
 `
 
+const Words3 = styled.div`
+  font-size: 22px;
+  font-weight: 400;
+  margin: 21px 18px;
+`
+
 const ExchangeList = styled.div`
   background-color: #E6E6FA;
   width: 354px;
@@ -44,6 +50,7 @@ const ExchangeList = styled.div`
   box-shadow: 0px 4px 4px #B7B7B7;
   font-family: 'Do Hyeon', sans-serif;
   font-size: 30px;
+  margin: 0 auto;
 `
 
 const ListItems = styled.li`
@@ -118,7 +125,7 @@ const FoodExchangeList = () => {
           <br /> 섭취량은..
         </Words2>
       </Words>
-
+    {/* <container2> */}
       <ExchangeList>
         <ListItems>곡류군 {'\u00A0'}{'\u00A0'} {content.food_exchange.grain}</ListItems>
         <ListItems>어육류군(저지방군) {'\u00A0'}{'\u00A0'} {content.food_exchange.fish_meat_low_fat}</ListItems>
@@ -128,12 +135,12 @@ const FoodExchangeList = () => {
         <ListItems>우유군 {'\u00A0'}{'\u00A0'} {content.food_exchange.dairy}</ListItems>
         <ListItems>과일군 {'\u00A0'}{'\u00A0'} {content.food_exchange.fruit}</ListItems>
       </ExchangeList>
-
+    {/* </container2> */}
 
       <Words>
-        <Words2>
+        <Words3>
           몸무게가 변화할 경우, 권장 섭취량도 <br/> 변경됩니다.
-        </Words2>
+        </Words3>
       </Words>
 
       {modalOpen && <FoodExchangeListModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />}
