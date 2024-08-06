@@ -28,7 +28,7 @@ const ModalContent = styled.div`
 
 
 const AgreeAllLabel = styled.label`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 24px;
   color: #000000;
 `;
@@ -86,7 +86,7 @@ const AgreeButton = styled.button`
   color: #6A0DAD;
   border: none;
   border-radius: 0 0 10px 10px;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 20px;
   z-index: 1;
 `;
@@ -94,7 +94,7 @@ const AgreeButton = styled.button`
 const DisagreeButton = styled.button`
   background-color: transparent;
   border: none;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 20px;
   margin-top: 20px;
   background-color: #ffffff ;

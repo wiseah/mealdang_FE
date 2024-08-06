@@ -39,8 +39,8 @@ export default function FoodToggle({ main = {}, side1 = {}, side2 = {}, side3 = 
     `;
 
     const FoodTitle = styled.span`
-        font-family: "Wavve PADO TTF";
-        font-size: 20px;
+font-family: 'Do Hyeon', sans-serif;
+        font-size: 23px;
         font-weight: 400;
         padding-left: 15px; 
     `;
@@ -67,7 +67,7 @@ export default function FoodToggle({ main = {}, side1 = {}, side2 = {}, side3 = 
 
     const FoodInfo = styled.span`
         color:  #FF6A4A;
-        font-family: "Wavve PADO TTF";
+        font-family: 'Do Hyeon', sans-serif;
         font-size: 24px;
         font-weight: 400;
         padding-top: 14px;
@@ -76,7 +76,6 @@ export default function FoodToggle({ main = {}, side1 = {}, side2 = {}, side3 = 
 
     const FoodText = styled.ul`
         color: #FF6A4A;
-        font-family: Inter;
         font-size: 18px;
         font-weight: 600;
         padding-left: 37px;
@@ -90,7 +89,7 @@ export default function FoodToggle({ main = {}, side1 = {}, side2 = {}, side3 = 
 
     const RecipeTitle = styled.span`
         color:  #FF6A4A;
-        font-family: "Wavve PADO TTF";
+        font-family: 'Do Hyeon', sans-serif;
         font-size: 24px;
         font-weight: 400;
         padding-left: 16px;
@@ -99,7 +98,6 @@ export default function FoodToggle({ main = {}, side1 = {}, side2 = {}, side3 = 
 
     const RecipeText = styled.span`
         color: #FF6A4A;
-        font-family: Inter;
         font-size: 18px;
         font-weight: 600;
         padding-left: 20px;

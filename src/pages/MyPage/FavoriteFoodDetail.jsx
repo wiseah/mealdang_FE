@@ -39,7 +39,7 @@ const PictureText = styled.div`
     height: 44px;
     color: #F74A25;
     text-align: center;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 20px;
     font-weight: 400;
     cursor: pointer;
@@ -57,7 +57,7 @@ const UploadedImage = styled.img`
 const Title = styled.div`
     width : 300px;
     height: 34px;
-    font-family: "Wavve PADO TTF";
+    font-family: 'Do Hyeon', sans-serif;
     font-size: 30px;
     font-weight: 400;
     display: flex;

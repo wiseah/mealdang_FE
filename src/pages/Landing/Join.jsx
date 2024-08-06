@@ -14,7 +14,7 @@ const Container = styled.div`
 `
 
 const Title = styled.h2`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 30px;
   text-align: center;
   margin: 11px 0 25px 0;
@@ -32,7 +32,7 @@ const FormItem = styled.div`
 `
 
 const ItemLabel = styled.label`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 25px;
   color: #737373;
 `
@@ -56,7 +56,7 @@ const InputField = styled.input`
   margin: 8px 0;
   font-size: 20px;
   font-weight: 400;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   padding-left: 20px;
 
   &::placeholder {
@@ -68,7 +68,7 @@ const InputField = styled.input`
 
 const Explanation = styled.div`
   font-size: 13px;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   color: #737373;
 `
 
@@ -94,7 +94,7 @@ const Message = styled.div`
 `;
 
 const AgreeLabel = styled.label`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 20px;
   font-weight: 400;
   color: #737373;

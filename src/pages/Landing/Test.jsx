@@ -9,11 +9,11 @@ const Container = styled.div`
   width: 100vw;
   max-width: 390px;
   min-height: 100vh;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
 `
 
 const Words = styled.div`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 22px;
   font-weight: 400;
   margin: 41px auto;
@@ -47,7 +47,7 @@ const RadioContainer = styled.div`
 `
 
 const RadioLabel = styled.label`
-  font-family: 'WavvePADO-Regular';
+font-family: 'Do Hyeon', sans-serif;
   font-size: 25px;
   font-weight: 400;
   color: #000000;
@@ -83,7 +83,7 @@ const NumberInput = styled.input`
   margin: 8px auto;
   font-size: 20px;
   font-weight: 400;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   text-align: center;
 
   &::placeholder {

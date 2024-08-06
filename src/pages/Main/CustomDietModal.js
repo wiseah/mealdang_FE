@@ -19,7 +19,7 @@ const ModalContainer = styled.div`
   background-color: rgba(133,133,133,0.25);
   backdrop-filter: blur(6px);
   /* margin-top: 72px; */
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   place-items: center;
 `;
 
@@ -80,7 +80,7 @@ const Input = styled.input`
 `
 
 const Warning = styled.div`
-  position: absolute;
+position: absolute;
   margin: 360px 25px 0 25px;
   width: 280px;
   height: 116px;
@@ -105,8 +105,8 @@ const CustomButton = styled.button`
   border: none;
   border-radius: 10px;
   background-color: #FF6A4A;
-  font-family: 'WavvePADO-Regular';
-  font-size: 20px;
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: 22px;
   color: #ffffff;
   margin: auto 60px;
   cursor: pointer; 
@@ -147,7 +147,7 @@ const Loader = styled.div`
 
 const LoadingText = styled.div`
   margin: 10px;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 30px;
   color: #F74A25;
 `;
@@ -186,6 +186,8 @@ const CustomDietModal = ({ isOpen, onClose }) => {
       modalContentElement.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+
   const handleRadioChange = (e) => {
     setDiet_combination(e.target.value);
   };

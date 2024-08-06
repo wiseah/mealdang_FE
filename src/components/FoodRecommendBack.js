@@ -50,7 +50,7 @@ const TurnButton = styled.div`
 const TurnText = styled.div`
   color: #F74A25;
   text-align: center;
-  font-family: "Wavve PADO TTF";
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 17px;
   font-weight: 400;
   padding: ${props => props.direction === 'previous' ? '0 16px 0 0' : '0 0 0 16px'};

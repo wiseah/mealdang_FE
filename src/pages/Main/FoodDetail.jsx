@@ -19,8 +19,8 @@ const Introduce = styled.span`
     height: 70px;
     color: #3F006C;
     text-align: center;
-    font-family: "Wavve PADO TTF";
-    font-size: 30px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 27px;
     font-weight: 400;
 `
 
@@ -50,8 +50,8 @@ const PictureText = styled.div`
     height: 44px;
     color: #F74A25;
     text-align: center;
-    font-family: "Wavve PADO TTF";
-    font-size: 20px;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 23px;
     font-weight: 400;
     cursor: pointer;
 `

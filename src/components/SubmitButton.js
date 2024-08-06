@@ -10,7 +10,7 @@ const StyledButton = styled.button`
   margin: 26.5px 35px 18px 35px;
   font-size: 30px;
   font-weight: 400;
-  font-family: 'WavvePADO-Regular';
+  font-family: 'Do Hyeon', sans-serif;
   color: #ffffff;
   text-align: center;
   background-color: ${(props) => (props.disabled ? '#CCCCCC' : '#6A0DAD')};
