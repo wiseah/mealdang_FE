@@ -6,6 +6,7 @@ import { FaIceCream } from "react-icons/fa";
 import { BiSolidMoon } from "react-icons/bi";
 import getMain from "../APIs/get/getMain";
 import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 const FoodContainer = styled.div`
   width: 340px;
@@ -18,11 +19,11 @@ const FoodContainer = styled.div`
   align-items: center;
   overflow-x: auto;
   padding-left: 10px;
-  scrollbar-width: none; /* Firefox에서 스크롤바 숨기기 */
-  -ms-overflow-style: none; /* Internet Explorer와 Edge에서 스크롤바 숨기기 */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
   
   &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Edge에서 스크롤바 숨기기 */
+    display: none;
   }
 `;
 
@@ -72,6 +73,7 @@ const mealTypeMap = {
 
 export function FoodRecommendBack({ currentDietSetId, onLikeChange }) {
   const [dietSets, setDietSets] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,17 +101,14 @@ export function FoodRecommendBack({ currentDietSetId, onLikeChange }) {
     };
 
     fetchData();
-  }, []);
+  }, [currentDietSetId, onLikeChange]);
 
   const handleTurn = (direction) => {
     const currentIndex = dietSets.findIndex(set => set.diet_set_id === currentDietSetId);
     if (direction === 'previous' && currentIndex < dietSets.length - 1) {
-      console.log('Previous diet_set_id:', dietSets[currentIndex + 1].diet_set_id);
       onLikeChange(dietSets[currentIndex + 1].diet_set_id);
     } else if (direction === 'next' && currentIndex > 0) {
-      console.log('Next diet_set_id:', dietSets[currentIndex - 1].diet_set_id);
       onLikeChange(dietSets[currentIndex - 1].diet_set_id);
-      
     }
   };
 
@@ -136,6 +135,7 @@ export function FoodRecommendBack({ currentDietSetId, onLikeChange }) {
                   ${diet.side3 || ''}
                 `.trim()}
                 Calories={`총 ${diet.carlorie || '0'} 칼로리`}
+                dietId={diet.diet_id}
               />
             ))}
           </FoodList>
