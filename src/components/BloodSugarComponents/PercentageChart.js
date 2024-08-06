@@ -19,12 +19,12 @@ const GraphContainer = styled.div`
   border: 2px solid #6A0DAD;
   border-radius: 11.85px;
   box-shadow: 0px 4.74px 4.74px #B7B7B7;
-  position: relative; /* 위치 조정 */
+  position: relative; 
   margin-bottom: 13px;
 `;
 
 const Title = styled.div`
-font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 30px;
   font-weight: 500;
   margin: 14px 20px;
@@ -53,7 +53,7 @@ const Item = styled.div`
   justify-items: center;
   margin: 0;
   padding-left: 26px;
-`
+`;
 
 const Guide = styled.div`
   display: flex;
@@ -74,19 +74,19 @@ const IconWrapper = styled.div`
 `;
 
 const Message1 = styled.div`
-font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 17px;
   color: #FF4A4A;
 `;
 
 const Message2 = styled.div`
-font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 17px;
   color: #FFAC4A;
 `;
 
 const Message3 = styled.div`
-font-family: 'Do Hyeon', sans-serif;
+  font-family: 'Do Hyeon', sans-serif;
   font-size: 17px;
   color: #2ADEA1;
 `;
@@ -106,19 +106,16 @@ const NoDataOverlay = styled.div`
   color: #6A0DAD;
   font-weight: 500;
   z-index: 1;
-`
+`;
 
 const PercentageChart = () => {
-
   const [data, setData] = useState([]);
   const [normalCount, setNormalCount] = useState('?');
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-
       try {
-
         const response = await getBloodSugarsState();
         console.log(response);
         const apiData = response.normal_range_percentage;
@@ -137,6 +134,19 @@ const PercentageChart = () => {
 
         setData(transformedData);
         setNormalCount(apiData.normal);
+
+        // 데이터가 비어있다면 기본 데이터 설정 및 모달 열기
+        if (transformedData[0].normal === 0) {
+          setData([{
+            id: 'blood_sugar',
+            low_blood_sugar: 1,
+            caution_low_blood_sugar: 1,
+            normal: 3,
+            caution_high_blood_sugar: 1,
+            high_blood_sugar: 1,
+          }]);
+          setOpenModal(true);
+        }
       } catch (error) {
         console.error('PercentageChart 내 getBloodSugarsState에서 에러 발생: ', error);
       }
@@ -145,82 +155,66 @@ const PercentageChart = () => {
     fetchData();
   }, []);
 
-  // 데이터가 없을 경우 
-
   const isDataEmpty = data.length === 0;
-
-  if (isDataEmpty) {
-    setData([{
-      id: 'blood_sugar',
-      low_blood_sugar: 1,
-      caution_low_blood_sugar: 1,
-      normal: 3,
-      caution_high_blood_sugar: 1,
-      high_blood_sugar: 1,
-    }]);
-    setOpenModal(true)
-  }
-
 
   return (
     <Container>
       <GraphContainer>
         <Title>최근 일주일 정상 수치 비율</Title>
         <div>
-        <Normal><PointSpan>{normalCount}</PointSpan> 회 </Normal>
-        <Item style={{ width: '311px', height: '24px' }}>
-          <ResponsiveBar
-            data={data}
-            keys={['low_blood_sugar', 'caution_low_blood_sugar', 'normal', 'caution_high_blood_sugar', 'high_blood_sugar']}
-            // indexBy="normal"
-            indexBy="id"
-            margin={{ top: 50, bottom: 50 }}
-            layout="horizontal"
-            valueScale={{ type: 'linear' }}
-            indexScale={{ type: 'band', round: true }}
-            colors={["#FF4A4A", "#FFAC4A", "#2ADEA1", "#FFAC4A", '#FF4A4A']}
-            axisTop={null}
-            axisRight={null}
-            axisBottom={null} // x축 tick 없앰
-            axisLeft={null} // y축 tick 없앰
-            labelSkipWidth={12}
-            labelSkipHeight={12}
-            legends={[]}
-            animate={false}
-            role="application"
-            ariaLabel="Nivo bar chart demo"
-            barAriaLabel={(e) =>
-              `${e.id}: ${e.formattedValue} in category: ${e.indexValue}`
-            }
-            theme={{
-              labels: {
-                text: {
-                  fontSize: 14,
-                  fontFamily: 'Do Hyeon'
+          <Normal><PointSpan>{normalCount}</PointSpan> 회 </Normal>
+          <Item style={{ width: '311px', height: '24px' }}>
+            <ResponsiveBar
+              data={data}
+              keys={['low_blood_sugar', 'caution_low_blood_sugar', 'normal', 'caution_high_blood_sugar', 'high_blood_sugar']}
+              indexBy="id"
+              margin={{ top: 50, bottom: 50 }}
+              layout="horizontal"
+              valueScale={{ type: 'linear' }}
+              indexScale={{ type: 'band', round: true }}
+              colors={["#FF4A4A", "#FFAC4A", "#2ADEA1", "#FFAC4A", '#FF4A4A']}
+              axisTop={null}
+              axisRight={null}
+              axisBottom={null}
+              axisLeft={null}
+              labelSkipWidth={12}
+              labelSkipHeight={12}
+              legends={[]}
+              animate={false}
+              role="application"
+              ariaLabel="Nivo bar chart demo"
+              barAriaLabel={(e) =>
+                `${e.id}: ${e.formattedValue} in category: ${e.indexValue}`
+              }
+              theme={{
+                labels: {
+                  text: {
+                    fontSize: 14,
+                    fontFamily: 'Do Hyeon'
+                  },
                 },
-              },
-            }}
-          />
-        </Item>
-        <Guide>
-          <GuideItem>
-            <IconWrapper><AiFillAlert size={38} color="#FF4A4A" /></IconWrapper>
-            <Message1>위험해요!</Message1>
-          </GuideItem>
-          <GuideItem>
-            <IconWrapper><AiFillAlert size={38} color="#FFAC4A" /></IconWrapper>
-            <Message2>조심해요!</Message2>
-          </GuideItem>
-          <GuideItem>
-            <IconWrapper><AiFillAlert size={38} color="#2ADEA1" /></IconWrapper>
-            <Message3>정상이에요</Message3>
-          </GuideItem>
-        </Guide>
-        {data.length === 0 && <NoDataOverlay>데이터가 충분하지 않습니다</NoDataOverlay>}
-</div>
+              }}
+            />
+          </Item>
+          <Guide>
+            <GuideItem>
+              <IconWrapper><AiFillAlert size={38} color="#FF4A4A" /></IconWrapper>
+              <Message1>위험해요!</Message1>
+            </GuideItem>
+            <GuideItem>
+              <IconWrapper><AiFillAlert size={38} color="#FFAC4A" /></IconWrapper>
+              <Message2>조심해요!</Message2>
+            </GuideItem>
+            <GuideItem>
+              <IconWrapper><AiFillAlert size={38} color="#2ADEA1" /></IconWrapper>
+              <Message3>정상이에요</Message3>
+            </GuideItem>
+          </Guide>
+          {isDataEmpty && <NoDataOverlay>데이터가 충분하지 않습니다</NoDataOverlay>}
+        </div>
       </GraphContainer>
     </Container>
-  )
+  );
 };
 
 export default PercentageChart;
