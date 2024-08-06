@@ -241,19 +241,25 @@ const CustomDietModal = ({ isOpen, onClose }) => {
     console.log('Submitting data:', requestData);
 
     try {
+      setIsLoading(true);
       const response = await postFoodRecommend(requestData);
       console.log('Response:', response);
+      setHasError(true);
       if (response) { // Check if response is valid
+        navigate('/aftermain');
         setIsLoading(false);
         onClose();
-        navigate('/aftermain');
       } else {
         throw new Error('Invalid response');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
+      navigate('/aftermain');
       setHasError(true);
-      setIsLoading(true);
+      console.log(isLoading, hasError);
+    }
+    finally{
+      setIsLoading(false);
     }
   };
 
@@ -261,7 +267,7 @@ const CustomDietModal = ({ isOpen, onClose }) => {
 
   return (
     <>
-    {isLoading && hasError && (
+    {isLoading && !hasError && (
       <LoadingContainer style={{ textAlign: 'center' }}>
         <LoaderDiv>
           <Loader />
